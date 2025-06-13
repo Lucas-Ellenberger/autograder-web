@@ -119,24 +119,11 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 
     let inputFields = [];
     for (const field of sortedInputs) {
-        let inputType = "text";
-        let placeholder = "";
-
-        if (field.name === "user-email") {
-            placeholder = context.user.email;
-            inputType = "email";
-        } else if (field.name === "user-pass") {
-            placeholder = "<current token>";
-            inputType = "password";
-        } else if (field.type.includes("SelfOr")) {
-            placeholder = context.user.email;
-            inputType = "email";
-        }
+        let inputField = getInputField(field, context)
 
         inputFields.push(`
             <div class="input-field">
-                <label for="${field.name}">${field.name} (expects: ${field.type})</label>
-                <input type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}">
+                ${inputField}
             </div>
         `);
     }
@@ -156,6 +143,36 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
     `;
 }
 
+function getInputField(field, context) {
+    if (field.type === "bool") {
+        return `
+            <input type="checkbox" name=${field.name} value="true"/>
+            <label for="true">${field.name}</label>
+        `;
+    }
+
+    let inputType = "text";
+    let placeholder = "";
+
+    if (field.name === "user-email") {
+        placeholder = context.user.email;
+        inputType = "email";
+    } else if (field.name === "user-pass") {
+        placeholder = "<current token>";
+        inputType = "password";
+    } else if (field.type.includes("SelfOr")) {
+        placeholder = context.user.email;
+        inputType = "email";
+    } else if (field.type === "bool") {
+        inputType = "checkbox";
+    }
+
+    return `
+        <label for="${field.name}">${field.name} (expects: ${field.type})</label>
+        <input type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}">
+    `;
+}
+
 function callEndpoint(targetEndpoint, inputFields, context, container) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
@@ -168,6 +185,8 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
         if (field.type === "string") {
             params[field.name] = input.value;
+        } else if (field.type === "bool") {
+            params[field.name] = input.checked
         } else {
             // Users can input complex types into text boxes.
             // Attempt to parse the input string into JSON.
