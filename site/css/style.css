@@ -173,6 +173,11 @@ select:disabled {
     cursor: no-drop;
 }
 
+input:invalid {
+    box-shadow: 0 0 0.25em 0.25em rgba(255, 0, 0, 0.6),
+                0 0 0.5em 0.25em rgba(255, 0, 0, 0.2);
+}
+
 button {
     border-radius: 5px;
     padding: 0.25em;
@@ -464,6 +469,10 @@ fieldset {
     background-color: var(--color-bg-secondary);
     border-radius: var(--curve-radius);
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
+}
+
+.endpoint-area .required {
+    color: red;
 }
 
 .endpoint-area .input-field {

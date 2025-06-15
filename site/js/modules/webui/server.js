@@ -144,15 +144,21 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 }
 
 function getInputField(field, context) {
-    if (field.type === "bool") {
-        return `
-            <input type="checkbox" name=${field.name} value="true"/>
-            <label for="true">${field.name}</label>
-        `;
-    }
-
     let inputType = "text";
     let placeholder = "";
+    let extraFields = "";
+    let displayName = `${field.name} (expects: ${field.type})`;
+
+    if (field.type.includes("SelfOr")) {
+        placeholder = context.user.email;
+        inputType = "email";
+    } else if (field.type.includes("int")) {
+        inputType = "number";
+        extraFields += ` pattern="\d*"`;
+    } else if (field.type === "bool") {
+        inputType = "checkbox";
+        extraFields += ` value="true"`;
+    }
 
     if (field.name === "user-email") {
         placeholder = context.user.email;
@@ -160,16 +166,16 @@ function getInputField(field, context) {
     } else if (field.name === "user-pass") {
         placeholder = "<current token>";
         inputType = "password";
-    } else if (field.type.includes("SelfOr")) {
-        placeholder = context.user.email;
-        inputType = "email";
-    } else if (field.type === "bool") {
-        inputType = "checkbox";
+    }
+
+    if ((field.required) && (placeholder === "")) {
+        extraFields += ` required`;
+        displayName += ` <span class="required"> *</span>`;
     }
 
     return `
-        <label for="${field.name}">${field.name} (expects: ${field.type})</label>
-        <input type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}">
+        <label for="${field.name}">${displayName}</label>
+        <input type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}"${extraFields}>
     `;
 }
 
