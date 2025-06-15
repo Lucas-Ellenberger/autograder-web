@@ -488,6 +488,12 @@ fieldset {
     padding: 0.5em;
 }
 
+.endpoint-area input[type="checkbox"] {
+    align-self: flex-start;
+    height: 1em;
+    width: 1em;
+}
+
 .results-area .code {
     display: flex;
     flex-direction: column;

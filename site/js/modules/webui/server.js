@@ -183,8 +183,13 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let params = {};
+    let inputError = false;
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-area fieldset [name="${field.name}"]`);
+        if (!input.validity.valid) {
+            inputError = true;
+        }
+
         if (!input || input.value === "") {
             continue
         }
@@ -207,6 +212,11 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     }
 
     let resultsArea = container.querySelector(".results-area");
+
+    if (inputError) {
+        resultsArea.innerHTML = '<p>Invalid input.</p>';
+        return;
+    }
 
     Autograder.Server.callEndpoint(targetEndpoint, params)
         .then(function(result) {
