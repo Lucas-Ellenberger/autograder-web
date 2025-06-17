@@ -173,7 +173,7 @@ select:disabled {
     cursor: no-drop;
 }
 
-input:invalid {
+input:invalid.touched {
     box-shadow: 0 0 0.25em 0.25em rgba(255, 0, 0, 0.6),
                 0 0 0.5em 0.25em rgba(255, 0, 0, 0.2);
 }
@@ -471,9 +471,9 @@ fieldset {
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
-.endpoint-area .required {
-    color: red;
-}
+/* .endpoint-area .required { */
+/*     color: red; */
+/* } */
 
 .endpoint-area .input-field {
     display: flex;

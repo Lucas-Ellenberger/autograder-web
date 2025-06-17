@@ -82,6 +82,13 @@ function render(endpoints, selectedEndpoint, context, container) {
 
         callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
     });
+
+    let allInputFields = container.querySelectorAll(".endpoint-area fieldset input");
+    allInputFields?.forEach(function(input) {
+        input.addEventListener("blur", function(event) {
+            input.classList.add("touched");
+        });
+    });
 }
 
 function renderSelector(endpoints, selectedEndpoint) {
@@ -169,8 +176,9 @@ function getInputField(field, context) {
     }
 
     if ((field.required) && (placeholder === "")) {
-        extraFields += ` required`;
-        displayName += ` <span class="required"> *</span>`;
+        extraFields += ' required';
+    } else {
+        displayName += ' (optional)';
     }
 
     return `
