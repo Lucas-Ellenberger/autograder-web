@@ -187,7 +187,9 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-area fieldset [name="${field.name}"]`);
         if (!input.validity.valid) {
+            // TODO: Put a class with an error.
             inputError = true;
+            continue
         }
 
         if (!input || input.value === "") {
