@@ -1,6 +1,6 @@
 :root {
-    --color-light-bg-primary: #f0f0f0;
-    --color-light-bg-secondary: #f5f5f5;
+    --color-light-bg-primary: #e7e7ff;
+    --color-light-bg-secondary: #f3f3ff;
     --color-light-bg-tertiary: #ffffff;
 
     --color-light-bg-accent-primary: rgb(130, 130, 255);
@@ -8,12 +8,14 @@
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
     --color-light-text-secondary: rgba(0, 0, 0, 0.70);
     --color-light-text-tertiary: rgba(0, 0, 0, 0.50);
+    --color-light-text-accent: rgba(0, 0, 0, 0.90);
 
     --color-light-text-link: rgba(40, 40, 255, 0.75);
 
     --color-light-text-primary-low: rgba(0, 0, 0, 0.45);
     --color-light-text-secondary-low: rgba(0, 0, 0, 0.35);
     --color-light-text-tertiary-low: rgba(0, 0, 0, 0.20);
+    --color-light-text-accent-low: rgba(0, 0, 0, 0.45);
 
     --color-dark-bg-primary: #303030;
     --color-dark-bg-secondary: #151515;
@@ -22,24 +24,31 @@
     --color-dark-text-primary: rgba(255, 255, 255, 0.90);
     --color-dark-text-secondary: rgba(255, 255, 255, 0.80);
     --color-dark-text-tertiary: rgba(255, 255, 255, 0.70);
+    --color-dark-text-accent: rgba(255, 255, 255, 0.90);
 
     --color-dark-text-link: rgba(130, 130, 255, 0.85);
 
     --color-dark-text-primary-low: rgba(255, 255, 255, 0.45);
     --color-dark-text-secondary-low: rgba(255, 255, 255, 0.40);
     --color-dark-text-tertiary-low: rgba(255, 255, 255, 0.35);
+    --color-dark-text-accent-low: rgba(255, 255, 255, 0.45);
 
     --color-dark-bg-accent-primary: rgb(130, 130, 255);
 
     --color-bg-shadow: #000000;
+    --color-text-error: #f40055;
 
-    --curve-radius: 5px;
+    --curve-radius-small: 10px;
+    --curve-radius-large: 20px;
 
     --font-size-larger: 1.25rem;
     --font-size-large: 1.15rem;
     --font-size-normal: 1.00rem;
     --font-size-small: 0.85rem;
     --font-size-smaller: 0.75rem;
+
+    --font-weight-normal: 450;
+    --font-weight-bold: 650;
 }
 
 /* Default to light colors. */
@@ -53,6 +62,9 @@ html {
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
+
+    --color-text-accent: var(--color-light-text-accent);
+    --color-text-accent-low: var(--color-light-text-accent-low);
 
     --color-text-link: var(--color-light-text-link);
 
@@ -74,6 +86,9 @@ html {
         --color-text-secondary: var(--color-light-text-secondary);
         --color-text-tertiary: var(--color-light-text-tertiary);
 
+        --color-text-accent: var(--color-light-text-accent);
+        --color-text-accent-low: var(--color-light-text-accent-low);
+
         --color-text-link: var(--color-light-text-link);
 
         --color-text-primary-low: var(--color-light-text-primary-low);
@@ -93,6 +108,9 @@ html {
         --color-text-primary: var(--color-dark-text-primary);
         --color-text-secondary: var(--color-dark-text-secondary);
         --color-text-tertiary: var(--color-dark-text-tertiary);
+
+        --color-text-accent: var(--color-dark-text-accent);
+        --color-text-accent-low: var(--color-dark-text-accent-low);
 
         --color-text-link: var(--color-dark-text-link);
 
@@ -114,6 +132,9 @@ html.light {
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
 
+    --color-text-accent: var(--color-light-text-accent);
+    --color-text-accent-low: var(--color-light-text-accent-low);
+
     --color-text-link: var(--color-light-text-link);
 
     --color-text-primary-low: var(--color-light-text-primary-low);
@@ -132,6 +153,9 @@ html.dark {
     --color-text-secondary: var(--color-dark-text-secondary);
     --color-text-tertiary: var(--color-dark-text-tertiary);
 
+    --color-text-accent: var(--color-dark-text-accent);
+    --color-text-accent-low: var(--color-dark-text-accent-low);
+
     --color-text-link: var(--color-dark-text-link);
 
     --color-text-primary-low: var(--color-dark-text-primary-low);
@@ -147,9 +171,80 @@ html.dark .light-only {
 }
 
 html {
+    font-size: var(--font-size-normal);
+
+    font-family: "Montserrat", Verdana, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: var(--font-weight-normal);
+    font-style: normal;
+}
+
+.primary-color {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
-    font-size: var(--font-size-normal);
+}
+
+.primary-color-low {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary-low);
+}
+
+.secondary-color {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+}
+
+.secondary-color a {
+    color: var(--color-text-secondary);
+}
+
+.secondary-color-low {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-secondary-low);
+}
+
+.secondary-color-low a {
+    color: var(--color-text-secondary-low);
+}
+
+.tertiary-color {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-tertiary);
+}
+
+.tertiary-color a {
+    color: var(--color-text-tertiary);
+}
+
+.tertiary-color-low {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-tertiary-low);
+}
+
+.tertiary-color-low a {
+    color: var(--color-text-tertiary-low);
+}
+
+.accent-color {
+    background-color: var(--color-bg-accent-primary);
+    color: var(--color-text-accent);
+}
+
+.accent-color a {
+    color: var(--color-text-accent);
+}
+
+.accent-color-low {
+    background-color: var(--color-bg-accent-primary);
+    color: var(--color-text-accent-low);
+}
+
+.accent-color-low a {
+    color: var(--color-text-accent-low);
+}
+
+.drop-shadow {
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
 a {
@@ -161,7 +256,12 @@ input,
 select {
     background-color: var(--color-bg-secondary);
     color: var(--color-text-secondary);
+
+    border-color: var(--color-text-secondary);
     border-width: medium;
+    border-radius: var(--curve-radius-small);
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+
     cursor: pointer;
 }
 
@@ -170,17 +270,36 @@ input:disabled,
 select:disabled {
     background-color: var(--color-bg-secondary-low);
     color: var(--color-text-secondary-low);
+    border-color: var(--color-text-secondary-low);
     cursor: no-drop;
 }
 
-input:invalid.touched {
-    box-shadow: 0 0 0.25em 0.25em rgba(255, 0, 0, 0.6),
-                0 0 0.5em 0.25em rgba(255, 0, 0, 0.2);
+input {
+    padding: 0.25em 0.5em;
 }
 
 button {
-    border-radius: 5px;
-    padding: 0.25em;
+    padding: 0.5em 0.25em;
+}
+
+select {
+    padding: 0.75em 1em;
+}
+
+input:invalid {
+    border-color: var(--color-text-error);
+}
+
+input:invalid.touched {
+    box-shadow: 0 0 0.25em 0.25em var(--color-text-error);
+                0 0 0.5em 0.25em var(--color-text-error);
+}
+
+button:focus,
+select:focus,
+input:focus {
+    accent-color: var(--color-bg-accent-primary);
+    border-color: var(--color-bg-accent-primary);
 }
 
 /* Set basic relative font sizing. */
@@ -265,13 +384,13 @@ fieldset {
 
 .bright-mode-toggle {
     cursor: pointer;
-    color: var(--color-text-primary-low);
+    color: var(--color-text-accent-low);
 }
 
 .bright-mode-toggle span.active {
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
     text-decoration: underline;
-    color: var(--color-text-primary);
+    color: var(--color-text-accent);
 }
 
 .page {
@@ -284,7 +403,6 @@ fieldset {
 .header {
     padding: 0.5em;
     text-align: center;
-    background-color: var(--color-bg-accent-primary);
 
     display: flex;
     flex-direction: row;
@@ -314,7 +432,6 @@ fieldset {
 
 .header a {
     text-decoration: none;
-    color: var(--color-text-primary);
 }
 
 .header .user-info {
@@ -332,7 +449,6 @@ fieldset {
 
 .footer {
     height: 1.5em;
-    background-color: var(--color-bg-accent-primary);
     padding: 0.5em 1em 0.5em 1em;
 
     display: flex;
@@ -375,7 +491,7 @@ fieldset {
 .content {
     flex-grow: 1000;
     padding: 1.0em;
-    border-radius: 10px;
+    border-radius: var(--curve-radius-large);
 }
 
 .content h2 {
@@ -405,9 +521,7 @@ fieldset {
     flex-direction: column;
     justify-content: center;
 
-    border-radius: 10px;
-    background-color: var(--color-bg-secondary);
-    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+    border-radius: var(--curve-radius-large);
     font-size: var(--font-size-larger);
     text-align: center;
 
@@ -418,7 +532,20 @@ fieldset {
 .card a {
     padding: 1.5em;
     text-decoration: none;
-    color: var(--color-text-primary);
+}
+
+.endpoint-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.endpoint-content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    max-width: fit-content;
 }
 
 .page-controls {
@@ -432,8 +559,6 @@ fieldset {
 
     font-size: var(--font-size-large);
 
-    padding-bottom: 1em;
-    border-bottom: 3px solid var(--color-text-secondary);
     margin-bottom: 1em;
 }
 
@@ -441,51 +566,78 @@ fieldset {
     max-width: 95vw;
 }
 
-.endpoint-area {
+.user-input-fields {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    max-width: 95vw;
+
+    gap: 1em;
+    padding: 1.5em;
+
+    border-radius: var(--curve-radius-small);
+}
+
+.user-input-fields fieldset {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.user-input-fields fieldset > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5em;
+}
+
+.user-input-fields label {
+    margin-bottom: 0.5em;
+}
+
+.endpoint-content > div {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    max-width: 95vw;
+
+    gap: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+.endpoint-input {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
-    padding-bottom: 1em;
-    margin-bottom: 1em;
-    border-bottom: 3px solid var(--color-text-secondary);
 }
 
-.endpoint-area:empty {
+.endpoint-input:empty {
     display: none;
 }
 
-.endpoint-area fieldset {
+.endpoint-input .endpoint-title {
     display: flex;
     flex-direction: column;
     align-self: stretch;
+    max-width: 95vw;
+    overflow-x: auto;
 
     gap: 1em;
     padding: 1.5em;
-    margin-bottom: 1em;
 
-    color: var(--color-text-secondary);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--curve-radius);
-    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+    border-radius: var(--curve-radius-small);
 }
 
-/* .endpoint-area .required { */
-/*     color: red; */
-/* } */
-
-.endpoint-area .input-field {
-    display: flex;
-    flex-direction: column;
+.endpoint-input h2 {
+    margin-bottom: 0em;
 }
 
-.endpoint-area label {
-    margin-bottom: 0.25em;
-}
-
-.endpoint-area input {
-    padding: 0.5em;
+.endpoint-input button {
+    padding: 0.5em 0.75em;
 }
 
 .endpoint-area input[type="checkbox"] {
@@ -494,21 +646,17 @@ fieldset {
     width: 1em;
 }
 
-.results-area .code {
+.results-area .result {
     display: flex;
     flex-direction: column;
     align-self: stretch;
     gap: 1em;
 
-    overflow-x: scroll;
+    overflow-x: auto;
     padding: 1.5em;
     margin-bottom: 1em;
 
-    border-radius: var(--curve-radius);
-    box-shadow: 2px 2px 1px var(--color-bg-shadow);
-
-    color: var(--color-text-secondary);
-    background-color: var(--color-bg-secondary);
+    border-radius: var(--curve-radius-small);
 }
 
 .submission table,
