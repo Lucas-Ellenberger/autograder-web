@@ -1,7 +1,7 @@
-import * as Autograder from '../autograder/base.js'
+import * as Autograder from '../autograder/base.js';
 
-import * as Render from './render.js'
-import * as Routing from './routing.js'
+import * as Render from './render.js';
+import * as Routing from './routing.js';
 
 // The priority of the field to show first.
 // Items later in the list have the highest priority.
@@ -130,7 +130,7 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 
     let inputFields = [];
     for (const field of sortedInputs) {
-        let inputField = getInputField(field, context)
+        let inputField = getInputField(field, context);
 
         inputFields.push(`
             <div class="input-field">
@@ -201,21 +201,21 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     let errorMessages = [];
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
-        input.classList.add("touched")
+        input.classList.add("touched");
 
         if (!input.validity.valid) {
-            errorMessages.push(`<p>Field "${field.name}": "${input.validationMessage}".</p>`)
-            continue
+            errorMessages.push(`<p>Field "${field.name}": "${input.validationMessage}".</p>`);
+            continue;
         }
 
         if (!input || input.value === "") {
-            continue
+            continue;
         }
 
         if (field.type === "string") {
             params[field.name] = input.value;
         } else if (field.type === "bool") {
-            params[field.name] = input.checked
+            params[field.name] = input.checked;
         } else {
             // Users can input complex types into text boxes.
             // Attempt to parse the input string into JSON.
@@ -233,7 +233,7 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
     if (errorMessages.length > 0) {
         let errorHTML = "<p>The request was not submitted to the autograder due to the following errors:</p>";
-        errorHTML += errorMessages.join("\n")
+        errorHTML += errorMessages.join("\n");
 
         resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${errorHTML}</div>`;
         return;
@@ -259,4 +259,4 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
 export {
     init,
-}
+};
