@@ -247,6 +247,10 @@ html {
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
+.required {
+    color: var(--color-text-error);
+}
+
 a {
     color: var(--color-text-link);
 }
@@ -286,13 +290,8 @@ select {
     padding: 0.75em 1em;
 }
 
-input:invalid {
-    border-color: var(--color-text-error);
-}
-
 input:invalid.touched {
-    box-shadow: 0 0 0.25em 0.25em var(--color-text-error);
-                0 0 0.5em 0.25em var(--color-text-error);
+    border-color: var(--color-text-error);
 }
 
 button:focus,

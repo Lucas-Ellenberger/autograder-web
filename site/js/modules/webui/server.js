@@ -87,7 +87,7 @@ function render(endpoints, selectedEndpoint, context, container) {
         callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
     });
 
-    let allInputFields = container.querySelectorAll(".endpoint-area fieldset input");
+    let allInputFields = container.querySelectorAll(".endpoint-input fieldset input");
     allInputFields?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
@@ -184,9 +184,8 @@ function getInputField(field, context) {
     }
 
     if ((field.required) && (placeholder === "")) {
-        extraFields += ' required';
-    } else {
-        displayName += ' (optional)';
+        extraFields += " required";
+        displayName += ` <span class="required">*</span>`;
     }
 
     return `
@@ -199,12 +198,13 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let params = {};
-    let inputError = false;
+    let errorMessages = [];
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
+        input.classList.add("touched")
+
         if (!input.validity.valid) {
-            // TODO: Put a class with an error.
-            inputError = true;
+            errorMessages.push(`<p>Field "${field.name}": "${input.validationMessage}".</p>`)
             continue
         }
 
@@ -231,8 +231,11 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
     let resultsArea = container.querySelector(".results-area");
 
-    if (inputError) {
-        resultsArea.innerHTML = '<p>Invalid input.</p>';
+    if (errorMessages.length > 0) {
+        let errorHTML = "<p>The request was not submitted to the autograder due to the following errors:</p>";
+        errorHTML += errorMessages.join("\n")
+
+        resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${errorHTML}</div>`;
         return;
     }
 
