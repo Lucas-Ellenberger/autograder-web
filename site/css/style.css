@@ -301,6 +301,15 @@ input:focus {
     border-color: var(--color-bg-accent-primary);
 }
 
+input[type="checkbox"] {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+
+    height: 1.25em;
+    width: 1.25em;
+}
+
 /* Set basic relative font sizing. */
 h1 {
     font-size: 2.00rem;
@@ -637,12 +646,6 @@ fieldset {
 
 .endpoint-input button {
     padding: 0.5em 0.75em;
-}
-
-.endpoint-area input[type="checkbox"] {
-    align-self: flex-start;
-    height: 1em;
-    width: 1em;
 }
 
 .results-area .result {
