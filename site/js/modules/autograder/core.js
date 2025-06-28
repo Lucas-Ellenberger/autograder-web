@@ -60,13 +60,15 @@ function deleteToken(credentials) {
     });
 }
 
-async function resolveAPIResponse(response) {
+async function resolveAPIResponse(response, usingContextUser) {
     let body = await response.json();
 
     if (!body.success) {
         if (response.status == 401) {
-            // Clear any credentials in the cache.
-            clearCredentials(false);
+            if (usingContextUser) {
+                // Clear any credentials in the cache when the context user has an auth error.
+                clearCredentials(false);
+            }
 
             // Shorten the message for auth error.
             return Promise.reject(body.message);
@@ -129,7 +131,11 @@ function sendRequest({
         'body': body,
     });
 
-    return response.then(resolveAPIResponse, resolveAPIError);
+    let usingContextUser = ((override_email == null) && (override_cleartext == null));
+
+    return response.then(function(result) {
+        return resolveAPIResponse(result, usingContextUser);
+    }, resolveAPIError);
 }
 
 export {
