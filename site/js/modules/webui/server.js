@@ -178,11 +178,9 @@ function getInputField(field, context) {
     if (field.name === "user-email") {
         placeholder = context.user.email;
         inputType = "email";
-        extraFields += " disabled";
     } else if (field.name === "user-pass") {
         placeholder = "<current token>";
         inputType = "password";
-        extraFields += " disabled";
     }
 
     if ((field.required) && (placeholder === "")) {
