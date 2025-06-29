@@ -167,11 +167,11 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 function callEndpoint(targetEndpoint, inputFields, context, container) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
-    let override_email = undefined;
-    let override_cleartext = undefined;
+    let overrideEmail = undefined;
+    let overrideCleartext = undefined;
 
     let params = {};
-    let clearContextUser = true;
+
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
         if (!input || input.value === "") {
@@ -179,14 +179,12 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
         }
 
         if (field.name === "user-email") {
-            override_email = input.value;
-            clearContextUser = false;
+            overrideEmail = input.value;
             continue;
         }
 
         if (field.name === "user-pass") {
-            override_cleartext = input.value;
-            clearContextUser = false;
+            overrideCleartext = input.value;
             continue;
         }
 
@@ -210,9 +208,9 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     Autograder.Server.callEndpoint({
             targetEndpoint: targetEndpoint,
             params: params,
-            override_email: override_email,
-            override_cleartext: override_cleartext,
-            clearContextUser: clearContextUser,
+            override_email: overrideEmail,
+            override_cleartext: overrideCleartext,
+            clearContextUser: false,
         }).then(function(result) {
             resultsArea.innerHTML = `
                 <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
