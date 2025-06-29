@@ -171,6 +171,7 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     let override_cleartext = undefined;
 
     let params = {};
+    let clearContextUser = true;
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
         if (!input || input.value === "") {
@@ -179,11 +180,13 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
         if (field.name === "user-email") {
             override_email = input.value;
+            clearContextUser = false;
             continue;
         }
 
         if (field.name === "user-pass") {
             override_cleartext = input.value;
+            clearContextUser = false;
             continue;
         }
 
@@ -204,8 +207,13 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
     let resultsArea = container.querySelector(".results-area");
 
-    Autograder.Server.callEndpoint(targetEndpoint, params, override_email, override_cleartext)
-        .then(function(result) {
+    Autograder.Server.callEndpoint({
+            targetEndpoint: targetEndpoint,
+            params: params,
+            override_email: override_email,
+            override_cleartext: override_cleartext,
+            clearContextUser: clearContextUser,
+        }).then(function(result) {
             resultsArea.innerHTML = `
                 <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
             `;

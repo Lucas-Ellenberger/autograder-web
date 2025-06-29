@@ -60,12 +60,12 @@ function deleteToken(credentials) {
     });
 }
 
-async function resolveAPIResponse(response, usingContextUser) {
+async function resolveAPIResponse(response, clearContextUser = true) {
     let body = await response.json();
 
     if (!body.success) {
         if (response.status == 401) {
-            if (usingContextUser) {
+            if (clearContextUser) {
                 // Clear any credentials in the cache when the context user has an auth error.
                 clearCredentials(false);
             }
@@ -98,6 +98,7 @@ function sendRequest({
         endpoint = undefined,
         payload = {}, files = [],
         override_email = undefined, override_cleartext = undefined,
+        clearContextUser = true,
         }) {
     if (!endpoint) {
         throw new Error("Endpoint not specified.")
@@ -131,10 +132,8 @@ function sendRequest({
         'body': body,
     });
 
-    let usingContextUser = ((override_email == null) && (override_cleartext == null));
-
     return response.then(function(result) {
-        return resolveAPIResponse(result, usingContextUser);
+        return resolveAPIResponse(result, clearContextUser);
     }, resolveAPIError);
 }
 

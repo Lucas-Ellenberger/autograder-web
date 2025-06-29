@@ -2,12 +2,17 @@ import * as Core from './core.js'
 
 let apiDescription = undefined;
 
-function callEndpoint(targetEndpoint, params, override_email = undefined, override_cleartext = undefined) {
+function callEndpoint({
+        targetEndpoint, params,
+        override_email = undefined, override_cleartext = undefined,
+        clearContextUser = true,
+        }) {
     return Core.sendRequest({
         endpoint: targetEndpoint,
         payload: params,
         override_email: override_email,
         override_cleartext: override_cleartext,
+        clearContextUser: clearContextUser,
     });
 }
 
