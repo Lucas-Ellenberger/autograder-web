@@ -26,7 +26,7 @@ const PATH_EMAIL = `${PATH_COURSE}/email`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
-const PATH_COURSE_GET_USER = `${PATH_COURSE}/get/user`;
+const PATH_COURSE_USER_GET = `${PATH_COURSE}/user/get`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
@@ -362,10 +362,10 @@ export {
     PATH_COURSE,
     PATH_ASSIGNMENT,
     PATH_EMAIL,
-    PATH_COURSE_GET_USER,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,
+    PATH_COURSE_USER_GET,
     PATH_SERVER,
     PATH_SERVER_CALL_API,
     PATH_SERVER_DOCS,

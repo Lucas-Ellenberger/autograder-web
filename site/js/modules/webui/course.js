@@ -10,7 +10,7 @@ function init() {
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
     Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', {course: true});
-    Routing.addRoute(/^course\/get\/user$/, handlerGetUser, 'Get User', {course: true});
+    Routing.addRoute(/^course\/user\/get$/, handlerUserGet, 'Get User', {course: true});
 }
 
 function handlerCourses(path, params, context, container) {
@@ -52,7 +52,7 @@ function handlerCourse(path, params, context, container) {
     cards.push(Render.makeCardObject(
         "course-action",
         "Get User",
-        Routing.formHashPath(Routing.PATH_COURSE_GET_USER, {
+        Routing.formHashPath(Routing.PATH_COURSE_USER_GET, {
             [Routing.PARAM_COURSE]: course.id,
         }),
     ));
@@ -165,7 +165,7 @@ function handlerEmail(path, params, context, container) {
     });
 }
 
-function handlerGetUser(path, params, context, container) {
+function handlerUserGet(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
@@ -178,12 +178,12 @@ function handlerGetUser(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     container.innerHTML = `
-        <div class="get-user-page">
-            <div class="get-user-content">
+        <div class="user-get-page">
+            <div class="user-get-content">
                 <h2>Get User</h2>
                 <div class="description">
                     <p>
-                        Get the information for a course user. Default: Gets your own information for ${course.id}.
+                        Get the information for a course user (defaults to you).
                     </p>
                 </div>
                 <div class="user-input-fields secondary-color drop-shadow">
@@ -224,8 +224,15 @@ function callCoursesUsersGet(params, context, container) {
         {'name': 'target-email', 'type': 'string', 'required': false},
     ];
 
-    // TODO: Pass a processResult function to display nicer info.
-    Server.callEndpoint('courses/users/get', fields, context, container, args);
+    Server.callEndpoint('courses/users/get', fields, context, container, args, processCoursesUsersGetResult);
+}
+
+function processCoursesUsersGetResult(result) {
+    if (!result.found) {
+        return `User not found.`;
+    }
+
+    return Render.listUsers([result.user]);
 }
 
 function extractRecipients(recipientString) {

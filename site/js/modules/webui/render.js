@@ -163,6 +163,22 @@ function submissionQuestions(questions) {
     return questionsHTML.join('');
 }
 
+function listUsers(users) {
+    let messages = [];
+    for (const user of users) {
+        let userParts = [];
+
+        userParts.push(`Email: ${user['email']}`);
+        userParts.push(`Name: ${user['name']}`);
+        userParts.push(`Role: ${user['role']}`);
+        userParts.push(`Email: ${user['email']}`);
+
+        messages.push(`${userParts.join("\n")}`);
+    }
+
+    return messages.join("\n\n");
+}
+
 function makePairedTableRow(label, value, name = undefined) {
     let nameHTML = '';
     if (name) {
@@ -241,6 +257,7 @@ export {
     autograderError,
     card,
     cards,
+    listUsers,
     makeCardObject,
     submission,
     submissionHistory,

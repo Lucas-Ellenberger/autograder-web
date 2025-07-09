@@ -546,7 +546,7 @@ fieldset {
 
 .email-page,
 .endpoint-page,
-.get-user-page {
+.user-get-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -554,7 +554,7 @@ fieldset {
 
 .email-content,
 .endpoint-content,
-.get-user-content {
+.user-get-content {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -628,8 +628,11 @@ table.standard-table tr:not(:last-child) {
 }
 
 .email-content > div,
+.email-content > button,
 .endpoint-content > div,
-.get-user-content > div {
+.endpoint-content > button,
+.user-get-content > div,
+.user-get-content > button {
     display: flex;
     flex-direction: column;
     align-content: center;

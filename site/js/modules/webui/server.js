@@ -310,7 +310,7 @@ function callEndpoint(targetEndpoint, inputFields, context, container, args, pro
                 output = processResult(result);
             } else {
                 output = JSON.stringify(result, null, 4);
-                dataLang = "json"
+                dataLang = "json";
             }
 
             resultsArea.innerHTML = `

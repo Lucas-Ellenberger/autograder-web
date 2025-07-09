@@ -7,14 +7,6 @@ function email(params) {
     });
 }
 
-function getUser(params) {
-    return Core.sendRequest({
-        endpoint: 'courses/users/get',
-        payload: params,
-    });
-}
-
 export {
     email,
-    getUser,
 };
