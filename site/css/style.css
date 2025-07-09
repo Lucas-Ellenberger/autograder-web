@@ -544,15 +544,17 @@ fieldset {
     text-decoration: none;
 }
 
+.email-page,
 .endpoint-page,
-.email-page {
+.get-user-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
+.email-content,
 .endpoint-content,
-.email-content {
+.get-user-content {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -625,8 +627,9 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
+.email-content > div,
 .endpoint-content > div,
-.email-content > div {
+.get-user-content > div {
     display: flex;
     flex-direction: column;
     align-content: center;

@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
+import * as Server from './server.js';
 
 const EMAIL_RECIPIENT_DOCS_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
@@ -9,6 +10,7 @@ function init() {
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
     Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', {course: true});
+    Routing.addRoute(/^course\/get\/user$/, handlerGetUser, 'Get User', {course: true});
 }
 
 function handlerCourses(path, params, context, container) {
@@ -43,6 +45,14 @@ function handlerCourse(path, params, context, container) {
         "course-action",
         "Email Users",
         Routing.formHashPath(Routing.PATH_EMAIL, {
+            [Routing.PARAM_COURSE]: course.id,
+        }),
+    ));
+
+    cards.push(Render.makeCardObject(
+        "course-action",
+        "Get User",
+        Routing.formHashPath(Routing.PATH_COURSE_GET_USER, {
             [Routing.PARAM_COURSE]: course.id,
         }),
     ));
@@ -153,6 +163,69 @@ function handlerEmail(path, params, context, container) {
             })
         ;
     });
+}
+
+function handlerGetUser(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
+
+    let titleHTML = `
+        <span>
+            <a href='${courseLink}'>${course.id}</a>
+            / get user
+        </span>
+    `;
+    Routing.setTitle(course.id, titleHTML);
+
+    container.innerHTML = `
+        <div class="get-user-page">
+            <div class="get-user-content">
+                <h2>Get User</h2>
+                <div class="description">
+                    <p>
+                        Get the information for a course user. Default: Gets your own information for ${course.id}.
+                    </p>
+                </div>
+                <div class="user-input-fields secondary-color drop-shadow">
+                    <fieldset>
+                        <div class="input-field">
+                            <label for="target-email">Target Email</label>
+                            <input type="email" id="target-email" name="target-email" placeholder="${context.user.email}"/>
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="get-user">Get User</button>
+                <div class="results-area"</div>
+            </div>
+        </div>
+    `;
+
+    document.querySelector('button.get-user').addEventListener('click', function(event) {
+        callCoursesUsersGet(params, context, container);
+    });
+
+    document.querySelector(".user-input-fields fieldset").addEventListener("keydown", function(event) {
+        if (event.key != "Enter") {
+            return;
+        }
+
+        callCoursesUsersGet(params, context, container);
+    });
+}
+
+function callCoursesUsersGet(params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+
+    let args = {
+        [Routing.PARAM_COURSE_ID]: course.id,
+    };
+
+    let fields = [
+        {'name': 'target-email', 'type': 'string', 'required': false},
+    ];
+
+    // TODO: Pass a processResult function to display nicer info.
+    Server.callEndpoint('courses/users/get', fields, context, container, args);
 }
 
 function extractRecipients(recipientString) {

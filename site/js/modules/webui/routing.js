@@ -17,6 +17,7 @@ const PARAM_EMAIL_HTML = 'html';
 const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
 const PARAM_SUBMISSION = 'submission';
+const PARAM_TARGET_EMAIL = 'target-email';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
 
 const PATH_COURSE = 'course';
@@ -25,6 +26,7 @@ const PATH_EMAIL = `${PATH_COURSE}/email`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+const PATH_COURSE_GET_USER = `${PATH_COURSE}/get/user`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
@@ -354,11 +356,13 @@ export {
     PARAM_EMAIL_SUBJECT,
     PARAM_EMAIL_TO,
     PARAM_SUBMISSION,
+    PARAM_TARGET_EMAIL,
     PARAM_TARGET_ENDPOINT,
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
     PATH_EMAIL,
+    PATH_COURSE_GET_USER,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,

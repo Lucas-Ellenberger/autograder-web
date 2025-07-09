@@ -86,7 +86,7 @@ function render(endpoints, selectedEndpoint, context, container) {
     let fieldset = container.querySelector(".endpoint-input fieldset");
     fieldset?.addEventListener("keydown", function(event) {
         if (event.key != "Enter") {
-            return
+            return;
         }
 
         callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
@@ -235,17 +235,17 @@ function getInputField(
     `;
 }
 
-function callEndpoint(targetEndpoint, inputFields, context, container) {
+function callEndpoint(targetEndpoint, inputFields, context, container, args, processResult) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let overrideEmail = undefined;
     let overrideCleartext = undefined;
 
-    let params = {};
+    let params = args ?? {};
     let errorMessages = [];
 
     for (let field of inputFields) {
-        let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
+        let input = container.querySelector(`.user-input-fields fieldset [name="${field.name}"]`);
         input.classList.add("touched");
 
         if (!input.validity.valid) {
@@ -303,8 +303,18 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
             overrideCleartext: overrideCleartext,
             clearContextUser: false,
         }).then(function(result) {
+            let output = undefined;
+            let dataLang = "";
+
+            if (processResult) {
+                output = processResult(result);
+            } else {
+                output = JSON.stringify(result, null, 4);
+                dataLang = "json"
+            }
+
             resultsArea.innerHTML = `
-                <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+                <pre><code class="result code code-block secondary-color drop-shadow" data-lang="${dataLang}">${output}</code></pre>
             `;
         })
         .catch(function(message) {
@@ -458,4 +468,5 @@ function displayTypes(typeData) {
 
 export {
     init,
+    callEndpoint,
 };
