@@ -18,10 +18,12 @@ const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
+const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
 const PATH_EMAIL = `${PATH_COURSE}/email`;
+const PATH_COURSE_USERS_LIST = `${PATH_COURSE}/list`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
@@ -355,10 +357,12 @@ export {
     PARAM_EMAIL_TO,
     PARAM_SUBMISSION,
     PARAM_TARGET_ENDPOINT,
+    PARAM_TARGET_USERS,
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
     PATH_EMAIL,
+    PATH_COURSE_USERS_LIST,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,

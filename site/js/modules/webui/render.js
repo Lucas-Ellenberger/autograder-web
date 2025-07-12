@@ -39,6 +39,77 @@ function cards(cards) {
     `;
 }
 
+function makePage(
+        params, context, container,
+        page = {className: '', header: '', description: '', inputs: [], buttonName: 'Submit'},
+        onSubmit) {
+    let inputHTML = '';
+    for (const input of page.inputs) {
+        inputHTML += input.toHTML();
+    }
+
+    container.innerHTML = `
+        <div class="template-page ${page.className}">
+            <div class="template-content">
+                <h2>${page.header}</h2>
+                <div class="description">
+                    <p>
+                        ${page.description}
+                    </p>
+                </div>
+                <div class="user-input-fields secondary-color drop-shadow">
+                    <fieldset>
+                        ${inputHTML}
+                    </fieldset>
+                </div>
+                <button class="template-button">${page.buttonName}</button>
+                <div class="results-area"></div>
+            </div>
+        </div>
+    `;
+
+    container.querySelector("button").addEventListener("click", function(event) {
+        populateResultsArea(params, context, container, page.inputs, onSubmit);
+    });
+
+    container.querySelector(".user-input-fields fieldset").addEventListener("keydown", function(event) {
+        if (event.key != "Enter") {
+            return;
+        }
+
+        populateResultsArea(params, context, container, page.inputs, onSubmit);
+    });
+
+    container.querySelectorAll(".user-input-fields fieldset input").forEach(function(input) {
+        input.addEventListener("blur", function(event) {
+            input.classList.add("touched");
+        });
+    });
+}
+
+function populateResultsArea(params, context, container, inputs, onSubmit) {
+    Routing.loadingStart(container.querySelector(".results-area"), false);
+
+    let inputParams = {};
+    for (const input of inputs) {
+        let value = input.getValue(container);
+        if (value != "") {
+            inputParams[input.getParam()] = value;
+        }
+    }
+
+    let resultsArea = container.querySelector(".results-area");
+    onSubmit(params, context, container, inputParams)
+        .then(function(result) {
+            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
+        })
+        .catch(function(message) {
+            console.error(message);
+            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
+        })
+    ;
+}
+
 function submissionHistory(course, assignment, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
@@ -242,6 +313,7 @@ export {
     card,
     cards,
     makeCardObject,
+    makePage,
     submission,
     submissionHistory,
     tableFromDictionaries,

@@ -1,4 +1,5 @@
 import * as Autograder from '../autograder/base.js';
+import * as Model from './model.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
@@ -9,6 +10,7 @@ function init() {
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
     Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', {course: true});
+    Routing.addRoute(/^course\/list$/, handlerUsers, 'Users', {course: true});
 }
 
 function handlerCourses(path, params, context, container) {
@@ -43,6 +45,14 @@ function handlerCourse(path, params, context, container) {
         "course-action",
         "Email Users",
         Routing.formHashPath(Routing.PATH_EMAIL, {
+            [Routing.PARAM_COURSE]: course.id,
+        }),
+    ));
+
+    cards.push(Render.makeCardObject(
+        "course-action",
+        "Get Users",
+        Routing.formHashPath(Routing.PATH_COURSE_USERS_LIST, {
             [Routing.PARAM_COURSE]: course.id,
         }),
     ));
@@ -155,6 +165,47 @@ function handlerEmail(path, params, context, container) {
     });
 }
 
+function handlerUsers(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
+
+    let titleHTML = `
+        <span>
+            <a href='${courseLink}'>${course.id}</a>
+            / users
+        </span>
+    `;
+    Routing.setTitle(course.id, titleHTML);
+
+    let inputFields = [
+        new Model.InputField('users', 'Target Users', Routing.PARAM_TARGET_USERS),
+    ];
+
+    Render.makePage(
+            params, context, container,
+            {
+                header: 'Get Users',
+                description: 'List the users in the course.',
+                inputs: inputFields,
+                buttonName: 'Get Users',
+            },
+            getUsers,
+        )
+    ;
+}
+
+function getUsers(params, context, container, inputParams) {
+    inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
+    return Autograder.Course.users(inputParams)
+        .then(function(result) {
+            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+}
+
 function extractRecipients(recipientString) {
     return recipientString
         .split(',')
@@ -163,6 +214,7 @@ function extractRecipients(recipientString) {
     ;
 }
 
+// TODO: Remove and merge with render version.
 function renderResult(message) {
     let resultsArea = document.querySelector(".results-area");
     resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
