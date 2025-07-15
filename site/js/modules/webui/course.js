@@ -28,7 +28,7 @@ function handlerCourse(path, params, context, container) {
 
     Routing.setTitle(course.id);
 
-    let cards = [];
+    let assignmentCards = [];
     for (const [id, assignment] of Object.entries(course.assignments)) {
         let args = {
             [Routing.PARAM_COURSE]: course.id,
@@ -36,10 +36,11 @@ function handlerCourse(path, params, context, container) {
         };
 
         let link = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-        cards.push(Render.makeCardObject('assignment', assignment.name, link));
+        assignmentCards.push(Render.makeCardObject('assignment', assignment.name, link));
     }
 
-    cards.push(Render.makeCardObject(
+    let actionCards = [];
+    actionCards.push(Render.makeCardObject(
         "course-action",
         "Email Users",
         Routing.formHashPath(Routing.PATH_EMAIL, {
@@ -49,7 +50,10 @@ function handlerCourse(path, params, context, container) {
 
     container.innerHTML = `
         <h2>${course.name}</h2>
-        ${Render.cards(cards)}
+        <h3>Assignments</h3>
+        ${Render.cards(assignmentCards)}
+        <h3>Actions</h3>
+        ${Render.cards(actionCards)}
     `;
 }
 

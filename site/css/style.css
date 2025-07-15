@@ -521,6 +521,8 @@ fieldset {
     justify-content: flex-start;
     gap: 2em;
     align-items: stretch;
+
+    margin-bottom: 1em;
 }
 
 .card {
@@ -542,6 +544,7 @@ fieldset {
 .card a {
     padding: 1.5em;
     text-decoration: none;
+    word-break: keep-all;
 }
 
 .endpoint-page,
