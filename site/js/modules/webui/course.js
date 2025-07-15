@@ -1,4 +1,5 @@
 import * as Autograder from '../autograder/base.js';
+import * as Input from './input.js';
 import * as Model from './model.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
@@ -51,7 +52,7 @@ function handlerCourse(path, params, context, container) {
 
     cards.push(Render.makeCardObject(
         "course-action",
-        "Get Users",
+        "List Users",
         Routing.formHashPath(Routing.PATH_COURSE_USERS_LIST, {
             [Routing.PARAM_COURSE]: course.id,
         }),
@@ -178,7 +179,7 @@ function handlerUsers(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     let inputFields = [
-        new Model.InputField('users', 'Target Users', Routing.PARAM_TARGET_USERS),
+        new Input.Field('users', 'Target Users', Routing.PARAM_TARGET_USERS, {marshalFunc: Input.valueFromJSON}),
     ];
 
     Render.makePage(
@@ -214,7 +215,6 @@ function extractRecipients(recipientString) {
     ;
 }
 
-// TODO: Remove and merge with render version.
 function renderResult(message) {
     let resultsArea = document.querySelector(".results-area");
     resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
