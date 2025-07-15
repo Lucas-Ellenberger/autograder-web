@@ -1,6 +1,5 @@
 import * as Autograder from '../autograder/base.js';
 import * as Input from './input.js';
-import * as Model from './model.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
@@ -185,17 +184,17 @@ function handlerUsers(path, params, context, container) {
     Render.makePage(
             params, context, container,
             {
-                header: 'Get Users',
+                header: 'List Users',
                 description: 'List the users in the course.',
                 inputs: inputFields,
-                buttonName: 'Get Users',
+                buttonName: 'List Users',
             },
-            getUsers,
+            listUsers,
         )
     ;
 }
 
-function getUsers(params, context, container, inputParams) {
+function listUsers(params, context, container, inputParams) {
     inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
     return Autograder.Course.users(inputParams)
         .then(function(result) {
@@ -205,6 +204,7 @@ function getUsers(params, context, container, inputParams) {
             console.error(message);
             return message;
         })
+    ;
 }
 
 function extractRecipients(recipientString) {

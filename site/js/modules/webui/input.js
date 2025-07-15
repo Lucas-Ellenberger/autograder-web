@@ -5,8 +5,7 @@ class Field {
             name, displayName, param,
             {
                 type = 'string', required = false, placeholder = '',
-                underlyingType = '', attributes = '', labelBefore = true,
-                marshalFunc = undefined
+                attributes = '', labelBefore = true, marshalFunc = undefined
             } = {}) {
         this.name = name;
         this.displayName = displayName;
@@ -14,7 +13,6 @@ class Field {
         this.type = type;
         this.required = required;
         this.placeholder = placeholder;
-        this.underlyingType = underlyingType;
         this.attributes = attributes;
         this.labelBefore = labelBefore;
         this.marshalFunc = marshalFunc;
@@ -68,8 +66,9 @@ class Field {
 
     getValue(container) {
         let input = container.querySelector(`fieldset [name=${this.name}`);
-        let value = undefined;
+        input.classList.add("touched");
 
+        let value = undefined;
         if (this.marshalFunc) {
             value = this.marshalFunc(input);
         } else {

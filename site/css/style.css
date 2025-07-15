@@ -545,14 +545,16 @@ fieldset {
 }
 
 .endpoint-page,
-.email-page {
+.email-page,
+.template-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
 .endpoint-content,
-.email-content {
+.email-content,
+.template-content {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -625,12 +627,17 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
+.endpoint-content > button,
 .endpoint-content > div,
-.email-content > div {
+.email-content > button,
+.email-content > div,
+.template-content > button,
+.template-content > div {
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
+    min-width: 50vw;
     max-width: 95vw;
 
     gap: 1em;
@@ -668,7 +675,8 @@ table.standard-table tr:not(:last-child) {
     margin-bottom: 0em;
 }
 
-.endpoint-input button {
+.endpoint-input button,
+.template-content button {
     padding: 0.5em 0.75em;
 }
 
