@@ -39,10 +39,13 @@ function cards(cards) {
     `;
 }
 
+// Create and display a web page that follows a standard template.
+// The template includes a header, description, input area, submission button, and a results area.
+// The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
         params, context, container,
         page = {className: '', header: '', description: '', inputs: [], buttonName: 'Submit'},
-        onSubmit) {
+        onSubmitFunc) {
     let inputHTML = '';
     for (const input of page.inputs) {
         inputHTML += input.toHTML();
@@ -69,7 +72,7 @@ function makePage(
     `;
 
     container.querySelector("button").addEventListener("click", function(event) {
-        populateResultsArea(params, context, container, page.inputs, onSubmit);
+        populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
     });
 
     container.querySelector(".user-input-fields fieldset").addEventListener("keydown", function(event) {
@@ -77,7 +80,7 @@ function makePage(
             return;
         }
 
-        populateResultsArea(params, context, container, page.inputs, onSubmit);
+        populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input").forEach(function(input) {
@@ -87,19 +90,19 @@ function makePage(
     });
 }
 
-function populateResultsArea(params, context, container, inputs, onSubmit) {
+function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
     for (const input of inputs) {
         let value = input.getValue(container);
         if (value != "") {
-            inputParams[input.getParam()] = value;
+            inputParams[input.getKey()] = value;
         }
     }
 
     let resultsArea = container.querySelector(".results-area");
-    onSubmit(params, context, container, inputParams)
+    onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
         })
@@ -234,6 +237,22 @@ function submissionQuestions(questions) {
     return questionsHTML.join('');
 }
 
+function listCourseUsers(users) {
+    let messages = [];
+    for (const user of users) {
+        let userParts = [];
+
+        userParts.push(`Email: ${user['email']}`);
+        userParts.push(`Name: ${user['name']}`);
+        userParts.push(`Role: ${user['role']}`);
+        userParts.push(`Email: ${user['email']}`);
+
+        messages.push(`${userParts.join("\n")}`);
+    }
+
+    return messages.join("\n\n");
+}
+
 function makePairedTableRow(label, value, name = undefined) {
     let nameHTML = '';
     if (name) {
@@ -312,6 +331,7 @@ export {
     autograderError,
     card,
     cards,
+    listCourseUsers,
     makeCardObject,
     makePage,
     submission,

@@ -178,7 +178,7 @@ function handlerUsers(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     let inputFields = [
-        new Input.Field('users', 'Target Users', Routing.PARAM_TARGET_USERS, {marshalFunc: Input.valueFromJSON}),
+        new Input.Field('users', 'Target Users', Routing.PARAM_TARGET_USERS, {extractInputFunc: Input.valueFromJSON}),
     ];
 
     Render.makePage(
@@ -198,7 +198,11 @@ function listUsers(params, context, container, inputParams) {
     inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
     return Autograder.Course.users(inputParams)
         .then(function(result) {
-            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`;
+            if (result.users.length === 0) {
+                return '<p>Unable to find target users.</p>';
+            }
+
+            return `<pre>${Render.listCourseUsers(result.users)}</pre`;
         })
         .catch(function(message) {
             console.error(message);

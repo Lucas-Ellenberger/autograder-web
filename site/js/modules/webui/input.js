@@ -1,21 +1,43 @@
 import * as Autograder from '../autograder/base.js';
 
+// A general representation of a user input field.
 class Field {
     constructor(
-            name, displayName, param,
+            name, displayName, key,
             {
                 type = 'string', required = false, placeholder = '',
-                attributes = '', labelBefore = true, marshalFunc = undefined
+                attributes = '', labelBefore = true, extractInputFunc = undefined
             } = {}) {
+        // The name of the field which will be used for targeting the field.
         this.name = name;
+
+        // The display name that will be shown to the user.
         this.displayName = displayName;
-        this.param = param;
+
+        // The key used for the JSON field.
+        this.key = key;
+
+        // The HTML input type.
+        // For more information about possible types,
+        // see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types.
         this.type = type;
+
+        // Flags the field requires user input.
         this.required = required;
+
+        // The placeholder for the input.
         this.placeholder = placeholder;
+
+        // Any additional attributes to the input field.
+        // If the field is required, the required attribute will be added automatically.
         this.attributes = attributes;
+
+        // Determines the position of the HTML label with respect to the input.
         this.labelBefore = labelBefore;
-        this.marshalFunc = marshalFunc;
+
+        // A custom function for extracting the value from an input.
+        // By default, the input.value will be returned.
+        this.extractInputFunc = extractInputFunc;
     }
 
     validate() {
@@ -27,8 +49,8 @@ class Field {
             console.error(`Input field cannot have an empty display name: ${JSON.stringify(this)}.`);
         }
 
-        if ((this.param == undefined) || (this.param == '')) {
-            console.error(`Input field cannot have an empty param: ${JSON.stringify(this)}.`);
+        if ((this.key == undefined) || (this.key == '')) {
+            console.error(`Input field caKeynnot have an empty key: ${JSON.stringify(this)}.`);
         }
     }
 
@@ -36,11 +58,13 @@ class Field {
         this.validate();
 
         let attributes = this.attributes;
+        let displayName = this.displayName;
         if (this.required) {
             attributes += ' required';
+            displayName += ` <span class="required-color">*</span>`;
         }
 
-        const label = `<label for="${this.name}">${this.displayName}</label>`;
+        const label = `<label for="${this.name}">${displayName}</label>`;
         const input = `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`;
 
         if (this.labelBefore) {
@@ -60,8 +84,8 @@ class Field {
         }
     }
 
-    getParam() {
-        return this.param;
+    getKey() {
+        return this.key;
     }
 
     getValue(container) {
@@ -69,8 +93,8 @@ class Field {
         input.classList.add("touched");
 
         let value = undefined;
-        if (this.marshalFunc) {
-            value = this.marshalFunc(input);
+        if (this.extractInputFunc) {
+            value = this.extractInputFunc(input);
         } else {
             if (input == undefined) {
                 return undefined;
@@ -96,6 +120,10 @@ function valueFromJSON(input) {
         return undefined;
     }
 
+    if (input.value === "") {
+        return "";
+    }
+
     let value = undefined;
     // Users can input complex types into text boxes.
     // Attempt to parse the input string into JSON.
@@ -112,6 +140,7 @@ function valueFromJSON(input) {
 
 export {
     Field,
+
     valueFromCheckbox,
     valueFromJSON,
 };
