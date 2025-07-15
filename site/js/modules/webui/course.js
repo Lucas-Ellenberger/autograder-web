@@ -3,7 +3,7 @@ import * as Input from './input.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
-const EMAIL_RECIPIENT_DOCS_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
+const COURSE_USER_REFERENCE_DOC_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
 function init() {
     let requirements = {course: true};
@@ -83,7 +83,7 @@ function handlerEmail(path, params, context, container) {
                     <p>
                         Separate recipient values with commas.
                         For valid recipient values reference this 
-                        <a href=${EMAIL_RECIPIENT_DOCS_LINK} target="_blank">documentation</a>.
+                        <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">documentation</a>.
                     </p>
                 </div>
                 <div class="user-input-fields secondary-color drop-shadow">
@@ -181,11 +181,13 @@ function handlerUsers(path, params, context, container) {
         new Input.Field('users', 'Target Users', Routing.PARAM_TARGET_USERS, {extractInputFunc: Input.valueFromJSON}),
     ];
 
+    let description = `List the users in the course. Target users expects a JSON list of <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">course user references</a>. Defaults to all users in the course.`;
+
     Render.makePage(
             params, context, container,
             {
                 header: 'List Users',
-                description: 'List the users in the course.',
+                description: description,
                 inputs: inputFields,
                 buttonName: 'List Users',
             },
