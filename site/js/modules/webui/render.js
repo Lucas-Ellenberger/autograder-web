@@ -39,6 +39,16 @@ function cards(cards) {
     `;
 }
 
+// Render a section name and some cards to html.
+function makeCardSections(sectionName, sectionCards) {
+    return `
+        <div class='card-section'>
+            <h3>${sectionName}</h3>
+            ${cards(sectionCards)}
+        </div>
+    `;
+}
+
 function submissionHistory(course, assignment, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
@@ -242,6 +252,7 @@ export {
     card,
     cards,
     makeCardObject,
+    makeCardSections,
     submission,
     submissionHistory,
     tableFromDictionaries,

@@ -50,10 +50,8 @@ function handlerCourse(path, params, context, container) {
 
     container.innerHTML = `
         <h2>${course.name}</h2>
-        <h3>Assignments</h3>
-        ${Render.cards(assignmentCards)}
-        <h3>Actions</h3>
-        ${Render.cards(actionCards)}
+        ${Render.makeCardSections("Assignments", assignmentCards)}
+        ${Render.makeCardSections("Actions", actionCards)}
     `;
 }
 

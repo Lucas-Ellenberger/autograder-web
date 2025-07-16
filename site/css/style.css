@@ -513,6 +513,10 @@ fieldset {
     margin-bottom: 0.75em;
 }
 
+.content > div {
+    margin-bottom: 1em;
+}
+
 .cards-area {
     display: flex;
     flex-direction: row;
@@ -521,8 +525,6 @@ fieldset {
     justify-content: flex-start;
     gap: 2em;
     align-items: stretch;
-
-    margin-bottom: 1em;
 }
 
 .card {
