@@ -48,10 +48,14 @@ function handlerCourse(path, params, context, container) {
         }),
     ));
 
+    let cardSections = [
+        ['Assignments', assignmentCards],
+        ['Actions', actionCards],
+    ];
+
     container.innerHTML = `
         <h2>${course.name}</h2>
-        ${Render.makeCardSections("Assignments", assignmentCards)}
-        ${Render.makeCardSections("Actions", actionCards)}
+        ${Render.makeCardSections(cardSections)}
     `;
 }
 

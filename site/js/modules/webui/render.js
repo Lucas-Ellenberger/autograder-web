@@ -39,8 +39,23 @@ function cards(cards) {
     `;
 }
 
+// Render a list of card sections to html.
+// A card section is [section name, a list of cards].
+function makeCardSections(sections) {
+    let cardSections = [];
+    for (const section of sections) {
+        cardSections.push(makeCardSection(section[0], section[1]));
+    }
+
+    return `
+        <div class='card-sections'>
+            ${cardSections.join("\n")}
+        <div>
+    `;
+}
+
 // Render a section name and some cards to html.
-function makeCardSections(sectionName, sectionCards) {
+function makeCardSection(sectionName, sectionCards) {
     return `
         <div class='card-section'>
             <h3>${sectionName}</h3>
@@ -252,6 +267,7 @@ export {
     card,
     cards,
     makeCardObject,
+    makeCardSection,
     makeCardSections,
     submission,
     submissionHistory,
