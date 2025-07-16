@@ -513,6 +513,10 @@ fieldset {
     margin-bottom: 0.75em;
 }
 
+.card-section {
+    margin-bottom: 1em;
+}
+
 .cards-area {
     display: flex;
     flex-direction: row;
@@ -542,6 +546,7 @@ fieldset {
 .card a {
     padding: 1.5em;
     text-decoration: none;
+    word-break: keep-all;
 }
 
 .endpoint-page,
