@@ -3,9 +3,9 @@ import * as Autograder from '../autograder/base.js';
 // A general representation of a user input field.
 class Field {
     constructor(
-            name, displayName, key,
+            name, displayName,
             {
-                type = 'string', required = false, placeholder = '',
+                type = 'text', underlyingType = 'string', required = false, placeholder = '',
                 attributes = '', labelBefore = true, extractInputFunc = undefined
             } = {}) {
         // The name of the field which will be used for targeting the field.
@@ -14,18 +14,20 @@ class Field {
         // The display name that will be shown to the user.
         this.displayName = displayName;
 
-        // The key used for the JSON field.
-        this.key = key;
-
         // The HTML input type.
-        // For more information about possible types,
-        // see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types.
+        // Supports checkbox, email, number, password, and text types.
         this.type = type;
+
+        // The underlying type of the field.
+        // Non-standard types are parsed to JSON.
+        // If a non-standard type cannot be parsed to JSON,
+        // a validation error is raised.
+        this.underlyingType = underlyingType;
 
         // Flags the field requires user input.
         this.required = required;
 
-        // The placeholder for the input.
+        // The placeholder text for the input.
         this.placeholder = placeholder;
 
         // Any additional attributes to the input field.
@@ -48,11 +50,21 @@ class Field {
         if ((this.displayName == undefined) || (this.displayName == '')) {
             console.error(`Input field cannot have an empty display name: ${JSON.stringify(this)}.`);
         }
-
-        if ((this.key == undefined) || (this.key == '')) {
-            console.error(`Input field caKeynnot have an empty key: ${JSON.stringify(this)}.`);
-        }
     }
+
+    // TODO: Expand validation for inputs.
+    // validateInput(input) {
+    //     if (!input.validity.valid) {
+    //         return `<p>Field "${field.name}": "${input.validationMessage}".</p>`;
+    //     }
+
+    //     if ((this.underlyingType != "string") && (this.underlyingType != "bool")) {
+    //         try {
+    //             JSON.parse(`${input.value}`);
+    //         } catch (error) {
+    //         }
+    //     }
+    // }
 
     toHTML() {
         this.validate();
@@ -64,55 +76,74 @@ class Field {
             displayName += ` <span class="required-color">*</span>`;
         }
 
-        const label = `<label for="${this.name}">${displayName}</label>`;
-        const input = `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`;
+        let inputFieldHTML = [
+            `<label for="${this.name}">${displayName}</label>`,
+            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`,
+        ];
 
-        if (this.labelBefore) {
-            return `
-                <div class="input-field">
-                    ${label}
-                    ${input}
-                </div>
-            `;
-        } else {
-            return `
-                <div class="input-field">
-                    ${input}
-                    ${label}
-                </div>
-            `;
+        if (!this.labelBefore) {
+            inputFieldHTML.reverse()
         }
+
+        return `
+            <div class="input-field">
+                ${inputFieldHTML.join("\n")}
+            </div>
+        `;
     }
 
     getKey() {
-        return this.key;
+        return this.name;
     }
 
+    // Get the value from the input.
+    // Throws an error on validation errors.
     getValue(container) {
         let input = container.querySelector(`fieldset [name=${this.name}`);
         input.classList.add("touched");
 
-        let value = undefined;
-        if (this.extractInputFunc) {
-            value = this.extractInputFunc(input);
-        } else {
-            if (input == undefined) {
-                return undefined;
-            }
+        validateInputValue(input, this.underlyingType);
 
-            value = input.value;
+        if (this.extractInputFunc) {
+            return this.extractInputFunc(input);
+        }
+
+        if (input == undefined) {
+            return undefined;
+        }
+
+        let value = undefined;
+        switch (this.type) {
+            case "checkbox":
+                value = input.checked;
+                break;
+            default:
+                value = valueFromJSON(input.value);
         }
 
         return value;
     }
 }
 
-function valueFromCheckbox(input) {
-    if (input == undefined) {
-        return undefined;
+// TODO: Expand validation for inputs.
+// Validate the value of the input.
+// Throws an error on invalid input values.
+function validateInputValue(input, fieldType) {
+    input.classList.add("touched");
+
+    if (!input.validity.valid) {
+        throw new Error(`<p>Field "${field.name}": "${input.validationMessage}".</p>`);
     }
 
-    return input.checked;
+    if (!input || input.value === "") {
+        return;
+    }
+
+    // Try to parse non-standard field types.
+    if ((fieldType != "string") && (fieldType != "bool")) {
+        // Throws an error on failure.
+        JSON.parse(`${input.value}`);
+    }
 }
 
 function valueFromJSON(input) {
@@ -124,23 +155,15 @@ function valueFromJSON(input) {
         return "";
     }
 
-    let value = undefined;
-    // Users can input complex types into text boxes.
-    // Attempt to parse the input string into JSON.
-    // Fallback to the raw input in case the input is not meant to be JSON.
-    try {
-        value = JSON.parse(`${input.value}`);
-    } catch (error) {
-        console.error(error);
-        value = input.value;
-    }
-
-    return value;
+    // TODO: Make sure this comment holds.
+    // The input has already been validated,
+    // so parse will not throw an error.
+    return JSON.parse(`${input.value}`);
 }
 
 export {
     Field,
 
-    valueFromCheckbox,
+    validateInputValue,
     valueFromJSON,
 };

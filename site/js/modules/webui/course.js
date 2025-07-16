@@ -184,20 +184,23 @@ function handlerUsers(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     let inputFields = [
-        new Input.Field('users', 'Target Users', Routing.PARAM_TARGET_USERS, {extractInputFunc: Input.valueFromJSON}),
+        new Input.Field(Routing.PARAM_TARGET_USERS, 'Target Users', {extractInputFunc: Input.valueFromJSON}),
     ];
 
-    let description = `List the users in the course. Target users expects a JSON list of <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">course user references</a>. Defaults to all users in the course.`;
+    let description = `
+        List the users in the course.
+        Target users expects a JSON list of <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">course user references</a>.
+        Defaults to all users in the course.
+    `;
 
     Render.makePage(
-            params, context, container,
+            params, context, container, listUsers,
             {
                 header: 'List Users',
                 description: description,
                 inputs: inputFields,
                 buttonName: 'List Users',
             },
-            listUsers,
         )
     ;
 }

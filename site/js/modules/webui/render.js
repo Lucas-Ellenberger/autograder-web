@@ -64,13 +64,13 @@ function makeCardSection(sectionName, sectionCards) {
     `;
 }
 
-// Create and display a web page that follows a standard template.
+// Render a page that follows a standard template.
 // The template includes a header, description, input area, submission button, and a results area.
+// The onSubmitFunc must return a promise that resolves to the content that should be displayed in the results area.
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
-        params, context, container,
-        page = {className: '', header: '', description: '', inputs: [], buttonName: 'Submit'},
-        onSubmitFunc) {
+        params, context, container, onSubmitFunc,
+        page = {className: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
     let inputHTML = '';
     for (const input of page.inputs) {
         inputHTML += input.toHTML();
@@ -119,14 +119,35 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
+    let errorMessages = [];
+
     for (const input of inputs) {
-        let value = input.getValue(container);
+        let value = undefined;
+        try {
+            value = input.getValue(container);
+        } catch (error) {
+            console.error(error);
+            errorMessages.push(error.message);
+            continue;
+        }
+
         if (value != "") {
             inputParams[input.getKey()] = value;
         }
     }
 
     let resultsArea = container.querySelector(".results-area");
+
+    if (errorMessages.length > 0) {
+        resultsArea.innerHTML = `
+            <div class="result secondary-color drop-shadow">
+                <p>The request was not submitted to the autograder due to the following errors:</p>
+                ${errorMessages.join("\n")}
+            </div>
+        `;
+        return;
+    }
+
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
@@ -265,12 +286,12 @@ function submissionQuestions(questions) {
 function listCourseUsers(users) {
     let messages = [];
     for (const user of users) {
-        let userParts = [];
-
-        userParts.push(`Email: ${user['email']}`);
-        userParts.push(`Name: ${user['name']}`);
-        userParts.push(`Role: ${user['role']}`);
-        userParts.push(`Email: ${user['email']}`);
+        let userParts = [
+            `Email: ${user['email']}`,
+            `Name: ${user['name']}`,
+            `Role: ${user['role']}`,
+            `LMS ID: ${user['lms-id']}`,
+        ];
 
         messages.push(`${userParts.join("\n")}`);
     }
