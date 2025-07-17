@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js';
 
+import * as Input from './input.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
@@ -46,7 +47,7 @@ function handlerCallAPI(path, params, context, container) {
             const endpoints = result["endpoints"];
             const selectedEndpoint = params[Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
 
-            render(endpoints, selectedEndpoint, context, container);
+            render(endpoints, selectedEndpoint, params, context, container);
         })
         .catch(function(message) {
             console.error(message);
@@ -55,19 +56,23 @@ function handlerCallAPI(path, params, context, container) {
     ;
 }
 
-function render(endpoints, selectedEndpoint, context, container) {
+function render(endpoints, selectedEndpoint, params, context, container) {
     let selector = renderSelector(endpoints, selectedEndpoint);
-    let endpointArea = renderEndpointArea(endpoints, selectedEndpoint, context);
+    let selectorHTML = `<div class="endpoint-controls">${selector}</div>`;
 
-    container.innerHTML = `
-        <div class="endpoint-page">
-            <div class="endpoint-content">
-                <div class="endpoint-controls">${selector}</div>
-                <div class="endpoint-input">${endpointArea}</div>
-                <div class="results-area"></div>
-            </div>
-        </div>
-    `;
+    let inputFields = getInputFields(endpoints, selectedEndpoint, context);
+
+    Render.makePage(
+            params, context, container, callEndpoint,
+            {
+                className: 'call-endpoint',
+                controlAreaHTML: selectorHTML,
+                header: selectedEndpoint,
+                inputs: inputFields,
+                buttonName: 'Call Endpoint',
+            },
+        )
+    ;
 
     container.querySelector(".endpoint-controls select").addEventListener("change", function(event) {
         let newParams = {
@@ -76,26 +81,6 @@ function render(endpoints, selectedEndpoint, context, container) {
 
         let path = Routing.formHashPath(Routing.PATH_SERVER_CALL_API, newParams);
         Routing.redirect(path);
-    });
-
-    let button = container.querySelector(".endpoint-input button");
-    button?.addEventListener("click", function(event) {
-        callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
-    });
-
-    let fieldset = container.querySelector(".endpoint-input fieldset");
-    fieldset?.addEventListener("keydown", function(event) {
-        if (event.key != "Enter") {
-            return
-        }
-
-        callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
-    });
-
-    container.querySelectorAll(".endpoint-input fieldset input")?.forEach(function(input) {
-        input.addEventListener("blur", function(event) {
-            input.classList.add("touched");
-        });
     });
 }
 
@@ -119,9 +104,9 @@ function renderSelector(endpoints, selectedEndpoint) {
     `;
 }
 
-function renderEndpointArea(endpoints, selectedEndpoint, context) {
+function getInputFields(endpoints, selectedEndpoint, context) {
     if (!(selectedEndpoint in endpoints)) {
-        return '';
+        return [];
     }
 
     let sortedInputs = endpoints[selectedEndpoint]["input"];
@@ -134,46 +119,22 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 
     let inputFields = [];
     for (const field of sortedInputs) {
-        inputFields.push(`${getInputField(context, {
-            fieldName: field.name,
-            fieldType: field.type,
-            requiredField: field.required,
-        })}`);
+        inputFields.push(getInputField(context, field.name, field.type, field.required));
     }
 
-    return `
-        <div class="endpoint-title secondary-color drop-shadow">
-            <h2>
-                ${selectedEndpoint}
-            </h2>
-        </div>
-
-        <div class="user-input-fields secondary-color drop-shadow">
-            <fieldset>
-                ${inputFields.join("\n")}
-            </fieldset>
-        </div>
-
-        <button class="call-endpoint">
-            Call Endpoint
-        </button>
-    `;
+    return inputFields;
 }
 
-// Given field information, the context, and optional styling information,
-// returns the HTML to display a field for user input.
-function getInputField(
-        context,
-        {fieldName = "", fieldType = "", requiredField = false},
-        {stylingClasses = "tertiary-color", dropShadow = true} = {},
-        ) {
+// Given the context and field information,
+// returns an Input.Field.
+function getInputField(context, fieldName = "", fieldType = "", requiredField = false) {
     let fieldClass = "input-field";
 
     let inputType = "text";
     let placeholder = "";
     let extraFields = "";
     let displayName = `${fieldName}`;
-    let labelFirst = true;
+    let labelBefore = true;
 
     if (PATTERN_TARGET_SELF_OR.test(fieldType)) {
         placeholder = context.user.email;
@@ -185,7 +146,7 @@ function getInputField(
         displayName += ` (expects: ${fieldType})`;
     } else if (fieldType === "bool") {
         fieldClass += " checkbox-field";
-        labelFirst = false;
+        labelBefore = false;
 
         inputType = "checkbox";
         extraFields += ` value="true"`;
@@ -202,119 +163,55 @@ function getInputField(
         inputType = "password";
     }
 
-    if ((requiredField) && (placeholder === "")) {
-        extraFields += " required";
-        displayName += ` <span class="required-color">*</span>`;
-    }
-
-    let inputClass = stylingClasses;
-    if (dropShadow) {
-        inputClass += " drop-shadow";
-    }
-
-    const label = `<label for="${fieldName}">${displayName}</label>`;
-    const input = `<input class="${inputClass}" type="${inputType}" id="${fieldName}" name="${fieldName}" placeholder="${placeholder}"${extraFields}>`;
-
-    let fieldHTML = "";
-    if (labelFirst) {
-        fieldHTML = `
-            ${label}
-            ${input}
-        `;
-    } else {
-        fieldHTML = `
-            ${input}
-            ${label}
-        `;
-    }
-
-    return `
-        <div class="${fieldClass}">
-            ${fieldHTML}
-        </div>
-    `;
+    return new Input.Field(fieldName, displayName, {
+            type: inputType,
+            underlyingType: fieldType,
+            required: requiredField,
+            placeholder: placeholder,
+            inputClass: fieldClass,
+            attributes: extraFields,
+            labelBefore: labelBefore,
+        })
+    ;
 }
 
-function callEndpoint(targetEndpoint, inputFields, context, container) {
-    Routing.loadingStart(container.querySelector(".results-area"), false);
+function callEndpoint(params, context, container, inputParams) {
+    const targetEndpoint = params[Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
+    if (!targetEndpoint) {
+        return Promise.resolve("Unable to find target endpoint.");
+    }
 
     let overrideEmail = undefined;
+    if (inputParams["user-email"]) {
+        overrideEmail = inputParams["user-email"];
+
+        // Remove the unnecessary email field.
+        delete inputParams["user-email"];
+    }
+
     let overrideCleartext = undefined;
+    if (inputParams["user-pass"]) {
+        overrideCleartext = inputParams["user-pass"];
 
-    let params = {};
-    let errorMessages = [];
-
-    for (let field of inputFields) {
-        let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
-        input.classList.add("touched");
-
-        if (!input.validity.valid) {
-            errorMessages.push(`<p>Field "${field.name}": "${input.validationMessage}".</p>`);
-            continue;
-        }
-
-        if (!input || input.value === "") {
-            continue;
-        }
-
-        if (field.name === "user-email") {
-            overrideEmail = input.value;
-            continue;
-        }
-
-        if (field.name === "user-pass") {
-            overrideCleartext = input.value;
-            continue;
-        }
-
-        if (field.type === "string") {
-            params[field.name] = input.value;
-        } else if (field.type === "bool") {
-            params[field.name] = input.checked;
-        } else {
-            // Users can input complex types into text boxes.
-            // Attempt to parse the input string into JSON.
-            // Fallback to the raw input in case the input is not meant to be JSON.
-            try {
-                params[field.name] = JSON.parse(`${input.value}`);
-            } catch (error) {
-                console.error(error);
-                params[field.name] = input.value;
-            }
-        }
+        // Remove the unnecessary password field.
+        delete inputParams["user-pass"];
     }
 
-    let resultsArea = container.querySelector(".results-area");
-
-    if (errorMessages.length > 0) {
-        resultsArea.innerHTML = `
-            <div class="result secondary-color drop-shadow">
-                <p>The request was not submitted to the autograder due to the following errors:</p>
-                ${errorMessages.join("\n")}
-            </div>
-        `;
-        return;
-    }
-
-    Autograder.Server.callEndpoint({
+    return Autograder.Server.callEndpoint({
             targetEndpoint: targetEndpoint,
-            params: params,
+            params: inputParams,
             overrideEmail: overrideEmail,
             overrideCleartext: overrideCleartext,
             clearContextUser: false,
-        }).then(function(result) {
-            resultsArea.innerHTML = `
-                <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+        })
+        .then(function(result) {
+            return `
+                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
             `;
         })
         .catch(function(message) {
             console.error(message)
-            let errorHTML = Render.autograderError(message);
-            resultsArea.innerHTML = `
-                <div class="result secondary-color drop-shadow">
-                    ${errorHTML}
-                </div>
-            `;
+            return message;
         })
     ;
 }

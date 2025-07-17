@@ -70,37 +70,62 @@ function makeCardSection(sectionName, sectionCards) {
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
         params, context, container, onSubmitFunc,
-        page = {className: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
-    let inputHTML = '';
-    for (const input of page.inputs) {
-        inputHTML += input.toHTML();
+        page = {className: '', controlAreaHTML: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
+    let controlAreaHTML = '';
+    if ((page.controlAreaHTML) && (page.controlAreaHTML != '')) {
+        controlAreaHTML = page.controlAreaHTML;
+    }
+
+    let headerHTML = '';
+    if ((page.header) && (page.header != '')) {
+        headerHTML = `<h2>${page.header}</h2>`;
+    }
+
+    let descriptionHTML = '';
+    if ((page.description) && (page.description != '')) {
+        descriptionHTML = `
+            <div class="description">
+                <p>
+                    ${page.description}
+                </p>
+            </div>
+        `;
+    }
+
+    let inputSectionHTML = '';
+    if ((page.inputs) && (page.inputs.length > 0)) {
+        let inputHTML = '';
+        for (const input of page.inputs) {
+            inputHTML += input.toHTML();
+        }
+
+        inputSectionHTML = `
+            <div class="user-input-fields secondary-color drop-shadow">
+                <fieldset>
+                    ${inputHTML}
+                </fieldset>
+            </div>
+            <button class="template-button">${page.buttonName}</button>
+        `;
     }
 
     container.innerHTML = `
         <div class="template-page ${page.className}">
             <div class="template-content">
-                <h2>${page.header}</h2>
-                <div class="description">
-                    <p>
-                        ${page.description}
-                    </p>
-                </div>
-                <div class="user-input-fields secondary-color drop-shadow">
-                    <fieldset>
-                        ${inputHTML}
-                    </fieldset>
-                </div>
-                <button class="template-button">${page.buttonName}</button>
+                ${controlAreaHTML}
+                ${headerHTML}
+                ${descriptionHTML}
+                ${inputSectionHTML}
                 <div class="results-area"></div>
             </div>
         </div>
     `;
 
-    container.querySelector("button").addEventListener("click", function(event) {
+    container.querySelector("button")?.addEventListener("click", function(event) {
         populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
     });
 
-    container.querySelector(".user-input-fields fieldset").addEventListener("keydown", function(event) {
+    container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
         if (event.key != "Enter") {
             return;
         }
@@ -108,7 +133,7 @@ function makePage(
         populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
     });
 
-    container.querySelectorAll(".user-input-fields fieldset input").forEach(function(input) {
+    container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
         });
@@ -131,7 +156,7 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
             continue;
         }
 
-        if (value != "") {
+        if ((value) && (value != "")) {
             inputParams[input.getKey()] = value;
         }
     }
