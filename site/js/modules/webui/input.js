@@ -141,7 +141,6 @@ class Field {
     shouldJSONParse() {
         if ((this.type === "checkbox")
                 || (this.type === "email")
-                || (this.type === "number")
                 || (this.type === "password")) {
             return false
         }
