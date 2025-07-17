@@ -14,6 +14,7 @@ const FIELD_PRIORITY = [
 ];
 
 const PATTERN_INT = /^int\d*$/;
+const PATTERN_TARGET_USER = /^core\.Target((Course)|(Server))User$/;
 const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-Z]+$/;
 
 function init() {
@@ -138,6 +139,9 @@ function getInputField(context, fieldName = "", fieldType = "", requiredField = 
 
     if (PATTERN_TARGET_SELF_OR.test(fieldType)) {
         placeholder = context.user.email;
+        inputType = "email";
+        displayName += ` (expects: ${fieldType})`;
+    } else if (PATTERN_TARGET_USER.test(fieldType)) {
         inputType = "email";
         displayName += ` (expects: ${fieldType})`;
     } else if (PATTERN_INT.test(fieldType)) {
