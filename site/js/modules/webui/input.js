@@ -92,7 +92,7 @@ class Field {
 
         let inputFieldHTML = [
             `<label for="${this.name}">${displayName}</label>`,
-            `<input class="${this.inputClass}" type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`,
+            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`,
         ];
 
         if (!this.labelBefore) {
@@ -100,7 +100,7 @@ class Field {
         }
 
         return `
-            <div class="input-field">
+            <div class="input-field ${this.inputClass}">
                 ${inputFieldHTML.join("\n")}
             </div>
         `;

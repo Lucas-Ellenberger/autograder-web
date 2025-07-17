@@ -78,7 +78,11 @@ function makePage(
 
     let headerHTML = '';
     if ((page.header) && (page.header != '')) {
-        headerHTML = `<h2>${page.header}</h2>`;
+        headerHTML = `
+            <div class="template-header secondary-color drop-shadow">
+                <h2>${page.header}</h2>
+            </div>
+        `;
     }
 
     let descriptionHTML = '';

@@ -549,7 +549,6 @@ fieldset {
     word-break: keep-all;
 }
 
-.endpoint-page,
 .email-page,
 .template-page {
     display: flex;
@@ -557,7 +556,6 @@ fieldset {
     justify-content: center;
 }
 
-.endpoint-content,
 .email-content,
 .template-content {
     display: flex;
@@ -632,8 +630,6 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
-.endpoint-content > button,
-.endpoint-content > div,
 .email-content > button,
 .email-content > div,
 .template-content > button,
@@ -652,35 +648,15 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
-.endpoint-input {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.endpoint-input:empty {
-    display: none;
-}
-
-.endpoint-input .endpoint-title {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    max-width: 95vw;
-    overflow-x: auto;
-
-    gap: 1em;
-    padding: 1.5em;
-
+.template-header {
     border-radius: var(--curve-radius-small);
 }
 
-.endpoint-input h2 {
-    margin-bottom: 0em;
+.template-content h2 {
+    margin-bottom: 0;
+    padding: 0.75em;
 }
 
-.endpoint-input button,
 .template-content button {
     padding: 0.5em 0.75em;
 }

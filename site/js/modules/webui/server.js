@@ -129,42 +129,43 @@ function getInputFields(endpoints, selectedEndpoint, context) {
 // Given the context and field information,
 // returns an Input.Field.
 function getInputField(context, fieldName = "", fieldType = "", requiredField = false) {
-    let fieldClass = "input-field";
-
     let inputType = "text";
-    let placeholder = "";
-    let extraFields = "";
     let displayName = `${fieldName}`;
+    let placeholder = "";
+
+    let fieldClass = "";
+    let extraFields = "";
     let labelBefore = true;
 
     if (PATTERN_TARGET_SELF_OR.test(fieldType)) {
-        placeholder = context.user.email;
         inputType = "email";
         displayName += ` (expects: ${fieldType})`;
+        placeholder = context.user.email;
     } else if (PATTERN_TARGET_USER.test(fieldType)) {
         inputType = "email";
         displayName += ` (expects: ${fieldType})`;
     } else if (PATTERN_INT.test(fieldType)) {
         inputType = "number";
-        extraFields += ` pattern="\d*"`;
         displayName += ` (expects: ${fieldType})`;
-    } else if (fieldType === "bool") {
-        fieldClass += " checkbox-field";
-        labelBefore = false;
 
+        extraFields += ` pattern="\d*"`;
+    } else if (fieldType === "bool") {
         inputType = "checkbox";
+
+        fieldClass += " checkbox-field";
         extraFields += ` value="true"`;
+        labelBefore = false;
     } else {
         displayName += ` (expects: ${fieldType})`;
     }
 
     // Due to the context credentials, remind the user the email and pass fields are optional.
     if (fieldName === "user-email") {
-        placeholder = context.user.email;
         inputType = "email";
+        placeholder = context.user.email;
     } else if (fieldName === "user-pass") {
-        placeholder = "<current token>";
         inputType = "password";
+        placeholder = "<current token>";
     }
 
     return new Input.Field(fieldName, displayName, {
