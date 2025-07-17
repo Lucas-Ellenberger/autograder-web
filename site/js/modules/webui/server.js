@@ -63,12 +63,18 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 
     let inputFields = getInputFields(endpoints, selectedEndpoint, context);
 
+    let description = undefined;
+    if (selectedEndpoint in endpoints) {
+        description = endpoints[selectedEndpoint].description;
+    }
+
     Render.makePage(
             params, context, container, callEndpoint,
             {
                 className: 'call-endpoint',
                 controlAreaHTML: selectorHTML,
                 header: selectedEndpoint,
+                description: description,
                 inputs: inputFields,
                 buttonName: 'Call Endpoint',
             },

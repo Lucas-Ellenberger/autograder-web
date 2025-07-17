@@ -79,7 +79,7 @@ function makePage(
     let headerHTML = '';
     if ((page.header) && (page.header != '')) {
         headerHTML = `
-            <div class="template-header secondary-color drop-shadow">
+            <div class="template-header">
                 <h2>${page.header}</h2>
             </div>
         `;
@@ -92,6 +92,16 @@ function makePage(
                 <p>
                     ${page.description}
                 </p>
+            </div>
+        `;
+    }
+
+    let infoHTML = '';
+    if ((headerHTML != '') || (descriptionHTML != '')) {
+        infoHTML = `
+            <div class="page-information secondary-color drop-shadow">
+                ${headerHTML}
+                ${descriptionHTML}
             </div>
         `;
     }
@@ -117,8 +127,7 @@ function makePage(
         <div class="template-page ${page.className}">
             <div class="template-content">
                 ${controlAreaHTML}
-                ${headerHTML}
-                ${descriptionHTML}
+                ${infoHTML}
                 ${inputSectionHTML}
                 <div class="results-area"></div>
             </div>

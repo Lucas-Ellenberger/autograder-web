@@ -648,13 +648,10 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
-.template-header {
-    border-radius: var(--curve-radius-small);
-}
-
-.template-content h2 {
-    margin-bottom: 0;
+.template-content .page-information {
     padding: 0.75em;
+    text-align: center;
+    border-radius: var(--curve-radius-small);
 }
 
 .template-content button {
