@@ -70,8 +70,13 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 
     let inputFields = getInputFields(endpoints, selectedEndpoint, context);
 
+    let onSubmitFunc = undefined;
+    if (selectedEndpoint) {
+        onSubmitFunc = callEndpoint;
+    }
+
     Render.makePage(
-            params, context, container, callEndpoint,
+            params, context, container, onSubmitFunc,
             {
                 className: 'call-endpoint',
                 controlAreaHTML: selectorHTML,

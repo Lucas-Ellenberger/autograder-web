@@ -119,8 +119,12 @@ function makePage(
                     ${inputHTML}
                 </fieldset>
             </div>
-            <button class="template-button">${page.buttonName}</button>
         `;
+    }
+
+    let buttonHTML = '';
+    if (onSubmitFunc) {
+        buttonHTML = `<button class="template-button">${page.buttonName}</button>`;
     }
 
     container.innerHTML = `
@@ -129,6 +133,7 @@ function makePage(
                 ${controlAreaHTML}
                 ${infoHTML}
                 ${inputSectionHTML}
+                ${buttonHTML}
                 <div class="results-area"></div>
             </div>
         </div>
