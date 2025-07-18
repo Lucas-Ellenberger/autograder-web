@@ -55,31 +55,6 @@ class Field {
         }
     }
 
-    // TODO: Expand validation for inputs.
-    // Validate the value of the input.
-    // Throws an error on invalid input values.
-    validateInputValue(input, fieldType) {
-        input.classList.add("touched");
-
-        if (!input.validity.valid) {
-            throw new Error(`<p>Field "${input.name}": "${input.validationMessage}".</p>`);
-        }
-
-        if (!input || input.value === "") {
-            return;
-        }
-
-        // Try to parse non-standard field types.
-        if (this.shouldJSONParse()) {
-            // Throws an error on failure.
-            try {
-                JSON.parse(`${input.value}`);
-            } catch (error) {
-                throw new Error(`<p>Field "${input.name}": "${error.message}".</p>`);
-            }
-        }
-    }
-
     toHTML() {
         this.validate();
 
@@ -106,66 +81,102 @@ class Field {
         `;
     }
 
-    getKey() {
-        return this.name;
-    }
-
-    // Get the value from the input.
-    // Throws an error on validation errors.
-    getValue(container) {
-        let input = container.querySelector(`fieldset [name=${this.name}`);
+    getResult(container) {
+        let input = container.querySelector(`fieldset [name=${this.name}]`);
         input.classList.add("touched");
 
-        this.validateInputValue(input, this.underlyingType);
+        return new Result(input, this.underlyingType, this.extractInputFunc);
+    }
+}
+
+// The result of getting an Input.Field.
+class Result {
+    constructor(input, underlyingType, extractInputFunc = undefined) {
+        // The input from the query selector.
+        this.input = input;
+
+        // See Field for field descriptions.
+        this.underlyingType = underlyingType;
+        this.extractInputFunc = extractInputFunc;
+    }
+
+    // Validate the value of the input.
+    // Throws an error on invalid input values.
+    validate() {
+        if (!this.input.validity.valid) {
+            throw new Error(`${this.input.validationMessage}`);
+        }
+
+        if (!this.input || this.input.value === "") {
+            return;
+        }
+
+        // Try to parse non-standard field types.
+        if (shouldJSONParse(this.input.type, this.underlyingType)) {
+            // Throws an error on failure.
+            JSON.parse(`${this.input.value}`);
+        }
+    }
+
+    getKey() {
+        return this.input.name;
+    }
+
+    // Get the value from the result.
+    // Throws an error on validation errors.
+    getValue() {
+        try {
+            this.validate();
+        } catch (error) {
+            throw new Error(`<p>Field "${this.input.name}": "${error.message}".</p>`);
+        }
 
         if (this.extractInputFunc) {
             return this.extractInputFunc(input);
         }
 
-        if (input == undefined) {
+        if (this.input == undefined) {
             return undefined;
         }
 
         let value = undefined;
-        if (this.type === "checkbox") {
-            value = input.checked;
-        } else if (this.shouldJSONParse()) {
-            value = valueFromJSON(input);
+        if (this.input.type === "checkbox") {
+            value = this.input.checked;
+        } else if (shouldJSONParse(this.input.type, this.underlyingType)) {
+            value = this.valueFromJSON();
         } else {
-            value = input.value;
+            value = this.input.value;
         }
 
         return value;
     }
 
-    shouldJSONParse() {
-        if ((this.type === "checkbox")
-                || (this.type === "email")
-                || (this.type === "password")) {
-            return false
+    valueFromJSON() {
+        if ((!this.input) || (!this.input.value) || (this.input.value === "")) {
+            return "";
         }
 
-        if (this.underlyingType === "string") {
-            return false
-        }
-
-        return true
+        // The input has already been validated,
+        // so parse will not throw an error.
+        return JSON.parse(`${this.input.value}`);
     }
 }
 
-function valueFromJSON(input) {
-    if ((!input) || (!input.value) || (input.value === "")) {
-        return "";
+function shouldJSONParse(type, underlyingType) {
+    if ((type === "checkbox")
+            || (type === "email")
+            || (type === "password")) {
+        return false
     }
 
-    // TODO: Make sure this comment holds.
-    // The input has already been validated,
-    // so parse will not throw an error.
-    return JSON.parse(`${input.value}`);
+    if (underlyingType === "string") {
+        return false
+    }
+
+    return true
 }
 
 export {
     Field,
-
-    valueFromJSON,
+    Result,
 };

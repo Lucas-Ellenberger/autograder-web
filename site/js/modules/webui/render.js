@@ -79,7 +79,7 @@ function makePage(
     let headerHTML = '';
     if ((page.header) && (page.header != '')) {
         headerHTML = `
-            <div class="template-header">
+            <div class="template-header secondary-color drop-shadow">
                 <h2>${page.header}</h2>
             </div>
         `;
@@ -88,7 +88,7 @@ function makePage(
     let descriptionHTML = '';
     if ((page.description) && (page.description != '')) {
         descriptionHTML = `
-            <div class="description">
+            <div class="template-description secondary-color drop-shadow">
                 <p>
                     ${page.description}
                 </p>
@@ -99,7 +99,7 @@ function makePage(
     let infoHTML = '';
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
-            <div class="page-information secondary-color drop-shadow">
+            <div class="page-information">
                 ${headerHTML}
                 ${descriptionHTML}
             </div>
@@ -160,9 +160,11 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
     let errorMessages = [];
 
     for (const input of inputs) {
+        let result = input.getResult(container);
+
         let value = undefined;
         try {
-            value = input.getValue(container);
+            value = result.getValue(container);
         } catch (error) {
             console.error(error);
             errorMessages.push(error.message);
@@ -170,7 +172,7 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
         }
 
         if ((value) && (value != "")) {
-            inputParams[input.getKey()] = value;
+            inputParams[result.getKey()] = value;
         }
     }
 

@@ -58,15 +58,17 @@ function handlerCallAPI(path, params, context, container) {
 }
 
 function render(endpoints, selectedEndpoint, params, context, container) {
+    let description = undefined;
+    if (selectedEndpoint in endpoints) {
+        description = endpoints[selectedEndpoint].description;
+    } else {
+        selectedEndpoint = undefined;
+    }
+
     let selector = renderSelector(endpoints, selectedEndpoint);
     let selectorHTML = `<div class="endpoint-controls">${selector}</div>`;
 
     let inputFields = getInputFields(endpoints, selectedEndpoint, context);
-
-    let description = undefined;
-    if (selectedEndpoint in endpoints) {
-        description = endpoints[selectedEndpoint].description;
-    }
 
     Render.makePage(
             params, context, container, callEndpoint,
@@ -112,7 +114,7 @@ function renderSelector(endpoints, selectedEndpoint) {
 }
 
 function getInputFields(endpoints, selectedEndpoint, context) {
-    if (!(selectedEndpoint in endpoints)) {
+    if (!selectedEndpoint) {
         return [];
     }
 
