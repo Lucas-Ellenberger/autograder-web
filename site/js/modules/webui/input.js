@@ -41,13 +41,13 @@ class Field {
         this.labelBefore = labelBefore;
 
         // A custom function for extracting the value from an input.
-        // By default, the input.value will be returned.
+        // If a default value extraction cannot be inferred, the value is parsed using JSON.
         this.extractInputFunc = extractInputFunc;
     }
 
     validate() {
         if ((this.name == undefined) || (this.name == '')) {
-            console.error(`Input field cannot have an empty name: ${JSON.stringify(this)}`);
+            console.error(`Input field cannot have an empty name: ${JSON.stringify(this)}.`);
         }
 
         if ((this.displayName == undefined) || (this.displayName == '')) {
@@ -71,7 +71,7 @@ class Field {
         ];
 
         if (!this.labelBefore) {
-            inputFieldHTML.reverse()
+            inputFieldHTML.reverse();
         }
 
         return `
@@ -105,6 +105,11 @@ class Result {
     validate() {
         if (!this.input.validity.valid) {
             throw new Error(`${this.input.validationMessage}`);
+        }
+
+        // Skip further validation if a custom extraction function is provided.
+        if (this.extractInputFunc != undefined) {
+            return;
         }
 
         if (!this.input || this.input.value === "") {
@@ -166,14 +171,14 @@ function shouldJSONParse(type, underlyingType) {
     if ((type === "checkbox")
             || (type === "email")
             || (type === "password")) {
-        return false
+        return false;
     }
 
     if (underlyingType === "string") {
-        return false
+        return false;
     }
 
-    return true
+    return true;
 }
 
 export {

@@ -65,7 +65,7 @@ function makeCardSection(sectionName, sectionCards) {
 }
 
 // Render a page that follows a standard template.
-// The template includes a header, description, input area, submission button, and a results area.
+// The template includes a control area, header, description, input area, submission button, and a results area.
 // The onSubmitFunc must return a promise that resolves to the content that should be displayed in the results area.
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(

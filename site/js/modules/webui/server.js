@@ -229,7 +229,7 @@ function callEndpoint(params, context, container, inputParams) {
         })
         .catch(function(message) {
             console.error(message)
-            return message;
+            return Render.autograderError(message);
         })
     ;
 }
