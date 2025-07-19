@@ -184,7 +184,9 @@ function handlerUsers(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     let inputFields = [
-        new Input.Field(Routing.PARAM_TARGET_USERS, 'Target Users', {underlyingType: '[]model.CourseUserReference'}),
+        new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {
+            underlyingType: '[]model.CourseUserReference'
+        }),
     ];
 
     let description = `

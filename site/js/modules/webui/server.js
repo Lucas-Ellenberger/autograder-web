@@ -13,10 +13,6 @@ const FIELD_PRIORITY = [
     "user-email",
 ];
 
-const PATTERN_INT = /^int\d*$/;
-const PATTERN_TARGET_USER = /^core\.Target((Course)|(Server))User$/;
-const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-Z]+$/;
-
 function init() {
     Routing.addRoute(/^server$/, handlerServer, 'Server Actions', undefined);
     Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', undefined);
@@ -133,64 +129,13 @@ function getInputFields(endpoints, selectedEndpoint, context) {
 
     let inputFields = [];
     for (const field of sortedInputs) {
-        inputFields.push(getInputField(context, field.name, field.type, field.required));
+        inputFields.push(new Input.FieldType(context, field.name, field.name, {
+            underlyingType: field.type,
+            required: field.required,
+        }));
     }
 
     return inputFields;
-}
-
-// Given the context and field information,
-// returns an Input.Field.
-function getInputField(context, fieldName = "", fieldType = "", requiredField = false) {
-    let inputType = "text";
-    let displayName = `${fieldName}`;
-    let placeholder = "";
-
-    let fieldClass = "";
-    let extraFields = "";
-    let labelBefore = true;
-
-    if (PATTERN_TARGET_SELF_OR.test(fieldType)) {
-        inputType = "email";
-        displayName += ` (expects: ${fieldType})`;
-        placeholder = context.user.email;
-    } else if (PATTERN_TARGET_USER.test(fieldType)) {
-        inputType = "email";
-        displayName += ` (expects: ${fieldType})`;
-    } else if (PATTERN_INT.test(fieldType)) {
-        inputType = "number";
-        displayName += ` (expects: ${fieldType})`;
-
-        extraFields += ` pattern="\d*"`;
-    } else if (fieldType === "bool") {
-        inputType = "checkbox";
-
-        fieldClass += " checkbox-field";
-        extraFields += ` value="true"`;
-        labelBefore = false;
-    } else {
-        displayName += ` (expects: ${fieldType})`;
-    }
-
-    // Due to the context credentials, remind the user the email and pass fields are optional.
-    if (fieldName === "user-email") {
-        inputType = "email";
-        placeholder = context.user.email;
-    } else if (fieldName === "user-pass") {
-        inputType = "password";
-        placeholder = "<current token>";
-    }
-
-    return new Input.FieldType(fieldName, displayName, {
-            type: inputType,
-            underlyingType: fieldType,
-            required: requiredField,
-            placeholder: placeholder,
-            inputClasses: fieldClass,
-            additionalAttributes: extraFields,
-            labelBefore: labelBefore,
-        })
-    ;
 }
 
 function callEndpoint(params, context, container, inputParams) {

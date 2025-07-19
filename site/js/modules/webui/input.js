@@ -1,20 +1,20 @@
+const PATTERN_INT = /^int\d*$/;
+const PATTERN_TARGET_USER = /^core\.Target((Course)|(Server))User$/;
+const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-Z]+$/;
+
 // A general representation of a user input field.
 class FieldType {
     constructor(
-            name, displayName,
+            context, name, displayName,
             {
-                type = 'text', underlyingType = 'string', required = false, placeholder = '',
-                inputClasses = '', additionalAttributes = '', labelBefore = true, extractInputFunc = undefined
+                underlyingType = 'string', required = false, placeholder = '', inputClasses = '',
+                additionalAttributes = '', labelBefore = true, extractInputFunc = undefined
             } = {}) {
         // The name of the field.
         this.name = name;
 
         // The display name that will be shown to the user.
         this.displayName = displayName;
-
-        // The HTML input type.
-        // Supports checkbox, email, number, password, and text types.
-        this.type = type;
 
         // The underlying type of the field.
         // Non-standard types are parsed to JSON.
@@ -42,6 +42,9 @@ class FieldType {
         // If a default value extraction cannot be inferred, the value is parsed using JSON.
         this.extractInputFunc = extractInputFunc;
 
+        this.type = undefined;
+        this.inferInput(context);
+
         this.validate();
     }
 
@@ -53,19 +56,56 @@ class FieldType {
         if ((this.displayName == undefined) || (this.displayName == '')) {
             console.error(`Input field cannot have an empty display name: ${JSON.stringify(this)}.`);
         }
+
+        if ((this.type == undefined) || (this.type == "")) {
+            console.error(`Input field cannot have an empty type: ${JSON.stringify(this)}.`);
+        }
+    }
+
+    // Using the context and the underlying type,
+    // infer the HTML input type and metadata.
+    // This function must be called exactly once when the FieldType is created.
+    // TODO: Handle dropdown and textarea cases. Should JSON types be textareas?
+    inferInput(context) {
+        if (this.underlyingType === "string") {
+            this.type = "text";
+        } else if (PATTERN_TARGET_SELF_OR.test(this.underlyingType)) {
+            this.type = "email";
+            this.placeholder = context.user.email;
+        } else if (PATTERN_TARGET_USER.test(this.underlyingType)) {
+            this.type = "email";
+        } else if (PATTERN_INT.test(this.underlyingType)) {
+            this.type = "number";
+            this.inputClasses += ` pattern="\d*"`;
+        } else if (this.underlyingType === "bool") {
+            this.type = "checkbox";
+            this.inputClasses += " checkbox-field";
+            this.additionalAttributes += ` value="true"`;
+            this.labelBefore = false;
+        } else {
+            this.type = "text";
+            this.displayName += ` (expects: ${this.underlyingType})`;
+        }
+
+        // Due to the context credentials, remind the user the email and pass fields are optional.
+        if (this.name === "user-email") {
+            this.type = "email";
+            this.placeholder = context.user.email;
+        } else if (this.name === "user-pass") {
+            this.type = "password";
+            this.placeholder = "<current token>";
+        }
+
+        if ((this.required) && (this.placeholder === "")) {
+            this.additionalAttributes += ' required';
+            this.displayName += ` <span class="required-color">*</span>`;
+        }
     }
 
     toHTML() {
-        let additionalAttributes = this.additionalAttributes;
-        let displayName = this.displayName;
-        if ((this.required) && (this.placeholder === "")) {
-            additionalAttributes += ' required';
-            displayName += ` <span class="required-color">*</span>`;
-        }
-
         let inputFieldHTML = [
-            `<label for="${this.name}">${displayName}</label>`,
-            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${additionalAttributes}/>`,
+            `<label for="${this.name}">${this.displayName}</label>`,
+            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
         ];
 
         if (!this.labelBefore) {
