@@ -1,14 +1,12 @@
-import * as Autograder from '../autograder/base.js';
-
 // A general representation of a user input field.
-class Field {
+class FieldType {
     constructor(
             name, displayName,
             {
                 type = 'text', underlyingType = 'string', required = false, placeholder = '',
-                inputClass = '', attributes = '', labelBefore = true, extractInputFunc = undefined
+                inputClasses = '', additionalAttributes = '', labelBefore = true, extractInputFunc = undefined
             } = {}) {
-        // The name of the field which will be used for targeting the field.
+        // The name of the field.
         this.name = name;
 
         // The display name that will be shown to the user.
@@ -31,11 +29,11 @@ class Field {
         this.placeholder = placeholder;
 
         // Optional classes that are attached to the input.
-        this.inputClass = inputClass;
+        this.inputClasses = inputClasses;
 
         // Any additional attributes to the input field.
         // If the field is required, the required attribute will be added automatically.
-        this.attributes = attributes;
+        this.additionalAttributes = additionalAttributes;
 
         // Determines the position of the HTML label with respect to the input.
         this.labelBefore = labelBefore;
@@ -43,6 +41,8 @@ class Field {
         // A custom function for extracting the value from an input.
         // If a default value extraction cannot be inferred, the value is parsed using JSON.
         this.extractInputFunc = extractInputFunc;
+
+        this.validate();
     }
 
     validate() {
@@ -56,18 +56,16 @@ class Field {
     }
 
     toHTML() {
-        this.validate();
-
-        let attributes = this.attributes;
+        let additionalAttributes = this.additionalAttributes;
         let displayName = this.displayName;
         if ((this.required) && (this.placeholder === "")) {
-            attributes += ' required';
+            additionalAttributes += ' required';
             displayName += ` <span class="required-color">*</span>`;
         }
 
         let inputFieldHTML = [
             `<label for="${this.name}">${displayName}</label>`,
-            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${attributes}/>`,
+            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${additionalAttributes}/>`,
         ];
 
         if (!this.labelBefore) {
@@ -75,27 +73,31 @@ class Field {
         }
 
         return `
-            <div class="input-field ${this.inputClass}">
+            <div class="input-field ${this.inputClasses}">
                 ${inputFieldHTML.join("\n")}
             </div>
         `;
     }
 
-    getResult(container) {
+    getFieldInstance(container) {
         let input = container.querySelector(`fieldset [name=${this.name}]`);
         input.classList.add("touched");
 
-        return new Result(input, this.underlyingType, this.extractInputFunc);
+        return new FieldInstance(input, this.underlyingType, this.extractInputFunc);
     }
 }
 
-// The result of getting an Input.Field.
-class Result {
+// An instance of getting an Input.FieldType.
+class FieldInstance {
     constructor(input, underlyingType, extractInputFunc = undefined) {
         // The input from the query selector.
         this.input = input;
 
-        // See Field for field descriptions.
+        if (this.input == undefined) {
+            throw new Error("Cannot instantiate a field with an undefined input.");
+        }
+
+        // See FieldType for field descriptions.
         this.underlyingType = underlyingType;
         this.extractInputFunc = extractInputFunc;
     }
@@ -112,7 +114,7 @@ class Result {
             return;
         }
 
-        if (!this.input || this.input.value === "") {
+        if (this.input.value === "") {
             return;
         }
 
@@ -123,7 +125,7 @@ class Result {
         }
     }
 
-    getKey() {
+    getName() {
         return this.input.name;
     }
 
@@ -133,7 +135,7 @@ class Result {
         try {
             this.validate();
         } catch (error) {
-            throw new Error(`<p>Field "${this.input.name}": "${error.message}".</p>`);
+            throw new Error(`<p>FieldType "${this.input.name}": "${error.message}".</p>`);
         }
 
         if (this.extractInputFunc) {
@@ -182,6 +184,6 @@ function shouldJSONParse(type, underlyingType) {
 }
 
 export {
-    Field,
-    Result,
+    FieldInstance,
+    FieldType,
 };

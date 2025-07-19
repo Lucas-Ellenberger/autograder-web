@@ -181,13 +181,13 @@ function getInputField(context, fieldName = "", fieldType = "", requiredField = 
         placeholder = "<current token>";
     }
 
-    return new Input.Field(fieldName, displayName, {
+    return new Input.FieldType(fieldName, displayName, {
             type: inputType,
             underlyingType: fieldType,
             required: requiredField,
             placeholder: placeholder,
-            inputClass: fieldClass,
-            attributes: extraFields,
+            inputClasses: fieldClass,
+            additionalAttributes: extraFields,
             labelBefore: labelBefore,
         })
     ;

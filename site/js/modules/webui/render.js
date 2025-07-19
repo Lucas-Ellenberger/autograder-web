@@ -106,14 +106,14 @@ function makePage(
         `;
     }
 
-    let inputSectionHTML = '';
+    let inputFieldsHTML = '';
     if ((page.inputs) && (page.inputs.length > 0)) {
         let inputHTML = '';
         for (const input of page.inputs) {
             inputHTML += input.toHTML();
         }
 
-        inputSectionHTML = `
+        inputFieldsHTML = `
             <div class="user-input-fields secondary-color drop-shadow">
                 <fieldset>
                     ${inputHTML}
@@ -127,13 +127,19 @@ function makePage(
         buttonHTML = `<button class="template-button">${page.buttonName}</button>`;
     }
 
+    let inputSectionHTML = `
+        <div class="input-area">
+            ${inputFieldsHTML}
+            ${buttonHTML}
+        </div>
+    `;
+
     container.innerHTML = `
         <div class="template-page ${page.className}">
             <div class="template-content">
                 ${controlAreaHTML}
                 ${infoHTML}
                 ${inputSectionHTML}
-                ${buttonHTML}
                 <div class="results-area"></div>
             </div>
         </div>
@@ -165,7 +171,7 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
     let errorMessages = [];
 
     for (const input of inputs) {
-        let result = input.getResult(container);
+        let result = input.getFieldInstance(container);
 
         let value = undefined;
         try {
@@ -177,7 +183,7 @@ function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
         }
 
         if ((value) && (value != "")) {
-            inputParams[result.getKey()] = value;
+            inputParams[result.getName()] = value;
         }
     }
 
