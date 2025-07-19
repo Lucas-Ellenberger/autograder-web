@@ -304,7 +304,7 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
             clearContextUser: false,
         }).then(function(result) {
             resultsArea.innerHTML = `
-                <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+                <pre><code class="result code code-block secondary-color drop-shadow language-json" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
             `;
         })
         .catch(function(message) {
