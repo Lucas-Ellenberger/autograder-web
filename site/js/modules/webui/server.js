@@ -61,7 +61,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
         selectedEndpoint = undefined;
     }
 
-    let selector = renderSelector(endpoints, selectedEndpoint);
+    let selector = renderSelector(context, endpoints, selectedEndpoint);
     let selectorHTML = `<div class="endpoint-controls">${selector}</div>`;
 
     let inputFields = getInputFields(endpoints, selectedEndpoint, context);
@@ -94,24 +94,22 @@ function render(endpoints, selectedEndpoint, params, context, container) {
     });
 }
 
-function renderSelector(endpoints, selectedEndpoint) {
-    let optionsList = [];
+function renderSelector(context, endpoints, selectedEndpoint) {
+    let optionsList = [
+        new Input.SelectOption("", "Select an endpoint..."),
+    ];
 
     for (const endpoint of Object.keys(endpoints)) {
-        let isSelected = "";
-        if (endpoint === selectedEndpoint) {
-            isSelected = "selected";
-        }
-
-        optionsList.push(`<option value="${endpoint}" ${isSelected}>${endpoint}</option>`);
+        optionsList.push(new Input.SelectOption(endpoint, endpoint, endpoint === selectedEndpoint));
     }
 
-    return `
-        <select id="endpoint-dropdown">
-            <option value="">Select an endpoint...</option>
-            ${optionsList.join("\n")}
-        </select>
-    `;
+    let selectorField = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
+        underlyingType: "select",
+        selectOptions: optionsList,
+        labelBefore: true,
+    });
+
+    return selectorField.toHTML();
 }
 
 function getInputFields(endpoints, selectedEndpoint, context) {

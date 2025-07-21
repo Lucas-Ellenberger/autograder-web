@@ -685,6 +685,12 @@ table.standard-table tr:not(:last-child) {
     border-radius: var(--curve-radius-small);
 }
 
+.endpoint-controls .input-field {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
 .submission table,
 .submission-history table {
     margin-left: 2em;

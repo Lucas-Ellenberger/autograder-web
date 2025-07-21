@@ -8,7 +8,7 @@ class FieldType {
             context, name, displayName,
             {
                 underlyingType = 'string', required = false, placeholder = '', inputClasses = '',
-                additionalAttributes = '', labelBefore = true, extractInputFunc = undefined
+                additionalAttributes = '', selectOptions = [], labelBefore = true, extractInputFunc = undefined
             } = {}) {
         // The name of the field.
         this.name = name;
@@ -34,6 +34,11 @@ class FieldType {
         // Any additional attributes to the input field.
         // If the field is required, the required attribute will be added automatically.
         this.additionalAttributes = additionalAttributes;
+
+        // A list of options for select elements.
+        // TODO: Update comment.
+        // Each options should include [value, displayName, isSelected].
+        this.selectOptions = selectOptions;
 
         // Determines the position of the HTML label with respect to the input.
         this.labelBefore = labelBefore;
@@ -82,6 +87,8 @@ class FieldType {
             this.inputClasses += " checkbox-field";
             this.additionalAttributes += ` value="true"`;
             this.labelBefore = false;
+        } else if (this.underlyingType === "select") {
+            this.type = "select";
         } else {
             this.type = "text";
             this.displayName += ` (expects: ${this.underlyingType})`;
@@ -103,10 +110,16 @@ class FieldType {
     }
 
     toHTML() {
-        let inputFieldHTML = [
-            `<label for="${this.name}">${this.displayName}</label>`,
-            `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
-        ];
+        let inputFieldHTML = [];
+        if (this.type === "select") {
+            // TODO: Test this.
+            inputFieldHTML = this.selectToHTMLArray();
+        } else {
+            inputFieldHTML = [
+                `<label for="${this.name}">${this.displayName}</label>`,
+                `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
+            ];
+        }
 
         if (!this.labelBefore) {
             inputFieldHTML.reverse();
@@ -119,8 +132,22 @@ class FieldType {
         `;
     }
 
+    selectToHTMLArray() {
+        let selectHTML = `
+            <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
+                ${getSelectOptionsHTML(this.selectOptions)}
+            </select>
+        `;
+        let labelHTML = `<label for="${this.name}"></label>`;
+
+        return [
+            labelHTML,
+            selectHTML,
+        ];
+    }
+
     getFieldInstance(container) {
-        let input = container.querySelector(`fieldset [name=${this.name}]`);
+        let input = container.querySelector(`fieldset [name="${this.name}"]`);
         input.classList.add("touched");
 
         return new FieldInstance(input, this.underlyingType, this.extractInputFunc);
@@ -179,7 +206,7 @@ class FieldInstance {
         }
 
         if (this.extractInputFunc) {
-            return this.extractInputFunc(input);
+            return this.extractInputFunc(this.input);
         }
 
         if (this.input == undefined) {
@@ -209,10 +236,28 @@ class FieldInstance {
     }
 }
 
+class SelectOption {
+    constructor(value, displayName = value, selected = false) {
+        this.value = value;
+        this.displayName = displayName;
+        this.selected = selected;
+    }
+
+    toHTML() {
+        let isSelected = '';
+        if (this.selected) {
+            isSelected = ' selected';
+        }
+
+        return `<option value="${this.value}"${isSelected}>${this.displayName}</option>`;
+    }
+}
+
 function shouldJSONParse(type, underlyingType) {
     if ((type === "checkbox")
             || (type === "email")
-            || (type === "password")) {
+            || (type === "password")
+            || (type === "select")) {
         return false;
     }
 
@@ -223,7 +268,20 @@ function shouldJSONParse(type, underlyingType) {
     return true;
 }
 
+// TODO: Add function comment. Should we create a select option class?
+// Is a class better than a list of options?
+function getSelectOptionsHTML(selectOptions) {
+    let optionsList = [];
+
+    for (const option of selectOptions) {
+        optionsList.push(option.toHTML());
+    }
+
+    return optionsList.join("\n");
+}
+
 export {
     FieldInstance,
     FieldType,
+    SelectOption,
 };
