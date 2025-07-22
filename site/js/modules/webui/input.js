@@ -2,15 +2,26 @@ const PATTERN_INT = /^int\d*$/;
 const PATTERN_TARGET_USER = /^core\.Target((Course)|(Server))User$/;
 const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-Z]+$/;
 
+// The set of valid types for a FieldType.
+const validFieldTypes = new Map([
+    ["checkbox", {}],
+    ["email", {}],
+    ["number", {}],
+    ["password", {}],
+    ["select", {}],
+    ["text", {}],
+]);
+
 // A general representation of a user input field.
+// The FieldType is responsible for generating and validating the HTML of a field.
 class FieldType {
     constructor(
             context, name, displayName,
             {
                 underlyingType = 'string', required = false, placeholder = '',
-                inputClasses = '', additionalAttributes = '', selectOptions = [],
+                inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
-            } = {}) {
+            }) {
         // The name of the field.
         this.name = name;
 
@@ -38,7 +49,7 @@ class FieldType {
 
         // A list of SelectOptions.
         // Only used when the underlyingType is "select".
-        this.selectOptions = selectOptions;
+        this.choices = choices;
 
         // Determines the position of the HTML label with respect to the input.
         this.labelBefore = labelBefore;
@@ -52,7 +63,7 @@ class FieldType {
         this.inputValidationFunc = inputValidationFunc;
 
         this.type = undefined;
-        this.inferFieldType(context);
+        this.inferFieldInformation(context);
 
         this.validate();
     }
@@ -76,22 +87,17 @@ class FieldType {
     }
 
     isValidType() {
-        if ((this.type === "checkbox")
-                || (this.type === "email")
-                || (this.type === "number")
-                || (this.type === "password")
-                || (this.type === "select")
-                || (this.type === "text")) {
-            return true;
+        if (validFieldTypes.get(this.type) == undefined) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     // Using the context and the underlying type,
     // infer the HTML input type and metadata.
     // This function must be called exactly once when the FieldType is created.
-    inferFieldType(context) {
+    inferFieldInformation(context) {
         if (this.underlyingType === "string") {
             this.type = "text";
         } else if (PATTERN_TARGET_SELF_OR.test(this.underlyingType)) {
@@ -130,37 +136,36 @@ class FieldType {
     }
 
     toHTML() {
-        let inputFieldHTML = [];
+        let listOfFieldHTML = [
+            `<label for="${this.name}">${this.displayName}</label>`,
+        ];
+
         if (this.type === "select") {
-            let selectOptions = this.selectOptions;
+            let choices = this.choices;
 
-            // Add the display name of the dropdown as the first option of the select.
-            selectOptions.unshift(new SelectOption("", this.displayName));
+            // Add a help message as the first choice of the select.
+            choices.unshift(new SelectOption("", "--Please choose an option--"));
 
-            inputFieldHTML = [
-                // Do not include the display name in the label.
-                // It clutters the dropdown and it is set as the first option.
-                `<label for="${this.name}"></label>`,
+            listOfFieldHTML.push(
                 `
                     <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
-                        ${getSelectOptionsHTML(selectOptions)}
+                        ${getSelectOptionsHTML(choices)}
                     </select>
-                `,
-            ];
+                `
+            );
         } else {
-            inputFieldHTML = [
-                `<label for="${this.name}">${this.displayName}</label>`,
+            listOfFieldHTML.push(
                 `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
-            ];
+            );
         }
 
         if (!this.labelBefore) {
-            inputFieldHTML.reverse();
+            listOfFieldHTML.reverse();
         }
 
         return `
             <div class="input-field ${this.inputClasses}">
-                ${inputFieldHTML.join("\n")}
+                ${listOfFieldHTML.join("\n")}
             </div>
         `;
     }
@@ -173,10 +178,11 @@ class FieldType {
     }
 }
 
-// An instance of getting an Input.FieldType.
+// The FieldInstance class is responsible for validating and getting the user input from a FieldType.
+// Each FieldType is created once, but it creates a new FieldInstance whenever the user input is needed.
 class FieldInstance {
     constructor(input, underlyingType, extractInputFunc = undefined, inputValidationFunc = undefined) {
-        // The input from the query selector.
+        // The input from the Input.FieldType's element.
         this.input = input;
 
         if (this.input == undefined) {
@@ -196,6 +202,10 @@ class FieldInstance {
             throw new Error(`${this.input.validationMessage}`);
         }
 
+        if (!this.input.checkValidity()) {
+            throw new Error(`${this.input.validationMessage}`);
+        }
+
         if (this.inputValidationFunc != undefined) {
             this.inputValidationFunc(this.input);
             return;
@@ -207,6 +217,12 @@ class FieldInstance {
         }
 
         if (this.input.value === "") {
+            if (this.input.required) {
+                throw new Error('Please input a non-empty string.');
+            }
+
+            // TODO: Fix required case providing an empty input.
+            console.log("shoot");
             return;
         }
 
@@ -294,11 +310,11 @@ function shouldJSONParse(type, underlyingType) {
 }
 
 // Returns the HTML for the list of SelectOptions.
-function getSelectOptionsHTML(selectOptions) {
+function getSelectOptionsHTML(choices) {
     let optionsList = [];
 
-    for (const option of selectOptions) {
-        optionsList.push(option.toHTML());
+    for (const choice of choices) {
+        optionsList.push(choice.toHTML());
     }
 
     return optionsList.join("\n");
