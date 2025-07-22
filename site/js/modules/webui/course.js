@@ -185,14 +185,12 @@ function handlerUsers(path, params, context, container) {
 
     let inputFields = [
         new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {
-            underlyingType: '[]model.CourseUserReference'
+            underlyingType: '[]model.CourseUserReference',
         }),
     ];
 
     let description = `
-        List the users in the course.
-        Target users expects a JSON list of <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">course user references</a>.
-        Defaults to all users in the course.
+        List the users in the course (defaults to all users).
     `;
 
     Render.makePage(

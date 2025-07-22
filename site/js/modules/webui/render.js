@@ -146,7 +146,7 @@ function makePage(
     `;
 
     container.querySelector("button")?.addEventListener("click", function(event) {
-        populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
+        submitInputs(params, context, container, page.inputs, onSubmitFunc);
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
@@ -154,7 +154,7 @@ function makePage(
             return;
         }
 
-        populateResultsArea(params, context, container, page.inputs, onSubmitFunc);
+        submitInputs(params, context, container, page.inputs, onSubmitFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
@@ -164,7 +164,7 @@ function makePage(
     });
 }
 
-function populateResultsArea(params, context, container, inputs, onSubmitFunc) {
+function submitInputs(params, context, container, inputs, onSubmitFunc) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};

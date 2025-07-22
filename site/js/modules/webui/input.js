@@ -7,8 +7,9 @@ class FieldType {
     constructor(
             context, name, displayName,
             {
-                underlyingType = 'string', required = false, placeholder = '', inputClasses = '',
-                additionalAttributes = '', selectOptions = [], labelBefore = true, extractInputFunc = undefined
+                underlyingType = 'string', required = false, placeholder = '',
+                inputClasses = '', additionalAttributes = '', selectOptions = [],
+                labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
             } = {}) {
         // The name of the field.
         this.name = name;
@@ -35,9 +36,8 @@ class FieldType {
         // If the field is required, the required attribute will be added automatically.
         this.additionalAttributes = additionalAttributes;
 
-        // A list of options for select elements.
-        // TODO: Update comment.
-        // Each options should include [value, displayName, isSelected].
+        // A list of SelectOptions.
+        // Only used when the underlyingType is select.
         this.selectOptions = selectOptions;
 
         // Determines the position of the HTML label with respect to the input.
@@ -47,6 +47,10 @@ class FieldType {
         // If a default value extraction cannot be inferred, the value is parsed using JSON.
         this.extractInputFunc = extractInputFunc;
 
+        // A custom input validation function.
+        // The validity state of the input is checked before calling this custom validation function.
+        this.inputValidationFunc = inputValidationFunc;
+
         this.type = undefined;
         this.inferInput(context);
 
@@ -55,22 +59,38 @@ class FieldType {
 
     validate() {
         if ((this.name == undefined) || (this.name == '')) {
-            console.error(`Input field cannot have an empty name: ${JSON.stringify(this)}.`);
+            console.error(`Input field cannot have an empty name: '${JSON.stringify(this)}'.`);
         }
 
         if ((this.displayName == undefined) || (this.displayName == '')) {
-            console.error(`Input field cannot have an empty display name: ${JSON.stringify(this)}.`);
+            console.error(`Input field cannot have an empty display name: '${JSON.stringify(this)}'.`);
         }
 
-        if ((this.type == undefined) || (this.type == "")) {
-            console.error(`Input field cannot have an empty type: ${JSON.stringify(this)}.`);
+        if ((this.type == undefined) || (this.type == '')) {
+            console.error(`Input field cannot have an empty type: '${JSON.stringify(this)}'.`);
         }
+
+        if (!this.isValidType()) {
+            console.error(`Input field contains an invalid type: '${JSON.stringify(this.type)}'.`);
+        }
+    }
+
+    isValidType() {
+        if ((this.type === "checkbox")
+                || (this.type === "email")
+                || (this.type === "number")
+                || (this.type === "password")
+                || (this.type === "select")
+                || (this.type === "text")) {
+            return true;
+        }
+
+        return false;
     }
 
     // Using the context and the underlying type,
     // infer the HTML input type and metadata.
     // This function must be called exactly once when the FieldType is created.
-    // TODO: Handle dropdown and textarea cases. Should JSON types be textareas?
     inferInput(context) {
         if (this.underlyingType === "string") {
             this.type = "text";
@@ -112,8 +132,15 @@ class FieldType {
     toHTML() {
         let inputFieldHTML = [];
         if (this.type === "select") {
-            // TODO: Test this.
-            inputFieldHTML = this.selectToHTMLArray();
+            inputFieldHTML = [
+                // Do not include the displayName in select labels as it clutters the dropdown.
+                `<label for="${this.name}"></label>`,
+                `
+                    <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
+                        ${getSelectOptionsHTML(this.selectOptions)}
+                    </select>
+                `,
+            ];
         } else {
             inputFieldHTML = [
                 `<label for="${this.name}">${this.displayName}</label>`,
@@ -132,31 +159,17 @@ class FieldType {
         `;
     }
 
-    selectToHTMLArray() {
-        let selectHTML = `
-            <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
-                ${getSelectOptionsHTML(this.selectOptions)}
-            </select>
-        `;
-        let labelHTML = `<label for="${this.name}"></label>`;
-
-        return [
-            labelHTML,
-            selectHTML,
-        ];
-    }
-
     getFieldInstance(container) {
         let input = container.querySelector(`fieldset [name="${this.name}"]`);
         input.classList.add("touched");
 
-        return new FieldInstance(input, this.underlyingType, this.extractInputFunc);
+        return new FieldInstance(input, this.underlyingType, this.extractInputFunc, this.inputValidationFunc);
     }
 }
 
 // An instance of getting an Input.FieldType.
 class FieldInstance {
-    constructor(input, underlyingType, extractInputFunc = undefined) {
+    constructor(input, underlyingType, extractInputFunc = undefined, inputValidationFunc = undefined) {
         // The input from the query selector.
         this.input = input;
 
@@ -167,6 +180,7 @@ class FieldInstance {
         // See FieldType for field descriptions.
         this.underlyingType = underlyingType;
         this.extractInputFunc = extractInputFunc;
+        this.inputValidationFunc = inputValidationFunc;
     }
 
     // Validate the value of the input.
@@ -174,6 +188,11 @@ class FieldInstance {
     validate() {
         if (!this.input.validity.valid) {
             throw new Error(`${this.input.validationMessage}`);
+        }
+
+        if (this.inputValidationFunc != undefined) {
+            this.inputValidationFunc(this.input);
+            return;
         }
 
         // Skip further validation if a custom extraction function is provided.
@@ -268,8 +287,7 @@ function shouldJSONParse(type, underlyingType) {
     return true;
 }
 
-// TODO: Add function comment. Should we create a select option class?
-// Is a class better than a list of options?
+// Returns the HTML for the list of SelectOptions.
 function getSelectOptionsHTML(selectOptions) {
     let optionsList = [];
 

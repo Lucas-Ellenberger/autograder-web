@@ -103,13 +103,13 @@ function renderSelector(context, endpoints, selectedEndpoint) {
         optionsList.push(new Input.SelectOption(endpoint, endpoint, endpoint === selectedEndpoint));
     }
 
-    let selectorField = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
+    let selector = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
         underlyingType: "select",
         selectOptions: optionsList,
         labelBefore: true,
     });
 
-    return selectorField.toHTML();
+    return selector.toHTML();
 }
 
 function getInputFields(endpoints, selectedEndpoint, context) {
