@@ -95,10 +95,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 }
 
 function renderSelector(context, endpoints, selectedEndpoint) {
-    let optionsList = [
-        new Input.SelectOption("", "Select an endpoint..."),
-    ];
-
+    let optionsList = [];
     for (const endpoint of Object.keys(endpoints)) {
         optionsList.push(new Input.SelectOption(endpoint, endpoint, endpoint === selectedEndpoint));
     }

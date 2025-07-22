@@ -37,7 +37,7 @@ class FieldType {
         this.additionalAttributes = additionalAttributes;
 
         // A list of SelectOptions.
-        // Only used when the underlyingType is select.
+        // Only used when the underlyingType is "select".
         this.selectOptions = selectOptions;
 
         // Determines the position of the HTML label with respect to the input.
@@ -52,7 +52,7 @@ class FieldType {
         this.inputValidationFunc = inputValidationFunc;
 
         this.type = undefined;
-        this.inferInput(context);
+        this.inferFieldType(context);
 
         this.validate();
     }
@@ -91,7 +91,7 @@ class FieldType {
     // Using the context and the underlying type,
     // infer the HTML input type and metadata.
     // This function must be called exactly once when the FieldType is created.
-    inferInput(context) {
+    inferFieldType(context) {
         if (this.underlyingType === "string") {
             this.type = "text";
         } else if (PATTERN_TARGET_SELF_OR.test(this.underlyingType)) {
@@ -132,12 +132,18 @@ class FieldType {
     toHTML() {
         let inputFieldHTML = [];
         if (this.type === "select") {
+            let selectOptions = this.selectOptions;
+
+            // Add the display name of the dropdown as the first option of the select.
+            selectOptions.unshift(new SelectOption("", this.displayName));
+
             inputFieldHTML = [
-                // Do not include the displayName in select labels as it clutters the dropdown.
+                // Do not include the display name in the label.
+                // It clutters the dropdown and it is set as the first option.
                 `<label for="${this.name}"></label>`,
                 `
                     <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
-                        ${getSelectOptionsHTML(this.selectOptions)}
+                        ${getSelectOptionsHTML(selectOptions)}
                     </select>
                 `,
             ];
