@@ -25,6 +25,9 @@ const standardUnderlyingTypePatterns = [
     PATTERN_INT,
 ];
 
+// Returns whether a type is a standard type.
+// Non-standard types are defaulted to JSON.
+// The standard types that are currently supported can be found in the above constants.
 function isStandardType(type) {
     if (standardUnderlyingTypes.get(type) != undefined) {
         return true;
@@ -44,13 +47,11 @@ function isStandardType(type) {
 class FieldType {
     #parsedType = undefined;
 
-    // TODO: Add support for default values, this may mean the select dropdown accepts the name of the option that should be defaulted.
-    // -- this will remove the need for the selected bool parameter for the option class constructor.
     constructor(
             context, name, displayName,
             {
                 type = 'string', parsedType = undefined, required = false, placeholder = '',
-                inputClasses = '', additionalAttributes = '', choices = [],
+                defaultValue = '', inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
             }) {
         // The name of the field.
@@ -70,6 +71,12 @@ class FieldType {
 
         // The placeholder text for the input.
         this.placeholder = placeholder;
+
+        // The default value for the field.
+        // TODO: Add default value for checkbox types.
+        // A non-empty string will include the "checked" element for checkboxes.
+        // Fields with a "select" type should provide the name of the value that is selected.
+        this.defaultValue = defaultValue;
 
         // Optional classes that are attached to the input.
         this.inputClasses = inputClasses;
@@ -182,7 +189,7 @@ class FieldType {
             listOfFieldHTML.push(
                 `
                     <select id="${this.name}" name="${this.name}" class="tertiary-color" ${this.additionalAttributes}>
-                        ${getSelectChoicesHTML(choices)}
+                        ${getSelectChoicesHTML(choices, this.defaultValue)}
                     </select>
                 `
             );
@@ -312,15 +319,14 @@ class FieldInstance {
 }
 
 class SelectOption {
-    constructor(value, displayName = value, selected = false) {
+    constructor(value, displayName = value) {
         this.value = value;
         this.displayName = displayName;
-        this.selected = selected;
     }
 
-    toHTML() {
+    toHTML(defaultValue) {
         let isSelected = '';
-        if (this.selected) {
+        if (this.value === defaultValue) {
             isSelected = ' selected';
         }
 
@@ -329,11 +335,11 @@ class SelectOption {
 }
 
 // Returns the HTML for the list of select choices.
-function getSelectChoicesHTML(choices) {
+function getSelectChoicesHTML(choices, defaultValue) {
     let choicesHTMLList = [];
 
     for (const choice of choices) {
-        choicesHTMLList.push(choice.toHTML());
+        choicesHTMLList.push(choice.toHTML(defaultValue));
     }
 
     return choicesHTMLList.join("\n");

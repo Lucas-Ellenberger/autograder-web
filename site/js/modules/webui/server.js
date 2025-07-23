@@ -95,12 +95,13 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 function renderSelector(context, endpoints, selectedEndpoint) {
     let optionsList = [];
     for (const endpoint of Object.keys(endpoints)) {
-        optionsList.push(new Input.SelectOption(endpoint, endpoint, endpoint === selectedEndpoint));
+        optionsList.push(new Input.SelectOption(endpoint));
     }
 
     let selector = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
         type: "select",
         choices: optionsList,
+        defaultValue: selectedEndpoint,
     });
 
     return selector.toHTML();
