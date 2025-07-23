@@ -61,9 +61,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
         selectedEndpoint = undefined;
     }
 
-    let selector = renderSelector(context, endpoints, selectedEndpoint);
-    let selectorHTML = `<div class="endpoint-controls">${selector}</div>`;
-
+    let selectorHTML = renderSelector(context, endpoints, selectedEndpoint);
     let inputFields = getInputFields(endpoints, selectedEndpoint, context);
 
     let onSubmitFunc = undefined;
@@ -84,7 +82,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
         )
     ;
 
-    container.querySelector(".endpoint-controls select").addEventListener("change", function(event) {
+    container.querySelector(".template-control-area select").addEventListener("change", function(event) {
         let newParams = {
             [Routing.PARAM_TARGET_ENDPOINT]: event.target.value,
         };
@@ -101,7 +99,7 @@ function renderSelector(context, endpoints, selectedEndpoint) {
     }
 
     let selector = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
-        underlyingType: "select",
+        type: "select",
         choices: optionsList,
     });
 
@@ -124,7 +122,7 @@ function getInputFields(endpoints, selectedEndpoint, context) {
     let inputFields = [];
     for (const field of sortedInputs) {
         inputFields.push(new Input.FieldType(context, field.name, field.name, {
-            underlyingType: field.type,
+            type: field.type,
             required: field.required,
         }));
     }

@@ -621,11 +621,13 @@ table.standard-table tr:not(:last-child) {
     align-items: center;
 }
 
-.user-input-fields .input-field label {
+.user-input-fields .input-field label,
+.template-control-area .input-field label {
     margin-bottom: 0.5em;
 }
 
-.user-input-fields .checkbox-field label {
+.user-input-fields .checkbox-field label,
+.template-control-area .checkbox-field label {
     margin-bottom: 0em;
     margin-left: 0.5em;
 }
@@ -685,7 +687,12 @@ table.standard-table tr:not(:last-child) {
     border-radius: var(--curve-radius-small);
 }
 
-.endpoint-controls .input-field {
+.template-control-area {
+    padding: 1.5em;
+    border-radius: var(--curve-radius-small);
+}
+
+.template-control-area .input-field {
     display: flex;
     flex-direction: column;
     align-self: stretch;

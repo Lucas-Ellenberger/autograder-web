@@ -73,7 +73,11 @@ function makePage(
         page = {className: '', controlAreaHTML: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
     let controlAreaHTML = '';
     if ((page.controlAreaHTML) && (page.controlAreaHTML != '')) {
-        controlAreaHTML = page.controlAreaHTML;
+        controlAreaHTML = `
+            <div class="template-control-area secondary-color drop-shadow">
+                ${page.controlAreaHTML}
+            </div>
+        `;
     }
 
     let headerHTML = '';
@@ -171,17 +175,16 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     let errorMessages = [];
 
     for (const input of inputs) {
-        let result = input.getFieldInstance(container);
-
-        let value = undefined;
+        let result = undefined;
         try {
-            value = result.getValue(container);
+            result = input.getFieldInstance(container);
         } catch (error) {
             console.error(error);
             errorMessages.push(error.message);
             continue;
         }
 
+        let value = result.getValue(container);
         if ((value) && (value != "")) {
             inputParams[result.getName()] = value;
         }

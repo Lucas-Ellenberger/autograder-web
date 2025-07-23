@@ -3,6 +3,7 @@ const PATTERN_TARGET_USER = /^core\.Target((Course)|(Server))User$/;
 const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-Z]+$/;
 
 // The set of valid types for a FieldType.
+// TODO: Use objects instead.
 const validFieldTypes = new Map([
     ["checkbox", {}],
     ["email", {}],
@@ -10,15 +11,44 @@ const validFieldTypes = new Map([
     ["password", {}],
     ["select", {}],
     ["text", {}],
+    ["json", {}],
 ]);
+
+const standardUnderlyingTypes = new Map([
+    ["string", {}],
+    ["bool", {}],
+]);
+
+const standardUnderlyingTypePatterns = [
+    PATTERN_INT,
+];
+
+function isStandardType(type) {
+    if (standardUnderlyingTypes.get(type) != undefined) {
+        return true;
+    }
+
+    for (const pattern of standardUnderlyingTypePatterns) {
+        if (pattern.test(type)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // A general representation of a user input field.
 // The FieldType is responsible for generating and validating the HTML of a field.
 class FieldType {
+    #parsedType = undefined;
+
+    // TODO: Rename type to type and type can become #parsedType
+    // TODO: Add support for default values, this may mean the select dropdown accepts the name of the option that should be defaulted.
+    // -- this will remove the need for the selected bool parameter for the option class constructor.
     constructor(
             context, name, displayName,
             {
-                underlyingType = 'string', required = false, placeholder = '',
+                type = 'string', parsedType = undefined, required = false, placeholder = '',
                 inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
             }) {
@@ -28,11 +58,11 @@ class FieldType {
         // The display name that will be shown to the user.
         this.displayName = displayName;
 
-        // The underlying type of the field.
+        // The field type.
         // Non-standard types are parsed to JSON.
         // If a non-standard type cannot be parsed to JSON,
         // a validation error is raised.
-        this.underlyingType = underlyingType;
+        this.type = type;
 
         // Flags the field requires user input.
         this.required = required;
@@ -48,7 +78,7 @@ class FieldType {
         this.additionalAttributes = additionalAttributes;
 
         // A list of SelectOptions.
-        // Only used when the underlyingType is "select".
+        // Only used when the parsedType is "select".
         this.choices = choices;
 
         // Determines the position of the HTML label with respect to the input.
@@ -62,8 +92,10 @@ class FieldType {
         // The validity state of the input is checked before calling this custom validation function.
         this.inputValidationFunc = inputValidationFunc;
 
-        this.type = undefined;
-        this.inferFieldInformation(context);
+        this.#parsedType = parsedType;
+        if (this.#parsedType == undefined) {
+            this.inferFieldInformation(context);
+        }
 
         this.validate();
     }
@@ -77,17 +109,17 @@ class FieldType {
             console.error(`Input field cannot have an empty display name: '${JSON.stringify(this)}'.`);
         }
 
-        if ((this.type == undefined) || (this.type == '')) {
-            console.error(`Input field cannot have an empty type: '${JSON.stringify(this)}'.`);
+        if ((this.#parsedType == undefined) || (this.#parsedType == '')) {
+            console.error(`Input field cannot have an empty parsed type: '${JSON.stringify(this)}'.`);
         }
 
         if (!this.isValidType()) {
-            console.error(`Input field contains an invalid type: '${JSON.stringify(this.type)}'.`);
+            console.error(`Input field contains an invalid parsed type: '${JSON.stringify(this.#parsedType)}'.`);
         }
     }
 
     isValidType() {
-        if (validFieldTypes.get(this.type) == undefined) {
+        if (validFieldTypes.get(this.#parsedType) == undefined) {
             return false;
         }
 
@@ -98,34 +130,34 @@ class FieldType {
     // infer the HTML input type and metadata.
     // This function must be called exactly once when the FieldType is created.
     inferFieldInformation(context) {
-        if (this.underlyingType === "string") {
-            this.type = "text";
-        } else if (PATTERN_TARGET_SELF_OR.test(this.underlyingType)) {
-            this.type = "email";
+        if (this.type === "string") {
+            this.#parsedType = "text";
+        } else if (PATTERN_TARGET_SELF_OR.test(this.type)) {
+            this.#parsedType = "email";
             this.placeholder = context.user.email;
-        } else if (PATTERN_TARGET_USER.test(this.underlyingType)) {
-            this.type = "email";
-        } else if (PATTERN_INT.test(this.underlyingType)) {
-            this.type = "number";
+        } else if (PATTERN_TARGET_USER.test(this.type)) {
+            this.#parsedType = "email";
+        } else if (PATTERN_INT.test(this.type)) {
+            this.#parsedType = "number";
             this.inputClasses += ` pattern="\d*"`;
-        } else if (this.underlyingType === "bool") {
-            this.type = "checkbox";
+        } else if (this.type === "bool") {
+            this.#parsedType = "checkbox";
             this.inputClasses += " checkbox-field";
             this.additionalAttributes += ` value="true"`;
             this.labelBefore = false;
-        } else if (this.underlyingType === "select") {
-            this.type = "select";
+        } else if (this.type === "select") {
+            this.#parsedType = "select";
         } else {
-            this.type = "text";
-            this.displayName += ` (expects: ${this.underlyingType})`;
+            this.#parsedType = "text";
+            this.displayName += ` (expects: ${this.type})`;
         }
 
         // Due to the context credentials, remind the user the email and pass fields are optional.
         if (this.name === "user-email") {
-            this.type = "email";
+            this.#parsedType = "email";
             this.placeholder = context.user.email;
         } else if (this.name === "user-pass") {
-            this.type = "password";
+            this.#parsedType = "password";
             this.placeholder = "<current token>";
         }
 
@@ -140,7 +172,7 @@ class FieldType {
             `<label for="${this.name}">${this.displayName}</label>`,
         ];
 
-        if (this.type === "select") {
+        if (this.#parsedType === "select") {
             let choices = this.choices;
 
             // Add a help message as the first choice of the select.
@@ -148,14 +180,14 @@ class FieldType {
 
             listOfFieldHTML.push(
                 `
-                    <select id="${this.name}" name="${this.name}" class="${this.inputClasses}" ${this.additionalAttributes}>
+                    <select id="${this.name}" name="${this.name}" class="tertiary-color" ${this.additionalAttributes}>
                         ${getSelectOptionsHTML(choices)}
                     </select>
                 `
             );
         } else {
             listOfFieldHTML.push(
-                `<input type="${this.type}" id="${this.name}" name="${this.name}" placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
+                `<input type="${this.#parsedType}" id="${this.name}" name="${this.name}" class="tertiary-color"placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
             );
         }
 
@@ -174,14 +206,14 @@ class FieldType {
         let input = container.querySelector(`fieldset [name="${this.name}"]`);
         input.classList.add("touched");
 
-        return new FieldInstance(input, this.underlyingType, this.extractInputFunc, this.inputValidationFunc);
+        return new FieldInstance(input, this.type, this.extractInputFunc, this.inputValidationFunc);
     }
 }
 
 // The FieldInstance class is responsible for validating and getting the user input from a FieldType.
 // Each FieldType is created once, but it creates a new FieldInstance whenever the user input is needed.
 class FieldInstance {
-    constructor(input, underlyingType, extractInputFunc = undefined, inputValidationFunc = undefined) {
+    constructor(input, type, extractInputFunc = undefined, inputValidationFunc = undefined) {
         // The input from the Input.FieldType's element.
         this.input = input;
 
@@ -190,9 +222,16 @@ class FieldInstance {
         }
 
         // See FieldType for field descriptions.
-        this.underlyingType = underlyingType;
+        this.type = type;
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
+
+        try {
+            this.validate();
+        } catch (error) {
+            throw new Error(`<p>FieldType "${this.input.name}": "${error.message}".</p>`);
+        }
+
     }
 
     // Validate the value of the input.
@@ -218,16 +257,17 @@ class FieldInstance {
 
         if (this.input.value === "") {
             if (this.input.required) {
+                console.log(this.input);
                 throw new Error('Please input a non-empty string.');
             }
 
             // TODO: Fix required case providing an empty input.
-            console.log("shoot");
+            console.log(`shoot: '${this.input.name}', '${this.input.required}'.\n`);
             return;
         }
 
         // Try to parse non-standard field types.
-        if (shouldJSONParse(this.input.type, this.underlyingType)) {
+        if (shouldJSONParse(this.type, this.input.type)) {
             // Throws an error on failure.
             JSON.parse(`${this.input.value}`);
         }
@@ -240,12 +280,6 @@ class FieldInstance {
     // Get the value from the result.
     // Throws an error on validation errors.
     getValue() {
-        try {
-            this.validate();
-        } catch (error) {
-            throw new Error(`<p>FieldType "${this.input.name}": "${error.message}".</p>`);
-        }
-
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
         }
@@ -257,7 +291,7 @@ class FieldInstance {
         let value = undefined;
         if (this.input.type === "checkbox") {
             value = this.input.checked;
-        } else if (shouldJSONParse(this.input.type, this.underlyingType)) {
+        } else if (shouldJSONParse(this.type, this.input.type)) {
             value = this.valueFromJSON();
         } else {
             value = this.input.value;
@@ -294,15 +328,16 @@ class SelectOption {
     }
 }
 
-function shouldJSONParse(type, underlyingType) {
-    if ((type === "checkbox")
-            || (type === "email")
-            || (type === "password")
-            || (type === "select")) {
+// TODO: Move this to a method.
+function shouldJSONParse(type, inputType) {
+    if (isStandardType(type)) {
         return false;
     }
 
-    if (underlyingType === "string") {
+    if ((inputType === "checkbox")
+            || (inputType === "email")
+            || (inputType === "password")
+            || (inputType === "select")) {
         return false;
     }
 

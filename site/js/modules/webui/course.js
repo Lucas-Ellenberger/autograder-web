@@ -185,7 +185,7 @@ function handlerUsers(path, params, context, container) {
 
     let inputFields = [
         new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {
-            underlyingType: '[]model.CourseUserReference',
+            type: '[]model.CourseUserReference',
         }),
     ];
 
