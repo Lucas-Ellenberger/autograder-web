@@ -185,7 +185,7 @@ function handlerUsers(path, params, context, container) {
 
     let inputFields = [
         new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {
-            type: '[]model.CourseUserReference',
+            type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
         }),
     ];
 
@@ -213,13 +213,29 @@ function listUsers(params, context, container, inputParams) {
                 return '<p>Unable to find target users.</p>';
             }
 
-            return `<pre>${Render.listCourseUsers(result.users)}</pre`;
+            return `<pre>${listCourseUsers(result.users)}</pre`;
         })
         .catch(function(message) {
             console.error(message);
             return message;
         })
     ;
+}
+
+function listCourseUsers(users) {
+    let messages = [];
+    for (const user of users) {
+        let userParts = [
+            `Email: ${user['email']}`,
+            `Name: ${user['name']}`,
+            `Role: ${user['role']}`,
+            `LMS ID: ${user['lms-id']}`,
+        ];
+
+        messages.push(`${userParts.join("\n")}`);
+    }
+
+    return messages.join("\n\n");
 }
 
 function extractRecipients(recipientString) {

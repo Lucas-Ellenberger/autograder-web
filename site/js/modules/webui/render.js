@@ -83,7 +83,7 @@ function makePage(
     let headerHTML = '';
     if ((page.header) && (page.header != '')) {
         headerHTML = `
-            <div class="template-header secondary-color drop-shadow">
+            <div class="template-header">
                 <h2>${page.header}</h2>
             </div>
         `;
@@ -92,7 +92,7 @@ function makePage(
     let descriptionHTML = '';
     if ((page.description) && (page.description != '')) {
         descriptionHTML = `
-            <div class="template-description secondary-color drop-shadow">
+            <div class="template-description">
                 <p>
                     ${page.description}
                 </p>
@@ -103,7 +103,7 @@ function makePage(
     let infoHTML = '';
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
-            <div class="page-information">
+            <div class="page-information secondary-color drop-shadow">
                 ${headerHTML}
                 ${descriptionHTML}
             </div>
@@ -337,22 +337,6 @@ function submissionQuestions(questions) {
     return questionsHTML.join('');
 }
 
-function listCourseUsers(users) {
-    let messages = [];
-    for (const user of users) {
-        let userParts = [
-            `Email: ${user['email']}`,
-            `Name: ${user['name']}`,
-            `Role: ${user['role']}`,
-            `LMS ID: ${user['lms-id']}`,
-        ];
-
-        messages.push(`${userParts.join("\n")}`);
-    }
-
-    return messages.join("\n\n");
-}
-
 function makePairedTableRow(label, value, name = undefined) {
     let nameHTML = '';
     if (name) {
@@ -431,7 +415,6 @@ export {
     autograderError,
     card,
     cards,
-    listCourseUsers,
     makeCardObject,
     makeCardSection,
     makeCardSections,
