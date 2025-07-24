@@ -64,6 +64,30 @@ function makeCardSection(sectionName, sectionCards) {
     `;
 }
 
+// Set the title given the title and the title parts.
+// Title parts should be an array of [displayName, link].
+function makeTitle(title, titleParts) {
+    let titlePartsHTML = [];
+    for (const part of titleParts) {
+        let displayName = part[0];
+        let link = part[1];
+
+        if (link) {
+            titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
+        } else {
+            titlePartsHTML.push(`${displayName}`);
+        }
+    }
+
+    let titleHTML = `
+        <span>
+            ${titlePartsHTML.join("\n/ ")}
+        </span>
+    `;
+
+    Routing.setTitle(title, titleHTML);
+}
+
 function submissionHistory(course, assignment, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
@@ -269,6 +293,7 @@ export {
     makeCardObject,
     makeCardSection,
     makeCardSections,
+    makeTitle,
     submission,
     submissionHistory,
     tableFromDictionaries,
