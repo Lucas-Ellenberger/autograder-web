@@ -5,23 +5,22 @@ const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-
 const COURSE_USER_REFERENCE_LIST_FIELD_TYPE = '[]model.CourseUserReference';
 
 // The set of valid types for a FieldType.
-// TODO: Use objects instead.
-const validFieldTypes = new Map([
-    ["checkbox", {}],
-    ["email", {}],
-    ["number", {}],
-    ["password", {}],
-    ["select", {}],
-    ["text", {}],
-    ["json", {}],
-]);
+const validFieldTypes = {
+    "checkbox": true,
+    "email": true,
+    "number": true,
+    "password": true,
+    "select": true,
+    "text": true,
+    "json": true,
+};
 
-const standardUnderlyingTypes = new Map([
-    ["string", {}],
-    ["bool", {}],
-]);
+const standardTypes = {
+    "string": true,
+    "bool": true,
+};
 
-const standardUnderlyingTypePatterns = [
+const standardTypePatterns = [
     PATTERN_INT,
 ];
 
@@ -29,11 +28,11 @@ const standardUnderlyingTypePatterns = [
 // Non-standard types are defaulted to JSON.
 // The standard types that are currently supported can be found in the above constants.
 function isStandardType(type) {
-    if (standardUnderlyingTypes.get(type) != undefined) {
+    if (type in standardTypes) {
         return true;
     }
 
-    for (const pattern of standardUnderlyingTypePatterns) {
+    for (const pattern of standardTypePatterns) {
         if (pattern.test(type)) {
             return true;
         }
@@ -73,8 +72,6 @@ class FieldType {
         this.placeholder = placeholder;
 
         // The default value for the field.
-        // TODO: Add default value for checkbox types.
-        // A non-empty string will include the "checked" element for checkboxes.
         // Fields with a "select" type should provide the name of the value that is selected.
         this.defaultValue = defaultValue;
 
@@ -127,15 +124,15 @@ class FieldType {
     }
 
     isValidType() {
-        if (validFieldTypes.get(this.#parsedType) == undefined) {
+        if (this.#parsedType in standardTypes) {
             return false;
         }
 
         return true;
     }
 
-    // Using the context and the underlying type,
-    // infer the HTML input type and metadata.
+    // Using the context and the type,
+    // infer the input type and field information.
     // This function must be called exactly once when the FieldType is created.
     inferFieldInformation(context) {
         if (this.type === "string") {
@@ -151,7 +148,13 @@ class FieldType {
         } else if (this.type === "bool") {
             this.#parsedType = "checkbox";
             this.inputClasses += " checkbox-field";
-            this.additionalAttributes += ` value="true"`;
+
+            let value = "true";
+            if (this.defaultValue != "") {
+                value = this.defaultValue;
+            }
+
+            this.additionalAttributes += ` value="${value}"`;
             this.labelBefore = false;
         } else if (this.type === "select") {
             this.#parsedType = "select";
@@ -180,6 +183,8 @@ class FieldType {
             `<label for="${this.name}">${this.displayName}</label>`,
         ];
 
+        let fieldInformation = `id="${this.name}" name="${this.name}" class="tertiary-color" ${this.additionalAttributes}`;
+
         if (this.#parsedType === "select") {
             let choices = this.choices;
 
@@ -188,7 +193,7 @@ class FieldType {
 
             listOfFieldHTML.push(
                 `
-                    <select id="${this.name}" name="${this.name}" class="tertiary-color" ${this.additionalAttributes}>
+                    <select ${fieldInformation}>
                         ${getSelectChoicesHTML(choices, this.defaultValue)}
                     </select>
                 `
@@ -200,7 +205,7 @@ class FieldType {
             }
 
             listOfFieldHTML.push(
-                `<input type="${htmlType}" id="${this.name}" name="${this.name}" class="tertiary-color"placeholder="${this.placeholder}" ${this.additionalAttributes}/>`,
+                `<input type="${htmlType}" ${fieldInformation} placeholder="${this.placeholder}"/>`,
             );
         }
 
@@ -298,7 +303,7 @@ class FieldInstance {
         let value = undefined;
         if (this.input.type === "checkbox") {
             value = this.input.checked;
-        } else if (this.#parsedType === "json") {
+        } else if ((this.#parsedType === "json") || (this.#parsedType === "number")) {
             value = this.valueFromJSON();
         } else {
             value = this.input.value;
