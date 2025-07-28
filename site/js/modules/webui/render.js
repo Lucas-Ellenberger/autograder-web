@@ -184,9 +184,9 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
             continue;
         }
 
-        let value = result.getValue(container);
+        let value = result.value;
         if ((value) && (value != "")) {
-            inputParams[result.getName()] = value;
+            inputParams[result.name] = value;
         }
     }
 

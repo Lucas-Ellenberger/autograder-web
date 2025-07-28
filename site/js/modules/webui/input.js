@@ -5,20 +5,20 @@ const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-
 const COURSE_USER_REFERENCE_LIST_FIELD_TYPE = '[]model.CourseUserReference';
 
 // The set of valid types for a FieldType.
-const validFieldTypes = {
-    "checkbox": true,
-    "email": true,
-    "number": true,
-    "password": true,
-    "select": true,
-    "text": true,
-    "json": true,
-};
+const validFieldTypes = [
+    "checkbox",
+    "email",
+    "json",
+    "number",
+    "password",
+    "select",
+    "text",
+];
 
-const standardTypes = {
-    "string": true,
-    "bool": true,
-};
+const standardTypes = [
+    "bool",
+    "string",
+];
 
 const standardTypePatterns = [
     PATTERN_INT,
@@ -28,7 +28,7 @@ const standardTypePatterns = [
 // Non-standard types are defaulted to JSON.
 // The standard types that are currently supported can be found in the above constants.
 function isStandardType(type) {
-    if (type in standardTypes) {
+    if (standardTypes.includes(type)) {
         return true;
     }
 
@@ -124,11 +124,11 @@ class FieldType {
     }
 
     isValidType() {
-        if (this.#parsedType in standardTypes) {
-            return false;
+        if (validFieldTypes.includes(this.#parsedType)) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     // Using the context and the type,
@@ -189,7 +189,7 @@ class FieldType {
             let choices = this.choices;
 
             // Add a help message as the first choice of the select.
-            choices.unshift(new SelectOption("", "--Please choose an option--"));
+            choices.unshift(new SelectOption("", "--Choose an option--"));
 
             listOfFieldHTML.push(
                 `
@@ -285,13 +285,13 @@ class FieldInstance {
         }
     }
 
-    getName() {
+    get name() {
         return this.input.name;
     }
 
     // Get the value from the result.
     // Throws an error on validation errors.
-    getValue() {
+    get value() {
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
         }
@@ -341,11 +341,7 @@ class SelectOption {
 
 // Returns the HTML for the list of select choices.
 function getSelectChoicesHTML(choices, defaultValue) {
-    let choicesHTMLList = [];
-
-    for (const choice of choices) {
-        choicesHTMLList.push(choice.toHTML(defaultValue));
-    }
+    let choicesHTMLList = choices.map(choice => choice.toHTML(defaultValue));
 
     return choicesHTMLList.join("\n");
 }
