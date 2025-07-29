@@ -172,7 +172,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
-    let errorMessages = [];
+    let errorCount = 0;
 
     for (const input of inputs) {
         let result = undefined;
@@ -180,7 +180,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
             result = input.getFieldInstance(container);
         } catch (error) {
             console.error(error);
-            errorMessages.push(error.message);
+            errorCount++;
             continue;
         }
 
@@ -192,11 +192,11 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
 
     let resultsArea = container.querySelector(".results-area");
 
-    if (errorMessages.length > 0) {
+    if (errorCount > 0) {
+        // TODO: How do we want to present the error message to the user?
         resultsArea.innerHTML = `
             <div class="result secondary-color drop-shadow">
-                <p>The request was not submitted to the autograder due to the following errors:</p>
-                ${errorMessages.join("\n")}
+                <p>The request was not submitted to the autograder due to the '${errorCount}' input errors.</p>
             </div>
         `;
         return;

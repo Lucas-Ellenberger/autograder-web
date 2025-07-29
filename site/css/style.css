@@ -632,6 +632,13 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
+/* TODO: Style error output. */
+.user-input-fields .input-field .error-message {
+    border: 5px;
+    border-color: var(--color-text-error);
+    border-radius: var(--curve-radius-small);
+}
+
 .template-content .page-information {
     padding: 1.5em;
     text-align: center;

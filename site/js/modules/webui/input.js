@@ -213,6 +213,8 @@ class FieldType {
             listOfFieldHTML.reverse();
         }
 
+        listOfFieldHTML.push(`<div class="error-message ${getErrorName(this.name)}"><p><span></span></p></div>`);
+
         return `
             <div class="input-field ${this.inputClasses}">
                 ${listOfFieldHTML.join("\n")}
@@ -224,7 +226,7 @@ class FieldType {
         let input = container.querySelector(`fieldset [name="${this.name}"]`);
         input.classList.add("touched");
 
-        return new FieldInstance(input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
+        return new FieldInstance(container, input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
     }
 }
 
@@ -233,7 +235,9 @@ class FieldType {
 class FieldInstance {
     #parsedType = undefined;
 
-    constructor(input, parsedType, extractInputFunc = undefined, inputValidationFunc = undefined) {
+    constructor(container, input, parsedType, extractInputFunc = undefined, inputValidationFunc = undefined) {
+        this.container = container;
+
         // The input from the Input.FieldType's element.
         this.input = input;
 
@@ -249,9 +253,11 @@ class FieldInstance {
         try {
             this.validate();
         } catch (error) {
-            throw new Error(`<p>FieldType "${this.input.name}": "${error.message}".</p>`);
+            let errorField = this.container.querySelector(`.${getErrorName(this.input.name)}`);
+            errorField.textContent = `"${this.input.name}": "${error.message}".`;
+            // TODO: Should we include the error message to the final text box?
+            throw new Error();
         }
-
     }
 
     // Validate the value of the input.
@@ -344,6 +350,10 @@ function getSelectChoicesHTML(choices, defaultValue) {
     let choicesHTMLList = choices.map(choice => choice.toHTML(defaultValue));
 
     return choicesHTMLList.join("\n");
+}
+
+function getErrorName(name) {
+    return `${name}-error`;
 }
 
 export {
