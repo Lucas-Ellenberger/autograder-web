@@ -250,13 +250,23 @@ class FieldInstance {
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
 
+        const errorField = this.container.querySelector(`.${getErrorName(this.input.name)}`);
+
         try {
             this.validate();
         } catch (error) {
-            let errorField = this.container.querySelector(`.${getErrorName(this.input.name)}`);
-            errorField.textContent = `"${this.input.name}": "${error.message}".`;
+            if (errorField) {
+                errorField.querySelector("span").textContent = error.message;
+                errorField.classList.add("show");
+            }
+
             // TODO: Should we include the error message to the final text box?
             throw new Error();
+        }
+
+        if (errorField) {
+            errorField.querySelector("span").textContent = '';
+            errorField.classList.remove("show");
         }
     }
 

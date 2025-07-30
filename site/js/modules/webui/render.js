@@ -161,9 +161,26 @@ function makePage(
         submitInputs(params, context, container, page.inputs, onSubmitFunc);
     });
 
+    console.log(page.inputs);
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
+
+            let currentPageInput = undefined;
+            for (const pageInput of page.inputs) {
+                if (pageInput.name === input.name) {
+                    currentPageInput = pageInput;
+                    break;
+                }
+            }
+
+            if (currentPageInput) {
+                try {
+                    currentPageInput.getFieldInstance(container);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
         });
     });
 }

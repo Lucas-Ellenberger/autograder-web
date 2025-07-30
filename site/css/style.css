@@ -36,7 +36,8 @@
     --color-dark-bg-accent-primary: rgb(130, 130, 255);
 
     --color-bg-shadow: #000000;
-    --color-text-error: #f40055;
+    --color-text-error: rgba(244, 0, 85);
+    --color-bg-error: rgba(244, 0, 85, 0.1);
 
     --curve-radius-small: 10px;
     --curve-radius-large: 20px;
@@ -298,6 +299,7 @@ select {
 
 input:invalid.touched {
     border-color: var(--color-text-error);
+    outline-color: var(--color-text-error);
 }
 
 button:focus,
@@ -634,9 +636,21 @@ table.standard-table tr:not(:last-child) {
 
 /* TODO: Style error output. */
 .user-input-fields .input-field .error-message {
-    border: 5px;
-    border-color: var(--color-text-error);
+    /* padding */
+    margin-top: 0.25em;
+    padding: 0.25em 0.5em;
+
+    color: var(--color-text-error);
+    background-color: var(--color-bg-error);
+
+    border-left: 5px;
     border-radius: var(--curve-radius-small);
+
+    display: none;
+}
+
+.user-input-fields .input-field .error-message.show {
+    display: block;
 }
 
 .template-content .page-information {
