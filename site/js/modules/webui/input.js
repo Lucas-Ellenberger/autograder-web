@@ -357,7 +357,7 @@ class SelectOption {
 
 // Returns the HTML for the list of select choices.
 function getSelectChoicesHTML(choices, defaultValue) {
-    let choicesHTMLList = choices.map(choice => choice.toHTML(defaultValue));
+    let choicesHTMLList = choices.map((choice) => (choice.toHTML(defaultValue)));
 
     return choicesHTMLList.join("\n");
 }

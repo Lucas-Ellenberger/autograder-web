@@ -66,7 +66,9 @@ function makeCardSection(sectionName, sectionCards) {
 
 // Render a page that follows a standard template.
 // The template includes a control area, header, description, input area, submission button, and a results area.
-// The onSubmitFunc must return a promise that resolves to the content that should be displayed in the results area.
+// The onSubmitFunc must do the following:
+//   - Accept four parameters (params, context, container, inputParams)
+//   - Return a promise that resolves to the content to display in the results area
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
         params, context, container, onSubmitFunc,
@@ -149,7 +151,7 @@ function makePage(
         </div>
     `;
 
-    container.querySelector("button")?.addEventListener("click", function(event) {
+    container.querySelector(".input-area .template-button")?.addEventListener("click", function(event) {
         submitInputs(params, context, container, page.inputs, onSubmitFunc);
     });
 
