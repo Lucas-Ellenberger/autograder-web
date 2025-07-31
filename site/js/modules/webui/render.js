@@ -161,7 +161,6 @@ function makePage(
         submitInputs(params, context, container, page.inputs, onSubmitFunc);
     });
 
-    console.log(page.inputs);
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
@@ -174,11 +173,14 @@ function makePage(
                 }
             }
 
+            // Validate the input after the user touches a field.
+            // Generate inline validation errors to help users catch errors as they progress.
             if (currentPageInput) {
                 try {
                     currentPageInput.getFieldInstance(container);
                 } catch (error) {
                     console.error(error);
+                    return;
                 }
             }
         });
@@ -189,15 +191,14 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
-    let errorCount = 0;
+    let errorMessages = [];
 
     for (const input of inputs) {
         let result = undefined;
         try {
             result = input.getFieldInstance(container);
         } catch (error) {
-            console.error(error);
-            errorCount++;
+            errorMessages.push(error.message);
             continue;
         }
 
@@ -209,11 +210,11 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
 
     let resultsArea = container.querySelector(".results-area");
 
-    if (errorCount > 0) {
-        // TODO: How do we want to present the error message to the user?
+    if (errorMessages.length > 0) {
         resultsArea.innerHTML = `
             <div class="result secondary-color drop-shadow">
-                <p>The request was not submitted to the autograder due to the '${errorCount}' input errors.</p>
+                <p>The request was not submitted to the autograder due to the following errors:</p>
+                ${errorMessages.join("\n")}
             </div>
         `;
         return;

@@ -260,10 +260,10 @@ class FieldInstance {
                 errorField.classList.add("show");
             }
 
-            // TODO: Should we include the error message to the final text box?
-            throw new Error();
+            throw new Error(`<p>${this.input.name}: ${error.message}`);
         }
 
+        // Clear the error message if validation is successful.
         if (errorField) {
             errorField.querySelector("span").textContent = '';
             errorField.classList.remove("show");
