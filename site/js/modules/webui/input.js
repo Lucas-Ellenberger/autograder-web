@@ -44,7 +44,7 @@ function isStandardType(type) {
 // A general representation of a user input field.
 // The FieldType is responsible for generating and validating the HTML of a field.
 class FieldType {
-    #parsedType = undefined;
+    #parsedType;
 
     constructor(
             context, name, displayName,
@@ -189,7 +189,7 @@ class FieldType {
             let choices = this.choices;
 
             // Add a help message as the first choice of the select.
-            choices.unshift(new SelectOption("", "--Choose an option--"));
+            choices.unshift(new SelectOption("", "--Choose an Option--"));
 
             listOfFieldHTML.push(
                 `
@@ -231,14 +231,14 @@ class FieldType {
 // The FieldInstance class is responsible for validating and getting the user input from a FieldType.
 // Each FieldType is created once, but it creates a new FieldInstance whenever the user input is needed.
 class FieldInstance {
-    #parsedType = undefined;
+    #parsedType;
 
     constructor(input, parsedType, extractInputFunc = undefined, inputValidationFunc = undefined) {
         // The input from the Input.FieldType's element.
         this.input = input;
 
         if (this.input == undefined) {
-            throw new Error("Cannot instantiate a field with an undefined input.");
+            throw new Error("<p>Cannot instantiate a field with an undefined input.</p>");
         }
 
         // See FieldType for field descriptions.
@@ -249,7 +249,7 @@ class FieldInstance {
         try {
             this.validate();
         } catch (error) {
-            throw new Error(`<p>FieldType "${this.input.name}": "${error.message}".</p>`);
+            throw new Error(`<p>FieldType "${this.getFieldName()}": "${error.message}".</p>`);
         }
 
     }
@@ -285,13 +285,13 @@ class FieldInstance {
         }
     }
 
-    get name() {
+    getFieldName() {
         return this.input.name;
     }
 
     // Get the value from the result.
     // Throws an error on validation errors.
-    get value() {
+    getFieldValue() {
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
         }
