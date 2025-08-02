@@ -28,7 +28,7 @@ function handlerCourses(path, params, context, container) {
 function handlerCourse(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
 
-    Routing.setTitle(course.id);
+    Render.makeTitle(course.id);
 
     let assignmentCards = [];
     for (const [id, assignment] of Object.entries(course.assignments)) {
@@ -73,13 +73,11 @@ function handlerEmail(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
-    let titleHTML = `
-        <span>
-            <a href='${courseLink}'>${course.id}</a>
-            / email
-        </span>
-    `;
-    Routing.setTitle(course.id, titleHTML);
+    let titleParts = [
+        [course.id, courseLink],
+        ["email"]
+    ];
+    Render.makeTitle(course.id, titleParts);
 
     container.innerHTML = `
         <div class="email-page">
@@ -175,13 +173,11 @@ function handlerUsers(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
-    let titleHTML = `
-        <span>
-            <a href='${courseLink}'>${course.id}</a>
-            / users
-        </span>
-    `;
-    Routing.setTitle(course.id, titleHTML);
+    let titleParts = [
+        [course.id, courseLink],
+        ["users"]
+    ];
+    Render.makeTitle(course.id, titleParts);
 
     let inputFields = [
         new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {

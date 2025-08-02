@@ -215,9 +215,15 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     ;
 }
 
-// Set the title given the title and the title parts.
-// Title parts should be an array of [displayName, link].
+// Set the title given a list of title parts.
+// Each title part is [display name, optional link].
+// If title parts is undefined, defaults to the title.
 function makeTitle(title, titleParts) {
+    if (!titleParts) {
+        Routing.setTitle(title);
+        return;
+    }
+
     let titlePartsHTML = [];
     for (const part of titleParts) {
         let displayName = part[0];
