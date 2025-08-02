@@ -64,6 +64,157 @@ function makeCardSection(sectionName, sectionCards) {
     `;
 }
 
+// Render a page that follows a standard template.
+// The template includes a control area, header, description, input area, submission button, and a results area.
+// The onSubmitFunc must do the following:
+//   - Accept four parameters (params, context, container, inputParams).
+//   - Return a promise that resolves to the content to display in the results area.
+// The page inputs expects a list of Input.Fields, see ./input.js for more information.
+function makePage(
+        params, context, container, onSubmitFunc,
+        page = {className: '', controlAreaHTML: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
+    let controlAreaHTML = '';
+    if ((page.controlAreaHTML) && (page.controlAreaHTML != '')) {
+        controlAreaHTML = `
+            <div class="template-control-area secondary-color drop-shadow">
+                ${page.controlAreaHTML}
+            </div>
+        `;
+    }
+
+    let headerHTML = '';
+    if ((page.header) && (page.header != '')) {
+        headerHTML = `
+            <div class="template-header">
+                <h2>${page.header}</h2>
+            </div>
+        `;
+    }
+
+    let descriptionHTML = '';
+    if ((page.description) && (page.description != '')) {
+        descriptionHTML = `
+            <div class="template-description">
+                <p>
+                    ${page.description}
+                </p>
+            </div>
+        `;
+    }
+
+    let infoHTML = '';
+    if ((headerHTML != '') || (descriptionHTML != '')) {
+        infoHTML = `
+            <div class="page-information secondary-color drop-shadow">
+                ${headerHTML}
+                ${descriptionHTML}
+            </div>
+        `;
+    }
+
+    let inputFieldsHTML = '';
+    if ((page.inputs) && (page.inputs.length > 0)) {
+        let inputHTML = '';
+        for (const input of page.inputs) {
+            inputHTML += input.toHTML();
+        }
+
+        inputFieldsHTML = `
+            <div class="user-input-fields secondary-color drop-shadow">
+                <fieldset>
+                    ${inputHTML}
+                </fieldset>
+            </div>
+        `;
+    }
+
+    let buttonHTML = '';
+    if (onSubmitFunc) {
+        buttonHTML = `<button class="template-button">${page.buttonName}</button>`;
+    }
+
+    let inputSectionHTML = `
+        <div class="input-area">
+            ${inputFieldsHTML}
+            ${buttonHTML}
+        </div>
+    `;
+
+    container.innerHTML = `
+        <div class="template-page ${page.className}">
+            <div class="template-content">
+                ${controlAreaHTML}
+                ${infoHTML}
+                ${inputSectionHTML}
+                <div class="results-area"></div>
+            </div>
+        </div>
+    `;
+
+    container.querySelector(".input-area .template-button")?.addEventListener("click", function(event) {
+        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+    });
+
+    container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
+        if (event.key != "Enter") {
+            return;
+        }
+
+        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+    });
+
+    container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
+        input.addEventListener("blur", function(event) {
+            input.classList.add("touched");
+        });
+    });
+}
+
+function submitInputs(params, context, container, inputs, onSubmitFunc) {
+    Routing.loadingStart(container.querySelector(".results-area"), false);
+
+    let inputParams = {};
+    let errorMessages = [];
+
+    for (const input of inputs) {
+        let result = undefined;
+        try {
+            result = input.getFieldInstance(container);
+        } catch (error) {
+            console.error(error);
+            errorMessages.push(error.message);
+            continue;
+        }
+
+        let value = result.getFieldValue();
+        if ((value) && (value != "")) {
+            inputParams[result.getFieldName()] = value;
+        }
+    }
+
+    let resultsArea = container.querySelector(".results-area");
+
+    if (errorMessages.length > 0) {
+        resultsArea.innerHTML = `
+            <div class="result secondary-color drop-shadow">
+                <p>The request was not submitted to the autograder due to the following errors:</p>
+                ${errorMessages.join("\n")}
+            </div>
+        `;
+        return;
+    }
+
+    onSubmitFunc(params, context, container, inputParams)
+        .then(function(result) {
+            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
+        })
+        .catch(function(message) {
+            console.error(message);
+            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
+        })
+    ;
+}
+
 function submissionHistory(course, assignment, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
@@ -269,6 +420,7 @@ export {
     makeCardObject,
     makeCardSection,
     makeCardSections,
+    makePage,
     submission,
     submissionHistory,
     tableFromDictionaries,
