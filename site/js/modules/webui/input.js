@@ -189,7 +189,7 @@ class FieldType {
             let choices = this.choices;
 
             // Add a help message as the first choice of the select.
-            choices.unshift(new SelectOption("", "--Choose an Option--"));
+            choices.unshift(new SelectOption("", "-- Choose an Option --"));
 
             listOfFieldHTML.push(
                 `
