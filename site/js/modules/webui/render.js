@@ -166,6 +166,24 @@ function makePage(
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
+
+            let currentPageInput = undefined;
+            for (const pageInput of page.inputs) {
+                if (pageInput.name === input.name) {
+                    currentPageInput = pageInput;
+                    break;
+                }
+            }
+
+            // Validate the input after the field loses focus.
+            if (currentPageInput) {
+                try {
+                    currentPageInput.getFieldInstance(container);
+                } catch (error) {
+                    console.error(error);
+                    return;
+                }
+            }
         });
     });
 }
@@ -181,7 +199,6 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         try {
             result = input.getFieldInstance(container);
         } catch (error) {
-            console.error(error);
             errorMessages.push(error.message);
             continue;
         }
