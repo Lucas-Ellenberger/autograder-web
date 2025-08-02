@@ -549,15 +549,15 @@ fieldset {
     word-break: keep-all;
 }
 
-.endpoint-page,
-.email-page {
+.email-page,
+.template-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.endpoint-content,
-.email-content {
+.email-content,
+.template-content {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -621,21 +621,32 @@ table.standard-table tr:not(:last-child) {
     align-items: center;
 }
 
-.user-input-fields .input-field label {
+.user-input-fields .input-field label,
+.template-control-area .input-field label {
     margin-bottom: 0.5em;
 }
 
-.user-input-fields .checkbox-field label {
+.user-input-fields .checkbox-field label,
+.template-control-area .checkbox-field label {
     margin-bottom: 0em;
     margin-left: 0.5em;
 }
 
-.endpoint-content > div,
-.email-content > div {
+.template-content .page-information {
+    padding: 1.5em;
+    text-align: center;
+    border-radius: var(--curve-radius-small);
+}
+
+.email-content > button,
+.email-content > div,
+.template-content > button,
+.template-content > div {
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
+    min-width: 50vw;
     max-width: 95vw;
 
     gap: 1em;
@@ -645,35 +656,11 @@ table.standard-table tr:not(:last-child) {
     margin-left: 0.5em;
 }
 
-.endpoint-input {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.endpoint-input:empty {
-    display: none;
-}
-
-.endpoint-input .endpoint-title {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    max-width: 95vw;
-    overflow-x: auto;
-
-    gap: 1em;
-    padding: 1.5em;
-
-    border-radius: var(--curve-radius-small);
-}
-
-.endpoint-input h2 {
+.template-content .template-description p {
     margin-bottom: 0em;
 }
 
-.endpoint-input button {
+.template-content button {
     padding: 0.5em 0.75em;
 }
 
@@ -688,6 +675,17 @@ table.standard-table tr:not(:last-child) {
     margin-bottom: 1em;
 
     border-radius: var(--curve-radius-small);
+}
+
+.template-control-area {
+    padding: 1.5em;
+    border-radius: var(--curve-radius-small);
+}
+
+.template-control-area .input-field {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
 }
 
 .submission table,

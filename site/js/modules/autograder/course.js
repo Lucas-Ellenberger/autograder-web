@@ -7,6 +7,14 @@ function email(params) {
     });
 }
 
+function users(params) {
+    return Core.sendRequest({
+        endpoint: 'courses/users/list',
+        payload: params,
+    });
+}
+
 export {
     email,
+    users,
 };
