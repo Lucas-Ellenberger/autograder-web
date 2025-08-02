@@ -171,6 +171,12 @@ function makePage(
 }
 
 function submitInputs(params, context, container, inputs, onSubmitFunc) {
+    // If the button is blocked, the server is processing the previous request.
+    let button = container.querySelector(".input-area .template-button");
+    if (button?.disabled) {
+        return;
+    }
+
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
@@ -204,6 +210,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         return;
     }
 
+    button.disabled = true;
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
@@ -211,6 +218,9 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         .catch(function(message) {
             console.error(message);
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
+        })
+        .finally(function() {
+            button.disabled = false;
         })
     ;
 }
