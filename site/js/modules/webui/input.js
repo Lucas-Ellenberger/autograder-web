@@ -213,17 +213,17 @@ class FieldType {
             listOfFieldHTML.reverse();
         }
 
-        listOfFieldHTML.push(`<div class="error-message ${getErrorName(this.name)}"><p><span></span></p></div>`);
+        listOfFieldHTML.push(`<div class="error-message"><p><span></span></p></div>`);
 
         return `
-            <div class="input-field ${this.inputClasses}">
+            <div class="input-field ${this.name} ${this.inputClasses}">
                 ${listOfFieldHTML.join("\n")}
             </div>
         `;
     }
 
     getFieldInstance(container) {
-        let input = container.querySelector(`fieldset [name="${this.name}"]`);
+        let input = container.querySelector(`fieldset *[name="${this.name}"]`);
         input.classList.add("touched");
 
         return new FieldInstance(container, input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
@@ -250,7 +250,9 @@ class FieldInstance {
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
 
-        const errorField = this.container.querySelector(`.${getErrorName(this.input.name)}`);
+        // TODO: Fix query.
+        const errorField = this.container.querySelector(`.user-input-fields .${this.name} .error-message`);
+        console.log(errorField);
 
         try {
             this.validate();
