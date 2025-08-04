@@ -210,7 +210,10 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         return;
     }
 
-    button.disabled = true;
+    if (button) {
+        button.disabled = true;
+    }
+
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
@@ -220,7 +223,9 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
         })
         .finally(function() {
-            button.disabled = false;
+            if (button) {
+                button.disabled = false;
+            }
         })
     ;
 }
