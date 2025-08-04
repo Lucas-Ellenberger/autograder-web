@@ -37,8 +37,16 @@ function submit(course, assignment, files) {
     });
 }
 
+function proxyResubmit(args) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/proxy/resubmit',
+        payload: args,
+    });
+}
+
 export {
     history,
     peek,
     submit,
+    proxyResubmit,
 }

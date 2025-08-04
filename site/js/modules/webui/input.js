@@ -7,6 +7,7 @@ const COURSE_USER_REFERENCE_LIST_FIELD_TYPE = '[]model.CourseUserReference';
 const INPUT_TYPE_BOOL = 'bool';
 const INPUT_TYPE_CHECKBOX = 'checkbox';
 const INPUT_TYPE_EMAIL = 'email';
+const INPUT_TYPE_INT = 'int';
 const INPUT_TYPE_JSON = 'json';
 const INPUT_TYPE_NUMBER = 'number';
 const INPUT_TYPE_PASSWORD = 'password';
@@ -362,6 +363,7 @@ export {
     INPUT_TYPE_BOOL,
     INPUT_TYPE_CHECKBOX,
     INPUT_TYPE_EMAIL,
+    INPUT_TYPE_INT,
     INPUT_TYPE_JSON,
     INPUT_TYPE_NUMBER,
     INPUT_TYPE_PASSWORD,
