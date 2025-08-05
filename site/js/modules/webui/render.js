@@ -72,31 +72,39 @@ function makeCardSection(sectionName, sectionCards) {
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
         params, context, container, onSubmitFunc,
-        page = {className: '', controlAreaHTML: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
-    let controlAreaHTML = '';
-    if ((page.controlAreaHTML) && (page.controlAreaHTML != '')) {
+        {
+            className = '',
+            controlAreaHTML = '',
+            header = '',
+            description = '',
+            inputs = [],
+            buttonName = 'Submit',
+            // Click the submit button as soon as the page is created.
+            submitOnCreation = false,
+        }) {
+    if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
             <div class="template-control-area secondary-color drop-shadow">
-                ${page.controlAreaHTML}
+                ${controlAreaHTML}
             </div>
         `;
     }
 
     let headerHTML = '';
-    if ((page.header) && (page.header != '')) {
+    if ((header) && (header != '')) {
         headerHTML = `
             <div class="template-header">
-                <h2>${page.header}</h2>
+                <h2>${header}</h2>
             </div>
         `;
     }
 
     let descriptionHTML = '';
-    if ((page.description) && (page.description != '')) {
+    if ((description) && (description != '')) {
         descriptionHTML = `
             <div class="template-description">
                 <p>
-                    ${page.description}
+                    ${description}
                 </p>
             </div>
         `;
@@ -113,9 +121,9 @@ function makePage(
     }
 
     let inputFieldsHTML = '';
-    if ((page.inputs) && (page.inputs.length > 0)) {
+    if ((inputs) && (inputs.length > 0)) {
         let inputHTML = '';
-        for (const input of page.inputs) {
+        for (const input of inputs) {
             inputHTML += input.toHTML();
         }
 
@@ -130,7 +138,7 @@ function makePage(
 
     let buttonHTML = '';
     if (onSubmitFunc) {
-        buttonHTML = `<button class="template-button">${page.buttonName}</button>`;
+        buttonHTML = `<button class="template-button">${buttonName}</button>`;
     }
 
     let inputSectionHTML = `
@@ -141,7 +149,7 @@ function makePage(
     `;
 
     container.innerHTML = `
-        <div class="template-page ${page.className}">
+        <div class="template-page ${className}">
             <div class="template-content">
                 ${controlAreaHTML}
                 ${infoHTML}
@@ -151,8 +159,9 @@ function makePage(
         </div>
     `;
 
-    container.querySelector(".input-area .template-button")?.addEventListener("click", function(event) {
-        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+    let button = container.querySelector(".input-area .template-button")
+    button?.addEventListener("click", function(event) {
+        submitInputs(params, context, container, inputs, onSubmitFunc);
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
@@ -160,7 +169,7 @@ function makePage(
             return;
         }
 
-        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
@@ -168,9 +177,19 @@ function makePage(
             input.classList.add("touched");
         });
     });
+
+    if (submitOnCreation) {
+        button?.click();
+    }
 }
 
 function submitInputs(params, context, container, inputs, onSubmitFunc) {
+    // If the button is blocked, the server is processing the previous request.
+    let button = container.querySelector(".input-area .template-button");
+    if (button?.disabled) {
+        return;
+    }
+
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
     let inputParams = {};
@@ -204,6 +223,10 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         return;
     }
 
+    if (button) {
+        button.disabled = true;
+    }
+
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
@@ -211,6 +234,11 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         .catch(function(message) {
             console.error(message);
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
+        })
+        .finally(function() {
+            if (button) {
+                button.disabled = false;
+            }
         })
     ;
 }

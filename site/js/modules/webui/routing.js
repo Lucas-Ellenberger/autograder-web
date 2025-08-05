@@ -22,11 +22,14 @@ const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
+const PATH_ASSIGNMENT_FETCH_COURSE_SCORES = `${PATH_ASSIGNMENT}/fetch/course/scores`;
 const PATH_EMAIL = `${PATH_COURSE}/email`;
 const PATH_COURSE_USERS_LIST = `${PATH_COURSE}/list`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
+const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
@@ -221,7 +224,7 @@ function setContextUserDisplay() {
     } else {
         currentUserHTML = '';
         loginAreaHTML = `
-            <a href='#login'>Log In</span>
+            <a href='#login'>Login</span>
         `;
     }
 
@@ -361,11 +364,14 @@ export {
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
+    PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
     PATH_EMAIL,
     PATH_COURSE_USERS_LIST,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,
+    PATH_PROXY_REGRADE,
+    PATH_PROXY_RESUBMIT,
     PATH_SERVER,
     PATH_SERVER_CALL_API,
     PATH_SERVER_DOCS,
