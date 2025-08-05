@@ -216,14 +216,14 @@ class FieldType {
         listOfFieldHTML.push(`<div class="error-message"><p><span></span></p></div>`);
 
         return `
-            <div class="input-field ${this.name} ${this.inputClasses}">
+            <div id="${this.name}" name="${this.name}" class="input-field ${this.inputClasses}">
                 ${listOfFieldHTML.join("\n")}
             </div>
         `;
     }
 
     getFieldInstance(container) {
-        let input = container.querySelector(`fieldset *[name="${this.name}"]`);
+        let input = container.querySelector(`fieldset .input-field *[name="${this.name}"]`);
         input.classList.add("touched");
 
         return new FieldInstance(container, input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
@@ -250,7 +250,7 @@ class FieldInstance {
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
 
-        const errorField = this.container.querySelector(`.${this.input.name} .error-message`);
+        const errorField = this.container.querySelector(`.input-field[name="${this.input.name}"] .error-message`);
 
         try {
             this.validate();
