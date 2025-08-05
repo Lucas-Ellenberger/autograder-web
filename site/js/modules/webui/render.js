@@ -243,17 +243,12 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     ;
 }
 
-// Set the title given a list of title parts.
-// Each title part is [display name, optional link].
-// If title parts is undefined, defaults to the title.
-function makeTitle(title, titleParts) {
-    if (!titleParts) {
-        Routing.setTitle(title);
-        return;
-    }
-
+// Set the page title given a list of title parts.
+// Each page title part is [display name, optional link].
+// If title parts is empty, the page title defaults to the tab title.
+function makeTitle(tabTitle, pageTitleParts = []) {
     let titlePartsHTML = [];
-    for (const part of titleParts) {
+    for (const part of pageTitleParts) {
         let displayName = part[0];
         let link = part[1];
 
@@ -264,13 +259,19 @@ function makeTitle(title, titleParts) {
         }
     }
 
-    let titleHTML = `
-        <span>
-            ${titlePartsHTML.join("\n/ ")}
-        </span>
-    `;
+    let titleHTML = '';
+    if (titlePartsHTML.length > 0) {
+        titleHTML = `
+            <span>
+                ${titlePartsHTML.join(" / ")}
+            </span>
+        `;
+    } else {
+        titleHTML = `<span>${tabTitle}</span>`;
+    }
 
-    Routing.setTitle(title, titleHTML);
+    document.querySelector('.page .page-title').innerHTML = titleHTML;
+    document.title = `${tabTitle} :: Autograder`;
 }
 
 function submissionHistory(course, assignment, history) {
