@@ -243,6 +243,36 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     ;
 }
 
+// Set the title given a list of title parts.
+// Each title part is [display name, optional link].
+// If title parts is undefined, defaults to the title.
+function makeTitle(title, titleParts) {
+    if (!titleParts) {
+        Routing.setTitle(title);
+        return;
+    }
+
+    let titlePartsHTML = [];
+    for (const part of titleParts) {
+        let displayName = part[0];
+        let link = part[1];
+
+        if (link) {
+            titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
+        } else {
+            titlePartsHTML.push(`${displayName}`);
+        }
+    }
+
+    let titleHTML = `
+        <span>
+            ${titlePartsHTML.join("\n/ ")}
+        </span>
+    `;
+
+    Routing.setTitle(title, titleHTML);
+}
+
 function submissionHistory(course, assignment, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
@@ -449,6 +479,7 @@ export {
     makeCardSection,
     makeCardSections,
     makePage,
+    makeTitle,
     submission,
     submissionHistory,
     tableFromDictionaries,

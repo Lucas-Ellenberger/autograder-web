@@ -25,15 +25,12 @@ function setAssignmentTitle(course, assignment) {
 
     let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
     let assignmentLink = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-    let titleHTML = `
-        <span>
-            <a href='${courseLink}'>${course.id}</a>
-            /
-            <a href='${assignmentLink}'>${assignment.id}</a>
-        </span>
-    `;
+    let titleParts = [
+        [course.id, courseLink],
+        [assignment.id, assignmentLink],
+    ];
 
-    Routing.setTitle(assignment.id, titleHTML);
+    Render.makeTitle(assignment.id, titleParts);
 }
 
 function handlerAssignment(path, params, context, container) {

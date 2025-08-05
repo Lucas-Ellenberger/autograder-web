@@ -173,7 +173,7 @@ function callEndpoint(params, context, container, inputParams) {
 }
 
 function handlerDocs(path, params, context, container) {
-    Routing.setTitle("API Documentation", "API Documentation");
+    Render.makeTitle("API Documentation");
 
     Autograder.Server.describe()
         .then(function(result) {
