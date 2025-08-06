@@ -272,7 +272,7 @@ function makeTitle(tabTitle, pageTitleParts = []) {
         if (link) {
             titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
         } else {
-            titlePartsHTML.push(`${displayName}`);
+            titlePartsHTML.push(displayName);
         }
     }
 
