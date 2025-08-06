@@ -37,6 +37,8 @@
 
     --color-bg-shadow: #0c0814;
     --color-text-error: #f40055;
+    --color-light-bg-error: rgba(0, 0, 0, 0.1);
+    --color-dark-bg-error: rgba(255, 255, 255, 0.1);
 
     --curve-radius-small: 10px;
     --curve-radius-large: 20px;
@@ -58,6 +60,7 @@ html {
     --color-bg-tertiary: var(--color-light-bg-tertiary);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+    --color-bg-error: var(--color-light-bg-error);
 
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
@@ -81,6 +84,7 @@ html {
         --color-bg-tertiary: var(--color-light-bg-tertiary);
 
         --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+        --color-bg-error: var(--color-light-bg-error);
 
         --color-text-primary: var(--color-light-text-primary);
         --color-text-secondary: var(--color-light-text-secondary);
@@ -104,6 +108,7 @@ html {
         --color-bg-tertiary: var(--color-dark-bg-tertiary);
 
         --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+        --color-bg-error: var(--color-dark-bg-error);
 
         --color-text-primary: var(--color-dark-text-primary);
         --color-text-secondary: var(--color-dark-text-secondary);
@@ -127,6 +132,7 @@ html.light {
     --color-bg-tertiary: var(--color-light-bg-tertiary);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+    --color-bg-error: var(--color-light-bg-error);
 
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
@@ -148,6 +154,7 @@ html.dark {
     --color-bg-tertiary: var(--color-dark-bg-tertiary);
 
     --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+    --color-bg-error: var(--color-dark-bg-error);
 
     --color-text-primary: var(--color-dark-text-primary);
     --color-text-secondary: var(--color-dark-text-secondary);
@@ -631,6 +638,32 @@ table.standard-table tr:not(:last-child) {
 .template-control-area .checkbox-field label {
     margin-bottom: 0em;
     margin-left: 0.5em;
+}
+
+.user-input-fields .input-field .error-message {
+    /* Hide the error message box by default. */
+    display: none;
+
+    color: var(--color-text-error);
+    background-color: var(--color-bg-error);
+    border-radius: var(--curve-radius-small);
+
+    /* Add a small margin to account for the input field's drop shadow. */
+    margin-top: 2px;
+    margin-bottom: 0.25em;
+
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.user-input-fields .input-field .error-message.show {
+    display: block;
+}
+
+.user-input-fields .input-field .error-message p {
+    margin: 0em;
 }
 
 .template-content .page-information {

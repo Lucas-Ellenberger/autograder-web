@@ -14,6 +14,7 @@ const INPUT_TYPE_PASSWORD = 'password';
 const INPUT_TYPE_SELECT = 'select';
 const INPUT_TYPE_STRING = 'string';
 const INPUT_TYPE_TEXT = 'text';
+const INPUT_TYPE_TEXTAREA = 'textarea';
 
 // The set of valid types for a FieldType.
 const VALID_PARSED_TYPES = [
@@ -24,6 +25,7 @@ const VALID_PARSED_TYPES = [
     INPUT_TYPE_PASSWORD,
     INPUT_TYPE_SELECT,
     INPUT_TYPE_TEXT,
+    INPUT_TYPE_TEXTAREA,
 ];
 
 const standardTypes = [
@@ -152,6 +154,8 @@ class FieldType {
             this.#parsedType = INPUT_TYPE_EMAIL;
         } else if (this.type === INPUT_TYPE_PASSWORD) {
             this.#parsedType = INPUT_TYPE_PASSWORD;
+        } else if (this.type === INPUT_TYPE_TEXTAREA) {
+            this.#parsedType = INPUT_TYPE_TEXTAREA;
         } else if (PATTERN_TARGET_SELF_OR.test(this.type)) {
             this.#parsedType = INPUT_TYPE_EMAIL;
             this.placeholder = context.user.email;
@@ -209,7 +213,11 @@ class FieldType {
                     <select ${fieldInformation}>
                         ${getSelectChoicesHTML(choices, this.defaultValue)}
                     </select>
-                `
+                `,
+            );
+        } else if (this.#parsedType === INPUT_TYPE_TEXTAREA) {
+            listOfFieldHTML.push(
+                `<textarea ${fieldInformation} placeholder="${this.placeholder}" value="${this.defaultValue}"></textarea>`,
             );
         } else {
             let htmlType = this.#parsedType;
@@ -226,18 +234,20 @@ class FieldType {
             listOfFieldHTML.reverse();
         }
 
+        listOfFieldHTML.push(`<div class="error-message"><p><span></span></p></div>`);
+
         return `
-            <div class="input-field ${this.inputClasses}">
+            <div class="input-field ${this.inputClasses}" data-name="${this.name}">
                 ${listOfFieldHTML.join("\n")}
             </div>
         `;
     }
 
     getFieldInstance(container) {
-        let input = container.querySelector(`fieldset [name="${this.name}"]`);
+        let input = container.querySelector(`fieldset .input-field *[name="${this.name}"]`);
         input.classList.add("touched");
 
-        return new FieldInstance(input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
+        return new FieldInstance(container, input, this.#parsedType, this.extractInputFunc, this.inputValidationFunc);
     }
 }
 
@@ -246,7 +256,9 @@ class FieldType {
 class FieldInstance {
     #parsedType;
 
-    constructor(input, parsedType, extractInputFunc = undefined, inputValidationFunc = undefined) {
+    constructor(container, input, parsedType, extractInputFunc = undefined, inputValidationFunc = undefined) {
+        this.container = container;
+
         // The input from the Input.FieldType's element.
         this.input = input;
 
@@ -259,12 +271,24 @@ class FieldInstance {
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
 
+        const errorField = this.container.querySelector(`.input-field[data-name="${this.input.name}"] .error-message`);
+
         try {
             this.validate();
         } catch (error) {
-            throw new Error(`<p>FieldType "${this.getFieldName()}": "${error.message}".</p>`);
+            if (errorField) {
+                errorField.querySelector("span").textContent = error.message;
+                errorField.classList.add("show");
+            }
+
+            throw new Error(`<p>${this.getFieldName()}: ${error.message}</p>`);
         }
 
+        // Clear the error message if validation is successful.
+        if (errorField) {
+            errorField.querySelector("span").textContent = '';
+            errorField.classList.remove("show");
+        }
     }
 
     // Validate the value of the input.
@@ -370,6 +394,7 @@ export {
     INPUT_TYPE_SELECT,
     INPUT_TYPE_STRING,
     INPUT_TYPE_TEXT,
+    INPUT_TYPE_TEXTAREA,
 
     FieldInstance,
     FieldType,

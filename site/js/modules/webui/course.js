@@ -79,94 +79,80 @@ function handlerEmail(path, params, context, container) {
     ];
     Render.makeTitle(course.id, titleParts);
 
-    container.innerHTML = `
-        <div class="email-page">
-            <div class="email-content">
-                <h2>Email Users</h2>
-                <div class="description">
-                    <p>
-                        Separate recipient values with commas.
-                        For valid recipient values reference this 
-                        <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">documentation</a>.
-                    </p>
-                </div>
-                <div class="user-input-fields secondary-color drop-shadow">
-                    <fieldset>
-                        <div class="input-field">
-                            <label for="email-to">To</label>
-                            <input type="text" id="email-to" name="to" />
-                        </div>
-                        <div class="input-field">
-                            <label for="email-cc">CC</label>
-                            <input type="text" id="email-cc" name="cc" />
-                        </div>
-                        <div class="input-field">
-                            <label for="email-bcc">BCC</label>
-                            <input type="text" id="email-bcc" name="bcc" />
-                        </div>
-                        <div class="input-field">
-                            <label for="email-subject">Subject</label>
-                            <input type="text" id="email-subject" name="subject" required />
-                        </div>
-                        <div class="input-field">
-                            <label for="email-body">Content</label>
-                            <textarea id="email-body" name="body" rows="10"></textarea>
-                        </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" id="dry-run" name="dry-run" />
-                            <label for="dry-run">Send as Dry Run</label>
-                        </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" id="html-format" name="html-format" />
-                            <label for="html-format">Content is in HTML</label>
-                        </div>
-                    </fieldset>
-                </div>
-                <button class="send-email">Send Email</button>
-                <div class="results-area"></div>
-            </div>
-        </div>
+    let description = `
+        Send an email to course users.
+        Separate recipient values with commas.
+        For valid recipient values reference
+        this <a href="${COURSE_USER_REFERENCE_DOC_LINK}" target="_blank">documentation</a>.
     `;
 
-    document.querySelector('button.send-email').addEventListener('click', function(event) {
-        Routing.loadingStart(container.querySelector(".results-area"), false);
+    let inputFields = [
+        new Input.FieldType(context, 'to', 'To', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, 'cc', 'CC', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, 'bcc', 'BCC', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, 'subject', 'Subject', {
+            required: true,
+        }),
+        new Input.FieldType(context, 'content', 'Content', {
+            type: Input.INPUT_TYPE_TEXTAREA,
+            additionalAttributes: 'rows="10"',
+        }),
+        new Input.FieldType(context, 'dryRun', 'Send as Dry Run', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'html', 'Content is HTML', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+    ];
 
-        let args = {
-            [Routing.PARAM_COURSE_ID]: course.id,
-            [Routing.PARAM_EMAIL_TO]: extractRecipients(container.querySelector("fieldset [name='to']").value),
-            [Routing.PARAM_EMAIL_CC]: extractRecipients(container.querySelector("fieldset [name='cc']").value),
-            [Routing.PARAM_EMAIL_BCC]: extractRecipients(container.querySelector("fieldset [name='bcc']").value),
-            [Routing.PARAM_EMAIL_SUBJECT]: container.querySelector("fieldset [name='subject']").value,
-            [Routing.PARAM_EMAIL_BODY]: container.querySelector("fieldset [name='body']").value,
-            [Routing.PARAM_DRY_RUN]: container.querySelector("fieldset [name='dry-run']").checked,
-            [Routing.PARAM_EMAIL_HTML]: container.querySelector("fieldset [name='html-format']").checked,
-        };
+    Render.makePage(
+            params, context, container, sendEmail,
+            {
+                header: 'Email Users',
+                description: description,
+                inputs: inputFields,
+                buttonName: 'Send Email',
+            },
+        )
+    ;
+}
 
-        if (args[Routing.PARAM_EMAIL_TO].length === 0 &&
-                args[Routing.PARAM_EMAIL_CC].length === 0 &&
-                args[Routing.PARAM_EMAIL_BCC].length === 0) {
-            renderResult('<p>Specify at least one recipient.</p>');
-            return;
-        }
+function sendEmail(params, context, container, inputParams) {
+    let args = {
+        [Routing.PARAM_COURSE_ID]: context.courses[params[Routing.PARAM_COURSE]].id,
+        [Routing.PARAM_EMAIL_TO]: inputParams.to ?? [],
+        [Routing.PARAM_EMAIL_CC]: inputParams.cc ?? [],
+        [Routing.PARAM_EMAIL_BCC]: inputParams.bcc ?? [],
+        [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
+        [Routing.PARAM_EMAIL_BODY]: inputParams.content,
+        [Routing.PARAM_DRY_RUN]: inputParams.dryRun,
+        [Routing.PARAM_EMAIL_HTML]: inputParams.html,
+    };
 
-        if (args[Routing.PARAM_EMAIL_SUBJECT].length === 0) {
-            renderResult('<p>Include a subject.</p>');
-            return;
-        }
+    if ((args[Routing.PARAM_EMAIL_TO].length === 0) &&
+            (args[Routing.PARAM_EMAIL_CC].length === 0) &&
+            (args[Routing.PARAM_EMAIL_BCC].length === 0)) {
+        return Promise.resolve('<p>Specify at least one recipient.</p>');
+    }
 
-        Autograder.Course.email(args)
-            .then(function(result) {
-                renderResult(`
-                    <p>Email sent successfully.</p>
-                    <pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
-                `);
-            })
-            .catch(function(message) {
-                console.error(message);
-                renderResult(Render.autograderError(message));
-            })
-        ;
-    });
+    return Autograder.Course.email(args)
+        .then(function(result) {
+            return `
+                <p>Email sent successfully.</p>
+                <pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+            `;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return Render.autograderError(message);
+        })
+    ;
 }
 
 function handlerUsers(path, params, context, container) {
@@ -234,17 +220,14 @@ function listCourseUsers(users) {
     return messages.join("\n\n");
 }
 
-function extractRecipients(recipientString) {
+function extractRecipients(input) {
+    let recipientString = input.value;
+
     return recipientString
         .split(',')
         .map((recipient) => (recipient.trim()))
         .filter((recipient) => (recipient.length > 0))
     ;
-}
-
-function renderResult(message) {
-    let resultsArea = document.querySelector(".results-area");
-    resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
 }
 
 export {
