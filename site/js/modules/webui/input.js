@@ -216,7 +216,7 @@ class FieldType {
         listOfFieldHTML.push(`<div class="error-message"><p><span></span></p></div>`);
 
         return `
-            <div id="${this.name}" name="${this.name}" class="input-field ${this.inputClasses}">
+            <div class="input-field ${this.inputClasses}" data-name="${this.name}">
                 ${listOfFieldHTML.join("\n")}
             </div>
         `;
@@ -250,7 +250,7 @@ class FieldInstance {
         this.extractInputFunc = extractInputFunc;
         this.inputValidationFunc = inputValidationFunc;
 
-        const errorField = this.container.querySelector(`.input-field[name="${this.input.name}"] .error-message`);
+        const errorField = this.container.querySelector(`.input-field[data-name="${this.input.name}"] .error-message`);
 
         try {
             this.validate();
