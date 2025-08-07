@@ -1,22 +1,18 @@
 import * as Base from './base.js'
 import * as Routing from './routing.js'
 
-test("Login Page", function() {
+import * as TestUtil from '../autograder/test/server.js'
+
+test("Login Page", async function() {
     Base.init(false);
 
+    console.log("bananas");
+    console.log(document.children[0].innerHTML);
+
+    const domChanged = TestUtil.waitForDOMChange();
     Routing.redirectLogin();
-	console.log("bananas");
+    await domChanged;
 
-    return new Promise(function() {
-        console.log("first promise");
-
-		setTimeout(function() {
-			console.log("Delayed for 1 second.");
-		}, 1000);
-
-        return new Promise(function() {
-            console.log("second promise");
-            console.log(document.title);
-        });
-    });
+    console.log(document.children[0].innerHTML);
+    expect(document.body.innerHTML).toContain(`data-page="login"`);
 });

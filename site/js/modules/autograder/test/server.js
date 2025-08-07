@@ -59,6 +59,23 @@ global.fetch = function(url, options = {}) {
     });
 }
 
+function waitForDOMChange(target = document.body) {
+    return new Promise(function(resolve) {
+        const observer = new MutationObserver(function(mutationsList) {
+            observer.disconnect();
+            resolve(mutationsList);
+        });
+
+        const config = { attributes: true, childList: true, subtree: true };
+        observer.observe(target, config);
+    });
+}
+
+function loadDOM() {
+    const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
+    document.documentElement.innerHTML = html;
+}
+
 // Load the test data from ./api_test_data.json.
 function loadAPITestData() {
     const text = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
@@ -71,6 +88,11 @@ function loadAPITestIdentity() {
 }
 
 beforeAll(function() {
+    loadDOM();
     loadAPITestData();
     loadAPITestIdentity();
 });
+
+export {
+    waitForDOMChange,
+};
