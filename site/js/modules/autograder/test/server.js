@@ -38,6 +38,13 @@ global.fetch = function(url, options = {}) {
         throw new Error(`Unknown API key: '${key}'.`);
     }
 
+    // Update the filler token cleartext to match the test user's name.
+    // This token is hashed and used as part of the lookup key for subsequent API calls.
+    // The test data expects the user's pass to match their name.
+    if (endpoint === 'users/tokens/create') {
+        responseContent.output['token-cleartext'] = parseRequestUserName(content);
+    }
+
     let responseData = {
         'id': '00000000-0000-0000-0000-000000000000',
         'locator': '',
@@ -59,6 +66,11 @@ global.fetch = function(url, options = {}) {
             return Promise.resolve(responseData.message);
         },
     });
+}
+
+function parseRequestUserName(content) {
+    let email = content["user-email"];
+    return email.split('@')[0];
 }
 
 function waitForDOMChange(selector, target = document.body, timeout = 3000) {
