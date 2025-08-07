@@ -5,6 +5,8 @@ import url from 'node:url';
 import * as Core from '../core.js'
 import * as Util from '../util.js'
 
+import * as Routing from '../../webui/routing.js'
+
 var testData = {}
 
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
@@ -59,11 +61,26 @@ global.fetch = function(url, options = {}) {
     });
 }
 
-function waitForDOMChange(target = document.body) {
-    return new Promise(function(resolve) {
-        const observer = new MutationObserver(function(mutationsList) {
+function waitForDOMChange(selector, target = document.body, timeout = 3000) {
+    return new Promise(function(resolve, reject) {
+        const foundElement = target.querySelector(selector);
+        if (foundElement) {
+            resolve(foundElemment);
+            return;
+        }
+
+        const timeoutId = setTimeout(function() {
             observer.disconnect();
-            resolve(mutationsList);
+            reject(new Error(`Timeout: Element "${selector}" not found in DOM.`));
+        }, timeout);
+
+        const observer = new MutationObserver(function(mutationsList) {
+            const element = target.querySelector(selector);
+            if (element) {
+                clearTimeout(timeoutId);
+                observer.disconnect();
+                resolve(mutationsList);
+            }
         });
 
         const config = { attributes: true, childList: true, subtree: true };
@@ -71,9 +88,12 @@ function waitForDOMChange(target = document.body) {
     });
 }
 
-function loadDOM() {
+async function loadDOM() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
+
+    let domChanged = waitForDOMChange('.page-body');
     document.documentElement.innerHTML = html;
+    await domChanged;
 }
 
 // Load the test data from ./api_test_data.json.
