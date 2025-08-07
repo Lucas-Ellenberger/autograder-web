@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import url from 'node:url';
 
 import * as Core from '../core.js'
 import * as Util from '../util.js'
@@ -8,6 +9,8 @@ var testData = {}
 
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
 const DEFAULT_ID_CLEARTEXT = 'server-admin';
+
+global.URL = url.URL;
 
 // Mock fetch to use our test data.
 global.fetch = function(url, options = {}) {
@@ -39,6 +42,7 @@ global.fetch = function(url, options = {}) {
         'server-version': '0.0.0',
         'start-timestamp': Util.getTimestampNow(),
         'end-timestamp': Util.getTimestampNow(),
+        // TODO: Could expand to support errors (by querying the testdata).
         'status': 200,
         'success': true,
         'message': responseContent.message ?? '',

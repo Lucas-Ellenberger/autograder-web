@@ -72,6 +72,9 @@ function addRoute(pattern, handler,
 // For routes that require an additional load/request (non-trivial routes),
 // the loading page will be activated when the request it made.
 function route(rawPath = undefined) {
+    // TEST
+    console.log(rawPath);
+
     if (!rawPath) {
         rawPath = getLocationHash();
     }
