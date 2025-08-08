@@ -40,7 +40,7 @@ global.fetch = function(url, options = {}) {
 
     // Update the filler token cleartext to match the test user's name.
     // This token is hashed and used as part of the lookup key for subsequent API calls.
-    // The test data expects the user's pass to match their name.
+    // The test data expects the user's pass to match their name (not the token).
     if (endpoint === 'users/tokens/create') {
         responseContent.output['token-cleartext'] = parseRequestUserName(content);
     }
@@ -51,7 +51,6 @@ global.fetch = function(url, options = {}) {
         'server-version': '0.0.0',
         'start-timestamp': Util.getTimestampNow(),
         'end-timestamp': Util.getTimestampNow(),
-        // TODO: Could expand to support errors (by querying the testdata).
         'status': 200,
         'success': true,
         'message': responseContent.message ?? '',
@@ -73,7 +72,7 @@ function parseRequestUserName(content) {
     return email.split('@')[0];
 }
 
-function waitForDOMChange(selector, target = document.body, timeout = 3000) {
+function waitForDOMChange(selector, target = document, timeout = 3000) {
     return new Promise(function(resolve, reject) {
         const foundElement = target.querySelector(selector);
         if (foundElement) {
@@ -83,7 +82,7 @@ function waitForDOMChange(selector, target = document.body, timeout = 3000) {
 
         const timeoutId = setTimeout(function() {
             observer.disconnect();
-            reject(new Error(`Timeout: Element "${selector}" not found in DOM.`));
+            reject(new Error(`Timeout: Target element not found in DOM: "${selector}".`));
         }, timeout);
 
         const observer = new MutationObserver(function(mutationsList) {
@@ -100,12 +99,12 @@ function waitForDOMChange(selector, target = document.body, timeout = 3000) {
     });
 }
 
-async function loadDOM() {
+// Load the site's HTML into the document.
+async function loadHTML() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
-
-    let domChanged = waitForDOMChange('.page-body');
     document.documentElement.innerHTML = html;
-    await domChanged;
+
+    await waitForDOMChange('.page-body');
 }
 
 // Load the test data from ./api_test_data.json.
@@ -120,7 +119,7 @@ function loadAPITestIdentity() {
 }
 
 beforeAll(function() {
-    loadDOM();
+    loadHTML();
     loadAPITestData();
     loadAPITestIdentity();
 });

@@ -11,10 +11,13 @@ test("Enrolled Courses", function() {
             return navigateToEnrolledCourses()
                 .then(function() {
                     expect(document.title).toContain('Enrolled Courses');
-                    expect(document.querySelector('.content[data-page="enrolled courses"]')).not.toBeNull();
+                    expect(document.querySelector('.header .page-title span').textContent).toBe('Enrolled Courses');
 
-                    const course101Link = document.querySelector('a[href="#course?course=course101"]');
-                    const courseLangLink = document.querySelector('a[href="#course?course=course-languages"]');
+                    let pageContent = document.querySelector('.page-body .content[data-page="enrolled courses"]');
+                    expect(pageContent).not.toBeNull();
+
+                    const course101Link = pageContent.querySelector('a[href="#course?course=course101"]');
+                    const courseLangLink = pageContent.querySelector('a[href="#course?course=course-languages"]');
 
                     expect(course101Link).not.toBeNull();
                     expect(courseLangLink).not.toBeNull();
@@ -34,12 +37,13 @@ test("Nav Course101", function() {
             return navigateToCourse(targetCourse)
                 .then(function() {
                     expect(document.title).toContain(targetCourse);
-                    expect(document.querySelector('.content[data-page="course"]')).not.toBeNull();
+                    expect(document.querySelector('.header .page-title span').textContent).toBe('course101');
 
-                    expect(document.querySelector('.page-title span').textContent).toBe('course101');
-                    expect(document.querySelector('h2').textContent).toBe('Course 101');
+                    let pageContent = document.querySelector('.page-body .content[data-page="course"]');
+                    expect(pageContent).not.toBeNull();
 
-                    expect(document.querySelector('a[href="#course/assignment?assignment=hw0&course=course101"]')).not.toBeNull();
+                    expect(pageContent.querySelector('h2').textContent).toBe('Course 101');
+                    expect(pageContent.querySelector(`.cards-area .card-assignment a[href="#course/assignment?assignment=hw0&course=${targetCourse}"]`)).not.toBeNull();
                 })
             ;
         })
@@ -58,7 +62,7 @@ function navigateToEnrolledCourses() {
 function navigateToCourse(courseID) {
     return navigateToEnrolledCourses()
         .then(function() {
-            const courseLink = document.querySelector(`a[href="#course?course=${courseID}"]`);
+            const courseLink = document.querySelector(`.page-body .content[data-page="enrolled courses"] a[href="#course?course=${courseID}"]`);
             courseLink.click();
 
             return TestUtil.waitForDOMChange(`.page-body .content[data-page="course"]`);
