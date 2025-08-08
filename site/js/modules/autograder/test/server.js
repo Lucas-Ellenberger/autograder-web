@@ -77,7 +77,7 @@ function waitForDOMChange(selector, target = document.body, timeout = 3000) {
     return new Promise(function(resolve, reject) {
         const foundElement = target.querySelector(selector);
         if (foundElement) {
-            resolve(foundElemment);
+            resolve(foundElement);
             return;
         }
 
@@ -91,7 +91,7 @@ function waitForDOMChange(selector, target = document.body, timeout = 3000) {
             if (element) {
                 clearTimeout(timeoutId);
                 observer.disconnect();
-                resolve(mutationsList);
+                resolve(element);
             }
         });
 
