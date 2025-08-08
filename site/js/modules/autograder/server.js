@@ -33,7 +33,17 @@ function describe() {
     ;
 }
 
+function users(targetUsers) {
+    return Core.sendRequest({
+        endpoint: 'users/list',
+        payload: {
+            'target-users': targetUsers,
+        }
+    });
+}
+
 export {
     callEndpoint,
     describe,
+    users,
 }

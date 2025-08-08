@@ -15,6 +15,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -77,6 +78,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Proxy Resubmit',
             Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Individual Analysis',
+            Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
         ),
     ];
 
@@ -269,7 +275,7 @@ function fetchCourseScores(params, context, container, inputParams) {
 
     return Autograder.Submissions.fetchCourseScores(course.id, assignment.id, inputParams['target-users'])
         .then(function(result) {
-            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
@@ -325,9 +331,7 @@ function proxyRegrade(params, context, container, inputParams) {
             inputParams.cutoff, inputParams.target, inputParams.wait
         )
         .then(function(result) {
-            return `
-                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
-            `;
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
@@ -401,6 +405,55 @@ function getSubmissionResultHTML(course, assignment, result) {
     } else {
         return Render.submission(course, assignment, result.result);
     }
+}
+
+function handlerAnalysisIndividual(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
+            type: '[]string',
+            required: true,
+        }),
+        new Input.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, analysisIndividual,
+            {
+                header: 'Individual Analysis',
+                description: 'Get the result of an individual analysis for the specified submissions.',
+                inputs: inputFields,
+                buttonName: 'Analyze',
+            },
+        )
+    ;
+}
+
+function analysisIndividual(params, context, container, inputParams) {
+    return Autograder.Submissions.analysisIndividual(
+            inputParams.submissions, inputParams.overwrite,
+            inputParams.wait, inputParams.dryRun,
+        )
+        .then(function(result) {
+            return Render.displayJSON(result);
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
 }
 
 export {

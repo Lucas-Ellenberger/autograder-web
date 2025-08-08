@@ -13,10 +13,13 @@ const FIELD_PRIORITY = [
     "user-email",
 ];
 
+const INDENT = "    ";
+
 function init() {
     Routing.addRoute(/^server$/, handlerServer, 'Server Actions', undefined);
     Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', undefined);
     Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation");
+    Routing.addRoute(/^server\/users\/list$/, handlerUsers, "List Users");
 }
 
 function handlerServer(path, params, context, container) {
@@ -29,6 +32,7 @@ function handlerServer(path, params, context, container) {
     let cards = [
         Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
+        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args)),
     ];
 
     container.innerHTML = `
@@ -307,6 +311,71 @@ function displayTypes(typeData) {
     });
 
     return types.join("\n");
+}
+
+function handlerUsers(path, params, context, container) {
+    Render.makeTitle("List Users"); 
+
+    let inputFields = [
+        new Input.FieldType(context, 'users', 'Target Users', {
+            type: '[]model.ServerUserReference',
+        }),
+    ];
+
+    Render.makePage(
+         params, context, container, listServerUsers,
+            {
+                header: 'List Users',
+                description: 'List the users on the server (defaults to all users).',
+                inputs: inputFields,
+                buttonName: 'List Users',
+            },
+        )
+    ;
+}
+
+function listServerUsers(params, context, container, inputParams) {
+    return Autograder.Server.users(inputParams.users)
+        .then(function(result) {
+            if (result.users.length === 0) {
+                return '<p>Unable to find target users.</p>';
+            }
+
+            return `<pre>${styleServerUsers(result.users)}</pre>`;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
+function styleServerUsers(users) {
+    let messages = [];
+    for (const user of users) {
+        let courses = [];
+        Object.entries(user.courses).forEach(function([course, data]) {
+            let courseContent = [
+                `${INDENT}ID: ${course}`,
+                `${INDENT}Role: ${data.role}`,
+            ];
+
+            courses.push(courseContent.join("\n"));
+        });
+
+        let userParts = [
+            `Email: ${user.email}`,
+            `Name: ${user.name}`,
+            `Role: ${user.role}`,
+            `Type: ${user.type}`,
+            `Courses:`,
+            courses.join("\n\n"),
+        ];
+
+        messages.push(`${userParts.join("\n")}`);
+    }
+
+    return messages.join("\n\n");
 }
 
 export {

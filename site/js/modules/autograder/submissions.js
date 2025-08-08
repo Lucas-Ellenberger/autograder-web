@@ -76,11 +76,24 @@ function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmissi
     });
 }
 
+function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dryRun) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/analysis/individual',
+        payload: {
+            'dry-run': dryRun,
+            'overwrite-records': overwriteRecords,
+            'submissions': submissions,
+            'wait-for-completion': waitForCompletion,
+        }
+    });
+}
+
 export {
-    history,
+    analysisIndividual,
     fetchCourseScores,
+    history,
     peek,
-    submit,
     proxyRegrade,
     proxyResubmit,
+    submit,
 }

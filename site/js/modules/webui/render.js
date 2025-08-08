@@ -177,7 +177,7 @@ function makePage(
             input.classList.add("touched");
 
             let currentPageInput = undefined;
-            for (const pageInput of page.inputs) {
+            for (const pageInput of inputs) {
                 if (pageInput.name === input.name) {
                     currentPageInput = pageInput;
                     break;
@@ -489,10 +489,15 @@ function tableFromDictionaries(headers, rows, classes = []) {
     return tableFromLists(tableHead, tableBody, classes);
 }
 
+function displayJSON(json) {
+    return `<pre><code class="code code-block" data-lang="json">${JSON.stringify(json, null, 4)}</code></pre>`;
+}
+
 export {
     autograderError,
     card,
     cards,
+    displayJSON,
     makeCardObject,
     makeCardSection,
     makeCardSections,

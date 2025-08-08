@@ -31,10 +31,12 @@ const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
 const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
 const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
+const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis/individual`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
 const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
+const PATH_SERVER_USERS_LIST = `${PATH_SERVER}/users/list`;
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -353,6 +355,7 @@ export {
     PARAM_TARGET_USERS,
 
     PATH_COURSE,
+    PATH_ANALYSIS_INDIVIDUAL,
     PATH_ASSIGNMENT,
     PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
     PATH_EMAIL,
@@ -365,4 +368,5 @@ export {
     PATH_SERVER,
     PATH_SERVER_CALL_API,
     PATH_SERVER_DOCS,
+    PATH_SERVER_USERS_LIST,
 };
