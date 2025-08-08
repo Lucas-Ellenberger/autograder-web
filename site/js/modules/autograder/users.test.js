@@ -91,13 +91,6 @@ const serverUsers = [
     },
     {
         "type": "server",
-        "email": "root",
-        "name": "root",
-        "role": "root",
-        "courses": {},
-    },
-    {
-        "type": "server",
         "email": "server-admin@test.edulinq.org",
         "name": "server-admin",
         "role": "admin",

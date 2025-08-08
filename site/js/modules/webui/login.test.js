@@ -1,32 +1,53 @@
-import * as Base from './base.js'
-import * as Routing from './routing.js'
-
-import * as Core from '../autograder/core.js'
-
+import * as Autograder from '../autograder/base.js'
 import * as TestUtil from '../autograder/test/server.js'
+
+import * as Base from './base.js'
+import * as Context from './context.js'
+import * as Routing from './routing.js'
 
 test("Login Page", async function() {
     Base.init(false);
 
-    // There is a beforeAll() function to auto set credentials.
-    // TODO: How should we start loading in the test user?
-    Core.clearCredentials(false);
+    const testCases = [
+        { email: "course-admin@test.edulinq.org", password: "course-admin" },
+        { email: "course-grader@test.edulinq.org", password: "course-grader" },
+        { email: "course-other@test.edulinq.org", password: "course-other" },
+        { email: "course-owner@test.edulinq.org", password: "course-owner" },
+        { email: "course-student@test.edulinq.org", password: "course-student" },
 
-    let changedToLogin = TestUtil.waitForDOMChange('.page-body .content[data-page="login"]');
-    Routing.redirectLogin();
-    await changedToLogin;
+        { email: "server-admin@test.edulinq.org", password: "server-admin" },
+        { email: "server-creator@test.edulinq.org", password: "server-creator" },
+        { email: "server-owner@test.edulinq.org", password: "server-owner" },
+        { email: "server-user@test.edulinq.org", password: "server-user" },
+    ];
 
-    // Fill out the user info.
-    let emailField = document.querySelector(`.user-input-fields .input-field[data-name="email"] input`);
-    emailField.value = "course-admin@test.edulinq.org";
+    for (const { email, password } of testCases) {
+        // Do not send an API request to delete the credentials.
+        // The API test data does not contain token deletion data.
+        Autograder.clearCredentials(false);
+        Context.clear();
 
-    let passField = document.querySelector(`.user-input-fields .input-field[data-name="cleartext"] input`);
-    passField.value = "course-admin";
+        let changedToLogin = TestUtil.waitForDOMChange('.page-body .content[data-page="login"]');
+        Routing.redirectLogin();
+        await changedToLogin;
 
-    let changedToHome = TestUtil.waitForDOMChange('.page-body .content[data-page="home"]');
-    document.querySelector(`.template-button`).click();
-    await changedToHome;
+        // Fill out the user info.
+        let emailField = document.querySelector(`.user-input-fields .input-field[data-name="email"] input`);
+        let passField = document.querySelector(`.user-input-fields .input-field[data-name="cleartext"] input`);
 
-    console.log(document.children[0].innerHTML);
-    expect(document.title).toContain("Home");
+        emailField.value = email;
+        passField.value = password;
+
+        let loginPromise = TestUtil.waitForDOMChange('.page-body .content[data-page="home"]');
+        document.querySelector('.template-button').click();
+        await loginPromise;
+
+        expect(document.title).toContain("Home");
+
+        let currentUserSpan = document.querySelector('.current-user span');
+        expect(currentUserSpan).not.toBeNull();
+
+        let displayName = password;
+        expect(currentUserSpan.textContent).toContain(displayName);
+    }
 });

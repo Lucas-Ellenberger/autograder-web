@@ -11053,6 +11053,238 @@
             "courses": {}
         }
     },
+    "{\"arguments\":{\"user-email\":\"course-grader@test.edulinq.org\",\"user-pass\":\"6be92840236110ea654fc87be7e023f3b7cc0a965681f4371679cf6aedfaa822\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "course-grader@test.edulinq.org",
+            "pass": "course-grader"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-grader@test.edulinq.org",
+                "name": "course-grader",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "role": "grader"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "role": "grader"
+                    }
+                }
+            },
+            "courses": {
+                "course-languages": {
+                    "id": "course-languages",
+                    "name": "Course Using Different Languages",
+                    "assignments": {
+                        "bash": {
+                            "id": "bash",
+                            "name": "A Simple Bash Assignment",
+                            "due-date": 0
+                        },
+                        "cpp-simple": {
+                            "id": "cpp-simple",
+                            "name": "A Simple C++ Assignment"
+                        },
+                        "java": {
+                            "id": "java",
+                            "name": "A Simple Java Assignment"
+                        }
+                    }
+                },
+                "course101": {
+                    "id": "course101",
+                    "name": "Course 101",
+                    "assignments": {
+                        "hw0": {
+                            "id": "hw0",
+                            "name": "Homework 0"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-other@test.edulinq.org\",\"user-pass\":\"eb79491a5f22c9d9d5a4b9c6ec5707e2480298ff552272fa8e2b84fb6e58fef4\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "course-other@test.edulinq.org",
+            "pass": "course-other"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-other@test.edulinq.org",
+                "name": "course-other",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "role": "other"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "role": "other"
+                    }
+                }
+            },
+            "courses": {
+                "course-languages": {
+                    "id": "course-languages",
+                    "name": "Course Using Different Languages",
+                    "assignments": {
+                        "bash": {
+                            "id": "bash",
+                            "name": "A Simple Bash Assignment",
+                            "due-date": 0
+                        },
+                        "cpp-simple": {
+                            "id": "cpp-simple",
+                            "name": "A Simple C++ Assignment"
+                        },
+                        "java": {
+                            "id": "java",
+                            "name": "A Simple Java Assignment"
+                        }
+                    }
+                },
+                "course101": {
+                    "id": "course101",
+                    "name": "Course 101",
+                    "assignments": {
+                        "hw0": {
+                            "id": "hw0",
+                            "name": "Homework 0"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-owner@test.edulinq.org\",\"user-pass\":\"b64e37dd98e0a08dd96bcbebb2d9f5b6b4d0957663dcc6799d2c15883928e905\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "course-owner@test.edulinq.org",
+            "pass": "course-owner"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-owner@test.edulinq.org",
+                "name": "course-owner",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "role": "owner"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "role": "owner"
+                    }
+                }
+            },
+            "courses": {
+                "course-languages": {
+                    "id": "course-languages",
+                    "name": "Course Using Different Languages",
+                    "assignments": {
+                        "bash": {
+                            "id": "bash",
+                            "name": "A Simple Bash Assignment",
+                            "due-date": 0
+                        },
+                        "cpp-simple": {
+                            "id": "cpp-simple",
+                            "name": "A Simple C++ Assignment"
+                        },
+                        "java": {
+                            "id": "java",
+                            "name": "A Simple Java Assignment"
+                        }
+                    }
+                },
+                "course101": {
+                    "id": "course101",
+                    "name": "Course 101",
+                    "assignments": {
+                        "hw0": {
+                            "id": "hw0",
+                            "name": "Homework 0"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-student@test.edulinq.org\",\"user-pass\":\"10a24248efef33e125728f7252d097d4c9022ad82244f0924969fd0ea87d712a\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "course-student@test.edulinq.org",
+            "pass": "course-student"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-student@test.edulinq.org",
+                "name": "course-student",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "role": "student"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "role": "student"
+                    }
+                }
+            },
+            "courses": {
+                "course-languages": {
+                    "id": "course-languages",
+                    "name": "Course Using Different Languages",
+                    "assignments": {
+                        "bash": {
+                            "id": "bash",
+                            "name": "A Simple Bash Assignment",
+                            "due-date": 0
+                        },
+                        "cpp-simple": {
+                            "id": "cpp-simple",
+                            "name": "A Simple C++ Assignment"
+                        },
+                        "java": {
+                            "id": "java",
+                            "name": "A Simple Java Assignment"
+                        }
+                    }
+                },
+                "course101": {
+                    "id": "course101",
+                    "name": "Course 101",
+                    "assignments": {
+                        "hw0": {
+                            "id": "hw0",
+                            "name": "Homework 0"
+                        }
+                    }
+                }
+            }
+        }
+    },
     "{\"arguments\":{\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/get\",\"files\":[]}": {
         "endpoint": "users/get",
         "module_name": "autograder.api.users.get",
@@ -11179,6 +11411,82 @@
                     }
                 }
             }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "server-admin@test.edulinq.org",
+                "name": "server-admin",
+                "role": "admin",
+                "courses": {}
+            },
+            "courses": {}
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-creator@test.edulinq.org\",\"user-pass\":\"772157961087b45260009a804ab937133e0ca8181e40dc5267a9b24d89514582\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-creator@test.edulinq.org",
+            "pass": "server-creator"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "server-creator@test.edulinq.org",
+                "name": "server-creator",
+                "role": "creator",
+                "courses": {}
+            },
+            "courses": {}
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-owner@test.edulinq.org\",\"user-pass\":\"b61ec8013bc8cc02f9e4fb199c13970a226f0f76d5f8145252c6f6751c283bf4\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-owner@test.edulinq.org",
+            "pass": "server-owner"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "server-owner@test.edulinq.org",
+                "name": "server-owner",
+                "role": "owner",
+                "courses": {}
+            },
+            "courses": {}
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-user@test.edulinq.org\",\"user-pass\":\"24ffc21469baecb37b0eed63e737fa07f95fa8cf40cfad84c57bcc5eb4130baf\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-user@test.edulinq.org",
+            "pass": "server-user"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "server-user@test.edulinq.org",
+                "name": "server-user",
+                "role": "user",
+                "courses": {}
+            },
+            "courses": {}
         }
     },
     "{\"arguments\":{\"target-users\":[\"*\"],\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/list\",\"files\":[]}": {
@@ -11625,11 +11933,107 @@
             "token-cleartext": "<TOKEN_CLEARTEXT>"
         }
     },
+    "{\"arguments\":{\"user-email\":\"course-grader@test.edulinq.org\",\"user-pass\":\"6be92840236110ea654fc87be7e023f3b7cc0a965681f4371679cf6aedfaa822\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "course-grader@test.edulinq.org",
+            "pass": "course-grader"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-other@test.edulinq.org\",\"user-pass\":\"eb79491a5f22c9d9d5a4b9c6ec5707e2480298ff552272fa8e2b84fb6e58fef4\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "course-other@test.edulinq.org",
+            "pass": "course-other"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-owner@test.edulinq.org\",\"user-pass\":\"b64e37dd98e0a08dd96bcbebb2d9f5b6b4d0957663dcc6799d2c15883928e905\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "course-owner@test.edulinq.org",
+            "pass": "course-owner"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-student@test.edulinq.org\",\"user-pass\":\"10a24248efef33e125728f7252d097d4c9022ad82244f0924969fd0ea87d712a\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "course-student@test.edulinq.org",
+            "pass": "course-student"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
     "{\"arguments\":{\"name\":\"foo\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
         "endpoint": "users/tokens/create",
         "module_name": "autograder.api.users.tokens.create",
         "arguments": {
             "name": "foo"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-creator@test.edulinq.org\",\"user-pass\":\"772157961087b45260009a804ab937133e0ca8181e40dc5267a9b24d89514582\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "server-creator@test.edulinq.org",
+            "pass": "server-creator"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-owner@test.edulinq.org\",\"user-pass\":\"b61ec8013bc8cc02f9e4fb199c13970a226f0f76d5f8145252c6f6751c283bf4\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "server-owner@test.edulinq.org",
+            "pass": "server-owner"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-user@test.edulinq.org\",\"user-pass\":\"24ffc21469baecb37b0eed63e737fa07f95fa8cf40cfad84c57bcc5eb4130baf\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "user": "server-user@test.edulinq.org",
+            "pass": "server-user"
         },
         "output": {
             "token-id": "<TOKEN_ID>",
