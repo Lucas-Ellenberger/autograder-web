@@ -5,7 +5,7 @@ import url from 'node:url';
 import * as Core from '../core.js'
 import * as Util from '../util.js'
 
-import * as Routing from '../../webui/routing.js'
+import * as TestUtil from './util.js'
 
 var testData = {}
 
@@ -72,39 +72,12 @@ function parseRequestUserName(content) {
     return email.split('@')[0];
 }
 
-function waitForDOMChange(selector, target = document, timeout = 3000) {
-    return new Promise(function(resolve, reject) {
-        const foundElement = target.querySelector(selector);
-        if (foundElement) {
-            resolve(foundElement);
-            return;
-        }
-
-        const timeoutId = setTimeout(function() {
-            observer.disconnect();
-            reject(new Error(`Timeout: Target element not found in DOM: "${selector}".`));
-        }, timeout);
-
-        const observer = new MutationObserver(function(mutationsList) {
-            const element = target.querySelector(selector);
-            if (element) {
-                clearTimeout(timeoutId);
-                observer.disconnect();
-                resolve(element);
-            }
-        });
-
-        const config = { attributes: true, childList: true, subtree: true };
-        observer.observe(target, config);
-    });
-}
-
 // Load the site's HTML into the document.
 async function loadHTML() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
     document.documentElement.innerHTML = html;
 
-    await waitForDOMChange('.page-body');
+    await TestUtil.waitForDOMChange('.page-body');
 }
 
 // Load the test data from ./api_test_data.json.
@@ -123,7 +96,3 @@ beforeAll(function() {
     loadAPITestData();
     loadAPITestIdentity();
 });
-
-export {
-    waitForDOMChange,
-};

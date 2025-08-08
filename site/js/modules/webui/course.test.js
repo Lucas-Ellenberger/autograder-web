@@ -1,12 +1,11 @@
-import * as TestUtil from '../autograder/test/server.js'
+import * as TestUtil from '../autograder/test/util.js'
 
 import * as Base from './base.js'
-import * as LoginUtil from './login.test.js'
 
 test("Enrolled Courses", function() {
     Base.init(false);
 
-    return LoginUtil.loginUser("course-student")
+    return TestUtil.loginUser("course-student")
         .then(function() {
             return navigateToEnrolledCourses()
                 .then(function() {
@@ -32,7 +31,7 @@ test("Nav Course101", function() {
 
     let targetCourse = 'course101';
 
-    return LoginUtil.loginUser("course-student")
+    return TestUtil.loginUser("course-student")
         .then(function() {
             return navigateToCourse(targetCourse)
                 .then(function() {
