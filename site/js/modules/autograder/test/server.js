@@ -5,8 +5,6 @@ import url from 'node:url';
 import * as Core from '../core.js'
 import * as Util from '../util.js'
 
-import * as TestUtil from './util.js'
-
 var testData = {}
 
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
@@ -73,11 +71,9 @@ function parseRequestUserName(content) {
 }
 
 // Load the site's HTML into the document.
-async function loadHTML() {
+function loadHTML() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
     document.documentElement.innerHTML = html;
-
-    await TestUtil.waitForDOMChange('.page-body');
 }
 
 // Load the test data from ./api_test_data.json.

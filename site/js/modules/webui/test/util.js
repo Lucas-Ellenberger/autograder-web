@@ -1,7 +1,7 @@
-import * as Autograder from '../base.js'
+import * as Autograder from '../../autograder/base.js'
 
-import * as Context from '../../webui/context.js'
-import * as Routing from '../../webui/routing.js'
+import * as Context from '../context.js'
+import * as Routing from '../routing.js'
 
 function waitForDOMChange(selector, target = document, timeout = 3000) {
     return new Promise(function(resolve, reject) {
@@ -31,13 +31,12 @@ function waitForDOMChange(selector, target = document, timeout = 3000) {
 }
 
 // A helper function for test to login as a user.
-// This is not in ../../webui/login.test.js to avoid importing a test file from other tests.
+// This is not in ../login.test.js to avoid importing a test file from other tests.
 function loginUser(displayName) {
     // Do not send an API request to delete the credentials.
     // The API test data does not contain token deletion data.
     Autograder.clearCredentials(false);
     Context.clear();
-
 
     let changedToLoginPage = waitForDOMChange('.page-body .content[data-page="login"]');
     Routing.redirectLogin();

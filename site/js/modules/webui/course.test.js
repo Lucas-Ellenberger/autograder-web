@@ -1,52 +1,41 @@
-import * as TestUtil from '../autograder/test/util.js'
-
 import * as Base from './base.js'
+import * as TestUtil from './test/util.js'
 
-test("Enrolled Courses", function() {
+test("Enrolled Courses", async function() {
     Base.init(false);
 
-    return TestUtil.loginUser("course-student")
-        .then(function() {
-            return navigateToEnrolledCourses()
-                .then(function() {
-                    expect(document.title).toContain('Enrolled Courses');
-                    expect(document.querySelector('.header .page-title span').textContent).toBe('Enrolled Courses');
+    await TestUtil.loginUser("course-student");
+    await navigateToEnrolledCourses();
 
-                    let pageContent = document.querySelector('.page-body .content[data-page="enrolled courses"]');
-                    expect(pageContent).not.toBeNull();
+    expect(document.title).toContain('Enrolled Courses');
+    expect(document.querySelector('.header .page-title span').textContent).toBe('Enrolled Courses');
 
-                    const course101Link = pageContent.querySelector('a[href="#course?course=course101"]');
-                    const courseLangLink = pageContent.querySelector('a[href="#course?course=course-languages"]');
+    let pageContent = document.querySelector('.page-body .content[data-page="enrolled courses"]');
+    expect(pageContent).not.toBeNull();
 
-                    expect(course101Link).not.toBeNull();
-                    expect(courseLangLink).not.toBeNull();
-                })
-            ;
-        })
-    ;
+    const course101Link = pageContent.querySelector('a[href="#course?course=course101"]');
+    const courseLangLink = pageContent.querySelector('a[href="#course?course=course-languages"]');
+
+    expect(course101Link).not.toBeNull();
+    expect(courseLangLink).not.toBeNull();
 });
 
-test("Nav Course101", function() {
+test("Nav Course101", async function() {
     Base.init(false);
 
+    await TestUtil.loginUser("course-student");
+
     let targetCourse = 'course101';
+    await navigateToCourse(targetCourse);
 
-    return TestUtil.loginUser("course-student")
-        .then(function() {
-            return navigateToCourse(targetCourse)
-                .then(function() {
-                    expect(document.title).toContain(targetCourse);
-                    expect(document.querySelector('.header .page-title span').textContent).toBe('course101');
+    expect(document.title).toContain(targetCourse);
+    expect(document.querySelector('.header .page-title span').textContent).toBe('course101');
 
-                    let pageContent = document.querySelector('.page-body .content[data-page="course"]');
-                    expect(pageContent).not.toBeNull();
+    let pageContent = document.querySelector('.page-body .content[data-page="course"]');
+    expect(pageContent).not.toBeNull();
 
-                    expect(pageContent.querySelector('h2').textContent).toBe('Course 101');
-                    expect(pageContent.querySelector(`.cards-area .card-assignment a[href="#course/assignment?assignment=hw0&course=${targetCourse}"]`)).not.toBeNull();
-                })
-            ;
-        })
-    ;
+    expect(pageContent.querySelector('h2').textContent).toBe('Course 101');
+    expect(pageContent.querySelector(`.cards-area .card-assignment a[href="#course/assignment?assignment=hw0&course=${targetCourse}"]`)).not.toBeNull();
 });
 
 function navigateToEnrolledCourses() {
@@ -58,15 +47,13 @@ function navigateToEnrolledCourses() {
     return changedToEnrolledCoursesPage;
 }
 
-function navigateToCourse(courseID) {
-    return navigateToEnrolledCourses()
-        .then(function() {
-            const courseLink = document.querySelector(`.page-body .content[data-page="enrolled courses"] a[href="#course?course=${courseID}"]`);
-            courseLink.click();
+async function navigateToCourse(courseID) {
+    await navigateToEnrolledCourses();
 
-            return TestUtil.waitForDOMChange(`.page-body .content[data-page="course"]`);
-        })
-    ;
+    const courseLink = document.querySelector(`.page-body .content[data-page="enrolled courses"] a[href="#course?course=${courseID}"]`);
+    courseLink.click();
+
+    return TestUtil.waitForDOMChange(`.page-body .content[data-page="course"]`);
 }
 
 export {
