@@ -17,27 +17,26 @@ test("Login Page", function() {
         { displayName: "server-user" },
     ];
 
-    function testLoginUser(displayName) {
-        return TestUtil.loginUser(displayName)
-            .then(function() {
-                expect(document.title).toContain("Home");
-
-                let currentUserSpan = document.querySelector('.current-user span');
-                expect(currentUserSpan).not.toBeNull();
-
-                expect(currentUserSpan.textContent).toContain(displayName);
-            })
-        ;
-    }
-
     let allTestCasePromises = Promise.resolve();
-    for (const { displayName } of testCases) {
+    for (const testCase of testCases) {
         allTestCasePromises = allTestCasePromises
             .then(function() {
-                return testLoginUser(displayName);
+                return testLoginUser(testCase.displayName);
             })
         ;
     }
 
     return allTestCasePromises;
 });
+
+function testLoginUser(displayName) {
+    return TestUtil.loginUser(displayName)
+        .then(function() {
+            expect(document.title).toContain("Home");
+
+            let currentUserSpan = document.querySelector('.current-user span');
+            expect(currentUserSpan).not.toBeNull();
+            expect(currentUserSpan.textContent).toContain(displayName);
+        })
+    ;
+}
