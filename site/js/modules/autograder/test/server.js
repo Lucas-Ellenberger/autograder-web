@@ -10,6 +10,18 @@ var testData = {}
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
 const DEFAULT_ID_CLEARTEXT = 'server-admin';
 
+const ALL_USERS = [
+    'course-admin',
+    'course-grader',
+    'course-other',
+    'course-owner',
+    'course-student',
+    'server-admin',
+    'server-creator',
+    'server-owner',
+    'server-user',
+];
+
 global.URL = url.URL;
 
 // Mock fetch to use our test data.
@@ -66,7 +78,7 @@ global.fetch = function(url, options = {}) {
 }
 
 function parseRequestUserName(content) {
-    let email = content["user-email"];
+    let email = content['user-email'];
     return email.split('@')[0];
 }
 
@@ -80,6 +92,40 @@ function loadHTML() {
 function loadAPITestData() {
     const text = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
     testData = JSON.parse(text)
+
+    createTokensDeleteTestData('server-admin', 'test')
+
+    let tokenId = '<TOKEN_ID>'
+    for (const user of ALL_USERS) {
+        createTokensDeleteTestData(user, tokenId);
+    }
+}
+
+function createTokensDeleteTestData(user, tokenId) {
+    let endpoint = 'users/tokens/delete';
+    let args = {
+        'token-id': tokenId,
+        'user-email': `${user}@test.edulinq.org`,
+        'user-pass': Util.sha256(user),
+    };
+
+    let keyData = {
+        'arguments': args,
+        'endpoint': endpoint,
+        'files': [],
+    };
+    let key = JSON.stringify(keyData);
+
+    testData[key] = {
+        'endpoint': endpoint,
+        'module_name': 'autograder.api.users.tokens.delete',
+        'arguments': {
+            'token-id': tokenId
+        },
+        'output': {
+            'found': true
+        }
+    }
 }
 
 // Load the default testing identity.
@@ -88,7 +134,7 @@ function loadAPITestIdentity() {
 }
 
 beforeAll(function() {
-    loadHTML();
     loadAPITestData();
     loadAPITestIdentity();
+    loadHTML();
 });

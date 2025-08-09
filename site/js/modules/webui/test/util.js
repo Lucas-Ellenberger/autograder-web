@@ -33,9 +33,7 @@ function waitForDOMChange(selector, target = document, timeout = 3000) {
 // A helper function for test to login as a user.
 // This is not in ../login.test.js to avoid importing a test file from other tests.
 function loginUser(displayName) {
-    // Do not send an API request to delete the credentials.
-    // The API test data does not contain token deletion data.
-    Autograder.clearCredentials(false);
+    Autograder.clearCredentials();
     Context.clear();
 
     let changedToLoginPage = waitForDOMChange('.page-body .content[data-page="login"]');
