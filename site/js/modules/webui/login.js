@@ -1,9 +1,9 @@
-import * as Autograder from '../autograder/base.js'
+import * as Autograder from '../autograder/base.js';
 
-import * as Context from './context.js'
-import * as Input from './input.js'
-import * as Render from './render.js'
-import * as Routing from './routing.js'
+import * as Context from './context.js';
+import * as Input from './input.js';
+import * as Render from './render.js';
+import * as Routing from './routing.js';
 
 function init() {
     Routing.addRoute(/^login$/, handlerLogin, 'Login', {login: false});
@@ -63,4 +63,5 @@ function handlerLogout(path, params, context, container) {
 
 export {
     init,
-}
+    login,
+};

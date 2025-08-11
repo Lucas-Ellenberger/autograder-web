@@ -48,13 +48,6 @@ global.fetch = function(url, options = {}) {
         throw new Error(`Unknown API key: '${key}'.`);
     }
 
-    // Update the filler token cleartext to match the test user's name.
-    // This token is hashed and used as part of the lookup key for subsequent API calls.
-    // The test data expects the user's pass to match their name (not the token).
-    if (endpoint === 'users/tokens/create') {
-        responseContent.output['token-cleartext'] = parseRequestUserName(content);
-    }
-
     let responseData = {
         'id': '00000000-0000-0000-0000-000000000000',
         'locator': '',
@@ -77,11 +70,6 @@ global.fetch = function(url, options = {}) {
     });
 }
 
-function parseRequestUserName(content) {
-    let email = content['user-email'];
-    return email.split('@')[0];
-}
-
 // Load the site's HTML into the document.
 function loadHTML() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
@@ -93,15 +81,32 @@ function loadAPITestData() {
     const text = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
     testData = JSON.parse(text)
 
-    createTokensDeleteTestData('server-admin', 'test')
+    for (const [key, value] of Object.entries(testData)) {
+        let keyData = JSON.parse(key);
+        if (keyData.endpoint === 'users/tokens/create') {
+            cleanTokensCreateTestData(key, keyData, value);
+        }
+    }
 
-    let tokenId = '<TOKEN_ID>'
     for (const user of ALL_USERS) {
-        createTokensDeleteTestData(user, tokenId);
+        createTokensDeleteTestData(user);
     }
 }
 
-function createTokensDeleteTestData(user, tokenId) {
+// Update the users/tokens/create testdata to return a token that matches the test user's name.
+// This token is hashed and used as part of the lookup key for subsequent API calls.
+// The test data expects the user's pass to match their name (not a token).
+function cleanTokensCreateTestData(key, keyData, value) {
+    let userEmail = keyData['arguments']['user-email'];
+    let displayName = userEmail.split('@')[0];
+
+    value.output['token-cleartext'] = displayName;
+
+    testData[key] = value;
+}
+
+// Generate test data for users/tokens/delete for every user.
+function createTokensDeleteTestData(user, tokenId = '<TOKEN_ID>') {
     let endpoint = 'users/tokens/delete';
     let args = {
         'token-id': tokenId,
@@ -130,7 +135,7 @@ function createTokensDeleteTestData(user, tokenId) {
 
 // Load the default testing identity.
 function loadAPITestIdentity() {
-    Core.setCredentials(DEFAULT_ID_EMAIL, 'test', DEFAULT_ID_CLEARTEXT);
+    Core.setCredentials(DEFAULT_ID_EMAIL, '<TOKEN_ID>', DEFAULT_ID_CLEARTEXT);
 }
 
 beforeAll(function() {

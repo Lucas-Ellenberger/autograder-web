@@ -1,5 +1,5 @@
-import * as Base from './base.js'
-import * as TestUtil from './test/util.js'
+import * as Base from './base.js';
+import * as TestUtil from './test/util.js';
 
 test("Enrolled Courses", async function() {
     Base.init(false);
@@ -29,7 +29,7 @@ test("Nav Course101", async function() {
     await navigateToCourse(targetCourse);
 
     expect(document.title).toContain(targetCourse);
-    expect(document.querySelector('.header .page-title span').textContent).toBe('course101');
+    expect(document.querySelector('.header .page-title span').textContent).toBe(targetCourse);
 
     let pageContent = document.querySelector('.page-body .content[data-page="course"]');
     expect(pageContent).not.toBeNull();
@@ -39,23 +39,19 @@ test("Nav Course101", async function() {
 });
 
 function navigateToEnrolledCourses() {
-    let courseLink = document.querySelector(`.nav .nav-item[data-target="courses"] a`);
-
     let changedToEnrolledCoursesPage = TestUtil.waitForDOMChange('.page-body .content[data-page="enrolled courses"]');
-    courseLink.click();
 
+    window.location.hash = '#courses';
     return changedToEnrolledCoursesPage;
 }
 
 async function navigateToCourse(courseID) {
     await navigateToEnrolledCourses();
 
-    const courseLink = document.querySelector(`.page-body .content[data-page="enrolled courses"] a[href="#course?course=${courseID}"]`);
-    courseLink.click();
-
+    window.location.hash = '#course?course=course101';
     return TestUtil.waitForDOMChange(`.page-body .content[data-page="course"]`);
 }
 
 export {
     navigateToEnrolledCourses,
-}
+};

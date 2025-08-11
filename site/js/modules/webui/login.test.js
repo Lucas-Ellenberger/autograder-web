@@ -1,5 +1,5 @@
-import * as Base from './base.js'
-import * as TestUtil from './test/util.js'
+import * as Base from './base.js';
+import * as TestUtil from './test/util.js';
 
 test("Login Page", function() {
     Base.init(false);

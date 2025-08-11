@@ -1,7 +1,8 @@
-import * as Autograder from '../../autograder/base.js'
+import * as Autograder from '../../autograder/base.js';
 
-import * as Context from '../context.js'
-import * as Routing from '../routing.js'
+import * as Context from '../context.js';
+import * as Login from '../login.js';
+import * as Routing from '../routing.js';
 
 function waitForDOMChange(selector, target = document, timeout = 3000) {
     return new Promise(function(resolve, reject) {
@@ -32,28 +33,24 @@ function waitForDOMChange(selector, target = document, timeout = 3000) {
 
 // A helper function for test to login as a user.
 // This is not in ../login.test.js to avoid importing a test file from other tests.
-function loginUser(displayName) {
+async function loginUser(displayName) {
     Autograder.clearCredentials();
     Context.clear();
 
-    let changedToLoginPage = waitForDOMChange('.page-body .content[data-page="login"]');
+    Routing.init();
+
     Routing.redirectLogin();
+    let changedToLoginPage = waitForDOMChange('.page-body .content[data-page="login"]');
+    await changedToLoginPage;
 
-    return changedToLoginPage
-        .then(function() {
-            // Fill out the user info.
-            let emailField = document.querySelector(`.user-input-fields .input-field[data-name="email"] input`);
-            let passField = document.querySelector(`.user-input-fields .input-field[data-name="cleartext"] input`);
+    let inputParams = {
+        'email': `${displayName}@test.edulinq.org`,
+        'cleartext': displayName,
+    }
+    await Login.login(undefined, undefined, document, inputParams);
 
-            emailField.value = `${displayName}@test.edulinq.org`;
-            passField.value = displayName;
-
-            let loggedInUser = waitForDOMChange('.page-body .content[data-page="home"]');
-            document.querySelector('.template-button').click();
-
-            return loggedInUser;
-        })
-    ;
+    let loggedInUser = waitForDOMChange('.page-body .content[data-page="home"]');
+    return loggedInUser;
 }
 
 export {
