@@ -1,4 +1,5 @@
 import * as Base from './base.js';
+import * as Events from './events.js';
 import * as TestUtil from './test/util.js';
 
 test("Enrolled Courses", async function() {
@@ -39,17 +40,27 @@ test("Nav Course101", async function() {
 });
 
 function navigateToEnrolledCourses() {
-    let changedToEnrolledCoursesPage = TestUtil.waitForDOMChange('.page-body .content[data-page="enrolled courses"]');
+    let coursesEvent = Events.eventManager.waitForEvent(Events.HANDLER_COMPLETED, {
+        'path': 'courses',
+    });
 
     window.location.hash = '#courses';
-    return changedToEnrolledCoursesPage;
+    return coursesEvent;
 }
 
 async function navigateToCourse(courseID) {
     await navigateToEnrolledCourses();
 
+    // TODO: Seems to not like the nested params and is failing the filter match.
+    let courseEvent = Events.eventManager.waitForEvent(Events.HANDLER_COMPLETED, {
+        'path': 'course',
+        'params': {
+            'course': 'course101',
+        },
+    });
+
     window.location.hash = '#course?course=course101';
-    return TestUtil.waitForDOMChange(`.page-body .content[data-page="course"]`);
+    return courseEvent;
 }
 
 export {

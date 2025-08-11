@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js';
 import * as Context from './context.js';
+import * as Events from './events.js';
 import * as Log from './log.js';
 import * as Render from './render.js';
 
@@ -198,6 +199,14 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
 
     // Call the handler.
     handler(path, params, context, container);
+
+    let eventDetails = {
+        'path': path,
+        'params': params,
+        'context': context,
+        'container': container,
+    }
+    Events.eventManager.dispatchEvent(Events.HANDLER_COMPLETED, eventDetails);
 }
 
 function setContextUserDisplay() {
