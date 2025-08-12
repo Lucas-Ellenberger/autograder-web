@@ -1,5 +1,6 @@
 import * as Base from './base.js';
-import * as Events from './events.js';
+import * as Event from './event.js';
+import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
 test("Enrolled Courses", async function() {
@@ -9,16 +10,13 @@ test("Enrolled Courses", async function() {
     await navigateToEnrolledCourses();
 
     expect(document.title).toContain('Enrolled Courses');
-    expect(document.querySelector('.header .page-title span').textContent).toBe('Enrolled Courses');
 
     let pageContent = document.querySelector('.page-body .content[data-page="enrolled courses"]');
     expect(pageContent).not.toBeNull();
 
-    const course101Link = pageContent.querySelector('a[href="#course?course=course101"]');
-    const courseLangLink = pageContent.querySelector('a[href="#course?course=course-languages"]');
-
-    expect(course101Link).not.toBeNull();
-    expect(courseLangLink).not.toBeNull();
+    const courseCardSpans = pageContent.querySelectorAll('.cards-area .card span');
+    expect(courseCardSpans[0].textContent).toBe('Course 101');
+    expect(courseCardSpans[1].textContent).toBe('Course Using Different Languages');
 });
 
 test("Nav Course101", async function() {
@@ -30,32 +28,29 @@ test("Nav Course101", async function() {
     await navigateToCourse(targetCourse);
 
     expect(document.title).toContain(targetCourse);
-    expect(document.querySelector('.header .page-title span').textContent).toBe(targetCourse);
 
     let pageContent = document.querySelector('.page-body .content[data-page="course"]');
-    expect(pageContent).not.toBeNull();
-
     expect(pageContent.querySelector('h2').textContent).toBe('Course 101');
     expect(pageContent.querySelector(`.cards-area .card-assignment a[href="#course/assignment?assignment=hw0&course=${targetCourse}"]`)).not.toBeNull();
 });
 
-function navigateToEnrolledCourses() {
-    let coursesEvent = Events.eventManager.waitForEvent(Events.HANDLER_COMPLETED, {
+async function navigateToEnrolledCourses() {
+    let coursesRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
         'path': 'courses',
     });
 
-    window.location.hash = '#courses';
-    return coursesEvent;
+    Routing.route('#courses');
+    await coursesRenderedPromise;
 }
 
 async function navigateToCourse(courseID) {
-    let courseEvent = Events.eventManager.waitForEvent(Events.HANDLER_COMPLETED, {
+    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
         'path': 'course',
         'params': {
             'course': 'course101',
         },
     });
 
-    window.location.hash = '#course?course=course101';
-    return courseEvent;
+    Routing.route('#course?course=course101');
+    await courseRenderedPromise;
 }

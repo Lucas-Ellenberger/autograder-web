@@ -1,6 +1,6 @@
 import * as Autograder from '../autograder/base.js';
 import * as Context from './context.js';
-import * as Events from './events.js';
+import * as Event from './event.js';
 import * as Log from './log.js';
 import * as Render from './render.js';
 
@@ -205,8 +205,8 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
         'params': params,
         'context': context,
         'container': container,
-    }
-    Events.eventManager.dispatchEvent(Events.HANDLER_COMPLETED, eventDetails);
+    };
+    Event.dispatchEvent(Event.EVENT_TYPE_HANDLER_COMPLETED, eventDetails);
 }
 
 function setContextUserDisplay() {
@@ -348,6 +348,7 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
+    route,
 
     PARAM_ASSIGNMENT,
     PARAM_COURSE,

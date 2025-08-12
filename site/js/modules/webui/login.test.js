@@ -29,14 +29,11 @@ test("Login Page", function() {
     return allTestCasePromises;
 });
 
-function testLoginUser(displayName) {
-    return TestUtil.loginUser(displayName)
-        .then(function() {
-            expect(document.title).toContain("Home");
+async function testLoginUser(displayName) {
+    await TestUtil.loginUser(displayName);
 
-            let currentUserSpan = document.querySelector('.current-user span');
-            expect(currentUserSpan).not.toBeNull();
-            expect(currentUserSpan.textContent).toContain(displayName);
-        })
-    ;
+    expect(document.title).toContain("Home");
+
+    let currentUserSpan = document.querySelector('.current-user span');
+    expect(currentUserSpan.textContent).toContain(displayName);
 }

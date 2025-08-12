@@ -10,18 +10,6 @@ var testData = {}
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
 const DEFAULT_ID_CLEARTEXT = 'server-admin';
 
-const ALL_TEST_USERS = [
-    'course-admin',
-    'course-grader',
-    'course-other',
-    'course-owner',
-    'course-student',
-    'server-admin',
-    'server-creator',
-    'server-owner',
-    'server-user',
-];
-
 global.URL = url.URL;
 
 // Mock fetch to use our test data.
@@ -70,7 +58,7 @@ global.fetch = function(url, options = {}) {
     });
 }
 
-// Load the site's HTML into the document.
+// Load the site's HTML into the DOM.
 function loadHTML() {
     const html = fs.readFileSync(path.join('site', 'index.html'), 'utf8');
     document.documentElement.innerHTML = html;
@@ -84,34 +72,31 @@ function loadAPITestData() {
     for (const [key, value] of Object.entries(testData)) {
         let keyData = JSON.parse(key);
         if (keyData.endpoint === 'users/tokens/create') {
-            cleanTokensCreateTestData(key, keyData, value);
-        }
-    }
+            let userEmail = keyData['arguments']['user-email'];
+            let displayName = userEmail.split('@')[0];
 
-    for (const user of ALL_TEST_USERS) {
-        createTokensDeleteTestData(user);
+            cleanTokensCreateTestData(key, displayName, value);
+            createTokensDeleteTestData(userEmail, displayName, value.output['token-cleartext']);
+            createTokensDeleteTestData(userEmail, displayName);
+        }
     }
 }
 
 // Update the users/tokens/create testdata to return a token that matches the test user's name.
 // This token is hashed and used as part of the lookup key for subsequent API calls.
 // The test data expects the user's pass to match their name (not a token).
-function cleanTokensCreateTestData(key, keyData, value) {
-    let userEmail = keyData['arguments']['user-email'];
-    let displayName = userEmail.split('@')[0];
-
+function cleanTokensCreateTestData(key, displayName, value) {
     value.output['token-cleartext'] = displayName;
-
     testData[key] = value;
 }
 
-// Generate test data for users/tokens/delete for every user.
-function createTokensDeleteTestData(user, tokenId = '<TOKEN_ID>') {
+// Generate test data for users/tokens/delete for the user and cleartext combination.
+function createTokensDeleteTestData(userEmail, cleartext, tokenId = '<TOKEN_ID>') {
     let endpoint = 'users/tokens/delete';
     let args = {
         'token-id': tokenId,
-        'user-email': `${user}@test.edulinq.org`,
-        'user-pass': Util.sha256(user),
+        'user-email': userEmail,
+        'user-pass': Util.sha256(cleartext),
     };
 
     let keyData = {
