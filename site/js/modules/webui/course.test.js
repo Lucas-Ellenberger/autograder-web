@@ -49,9 +49,6 @@ function navigateToEnrolledCourses() {
 }
 
 async function navigateToCourse(courseID) {
-    await navigateToEnrolledCourses();
-
-    // TODO: Seems to not like the nested params and is failing the filter match.
     let courseEvent = Events.eventManager.waitForEvent(Events.HANDLER_COMPLETED, {
         'path': 'course',
         'params': {
@@ -62,7 +59,3 @@ async function navigateToCourse(courseID) {
     window.location.hash = '#course?course=course101';
     return courseEvent;
 }
-
-export {
-    navigateToEnrolledCourses,
-};

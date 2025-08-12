@@ -10,7 +10,7 @@ var testData = {}
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
 const DEFAULT_ID_CLEARTEXT = 'server-admin';
 
-const ALL_USERS = [
+const ALL_TEST_USERS = [
     'course-admin',
     'course-grader',
     'course-other',
@@ -88,7 +88,7 @@ function loadAPITestData() {
         }
     }
 
-    for (const user of ALL_USERS) {
+    for (const user of ALL_TEST_USERS) {
         createTokensDeleteTestData(user);
     }
 }

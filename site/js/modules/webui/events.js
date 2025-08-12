@@ -16,13 +16,13 @@ class EventManager {
     }
 
     // Add an event listener with optional filtering.
-    // TODO: Describe the details.
+    // Details are used to match the event.detail data.
+    // All details must match the corresponding key in the event.detail to trigger the onEventFunc.
     addEventListener(eventName, onEventFunc, details = undefined) {
         // The function keyword create a new 'this' context.
         // Store a reference to 'this' in self to preserve context.
         const self = this;
         const onEventFuncWithFilter = function(event) {
-            console.debug(`Incoming event: '${eventName}' with event details: '${JSON.stringify(event.detail)}' and target details: '${JSON.stringify(details)}'.`);
             if (self.matchesFilter(event.detail, details)) {
                 onEventFunc(event);
             }
@@ -56,7 +56,12 @@ class EventManager {
         }
 
         return Object.entries(details).every(function([key, value]) {
-            return eventDetails[key] === value;
+            try {
+                return JSON.stringify(eventDetails[key]) === JSON.stringify(value);
+            } catch(error) {
+                // If the values cannot be stringified, default to basic equality.
+                return eventDetails[key] === value;
+            }
         });
     }
 
@@ -69,6 +74,9 @@ class EventManager {
         this.listeners.clear();
     }
 
+    // Returns a promise that resolves when the target event occurs.
+    // Waits for an event that has the same name and matches the details.
+    // If the timeout is specified, the promise rejects if the event is not found within the timeout.
     waitForEvent(eventName, details = undefined, timeout = DEFAULT_TIMEOUT) {
         const self = this;
         return new Promise(function(resolve, reject) {
