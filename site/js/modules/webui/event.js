@@ -1,7 +1,7 @@
-// Event listeners listen for events of the same name.
-// All events may provide additional details which will be stored in event.detail.
-// To listen for a specific event within an event type,
-// provide additional event details.
+// A package to listen for custom events.
+// An event listener listens for custom events with the same name as the listener to be dispatched.
+// All custom events may provide additional details which will be stored in event.detail.
+// To listen for a specific event within an event type, provide additional event details.
 // Every key-value pair in the provided details must be matched in the event.detail information.
 // To check for object equality, each value is compared via JSON.stringify().
 // If the value cannot be stringified, basic equality (===) will be used for the comparison.

@@ -1,7 +1,7 @@
 import * as Base from './base.js';
 import * as TestUtil from './test/util.js';
 
-test("Login Page", function() {
+test("Login Page", async function() {
     Base.init(false);
 
     const testCases = [
@@ -17,16 +17,9 @@ test("Login Page", function() {
         { displayName: "server-user" },
     ];
 
-    let allTestCasePromises = Promise.resolve();
     for (const testCase of testCases) {
-        allTestCasePromises = allTestCasePromises
-            .then(function() {
-                return testLoginUser(testCase.displayName);
-            })
-        ;
+        await testLoginUser(testCase.displayName);
     }
-
-    return allTestCasePromises;
 });
 
 async function testLoginUser(displayName) {
