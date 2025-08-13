@@ -23,6 +23,7 @@ const PARAM_TARGET_ENDPOINT = 'endpoint';
 const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
+const PATH_COURSES = 'courses';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
 const PATH_ASSIGNMENT_FETCH_COURSE_SCORES = `${PATH_ASSIGNMENT}/fetch/course/scores`;
 const PATH_EMAIL = `${PATH_COURSE}/email`;
@@ -105,6 +106,10 @@ function route(rawPath = undefined) {
     // Fallback to the default route.
     console.warn(`Unknown path '${path}'. Falling back to default route.`);
     return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, {});
+}
+
+function routeComponents({path = undefined, params = {}}) {
+    route(formHashPath(path, params));
 }
 
 // Parse a raw path (which may have come from a hash)
@@ -206,7 +211,7 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
         'context': context,
         'container': container,
     };
-    Event.dispatchEvent(Event.EVENT_TYPE_HANDLER_COMPLETED, eventDetails);
+    Event.dispatchEvent(Event.ROUTING_COMPLETED, eventDetails);
 }
 
 function setContextUserDisplay() {
@@ -348,7 +353,7 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
-    route,
+    routeComponents,
 
     PARAM_ASSIGNMENT,
     PARAM_COURSE,
@@ -365,6 +370,7 @@ export {
     PARAM_TARGET_USERS,
 
     PATH_COURSE,
+    PATH_COURSES,
     PATH_ANALYSIS_INDIVIDUAL,
     PATH_ASSIGNMENT,
     PATH_ASSIGNMENT_FETCH_COURSE_SCORES,

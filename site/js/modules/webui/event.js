@@ -10,9 +10,9 @@
 const eventListeners = new Map();
 const eventElement = document.createElement(`div`);
 
-const EVENT_TYPE_HANDLER_COMPLETED = 'Event Type: Handler Completed';
+const ROUTING_COMPLETED = 'Routing Completed';
 
-const DEFAULT_TIMEOUT = 3000;
+const DEFAULT_TIMEOUT_MS = 3000;
 
 // Create an event with the given name and optional details.
 function createEvent(eventName, details = {}) {
@@ -25,6 +25,7 @@ function createEvent(eventName, details = {}) {
 // Details are used to match the event.detail data.
 // All details must match the corresponding key in the event.detail to trigger the onEventFunc.
 // See the file level comment for more information on detail matching semantics.
+// Returns a cleanup function that removes the event listener.
 function addEventListener(eventName, onEventFunc, details = undefined) {
     const onEventFuncWithFilter = function(event) {
         if (matchesFilter(event.detail, details)) {
@@ -81,7 +82,7 @@ function removeAllListeners() {
 // Returns a promise that resolves when the target event occurs.
 // The promise resolves when an event with a matching name and details is dispatched.
 // If the timeout is specified, the promise rejects if the event is not found within the timeout.
-function getEventPromise(eventName, details = undefined, timeout = DEFAULT_TIMEOUT) {
+function getEventPromise(eventName, details = undefined, timeout = DEFAULT_TIMEOUT_MS) {
     return new Promise(function(resolve, reject) {
         let timeoutId = undefined;
 
@@ -107,5 +108,5 @@ export {
     getEventPromise,
     removeAllListeners,
 
-    EVENT_TYPE_HANDLER_COMPLETED,
+    ROUTING_COMPLETED,
 };

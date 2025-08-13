@@ -35,22 +35,26 @@ test("Nav Course101", async function() {
 });
 
 async function navigateToEnrolledCourses() {
-    let coursesRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
-        'path': 'courses',
-    });
+    let pathComponents = {
+        'path': Routing.PATH_COURSES,
+    };
 
-    Routing.route('#courses');
+    let coursesRenderedPromise = Event.getEventPromise(Event.ROUTING_COMPLETED, pathComponents);
+
+    Routing.routeComponents(pathComponents);
     await coursesRenderedPromise;
 }
 
-async function navigateToCourse(courseID) {
-    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
-        'path': 'course',
+async function navigateToCourse(courseId) {
+    let pathComponents = {
+        'path': Routing.PATH_COURSE,
         'params': {
-            'course': 'course101',
+            [Routing.PARAM_COURSE]: courseId,
         },
-    });
+    };
 
-    Routing.route('#course?course=course101');
+    let courseRenderedPromise = Event.getEventPromise(Event.ROUTING_COMPLETED, pathComponents);
+
+    Routing.routeComponents(pathComponents);
     await courseRenderedPromise;
 }

@@ -12,14 +12,14 @@ async function loginUser(displayName) {
     Context.clear();
     Routing.init();
 
-    let loginRenderedProimise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
+    let loginRenderedProimise = Event.getEventPromise(Event.ROUTING_COMPLETED, {
         'path': 'login',
     });
 
     Routing.redirectLogin();
     await loginRenderedProimise;
 
-    let homeRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_HANDLER_COMPLETED, {
+    let homeRenderedPromise = Event.getEventPromise(Event.ROUTING_COMPLETED, {
         'path': '',
     });
 
