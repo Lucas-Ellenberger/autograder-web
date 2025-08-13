@@ -12,14 +12,14 @@ async function loginUser(displayName) {
     Context.clear();
     Routing.init();
 
-    let loginRenderedProimise = Event.getEventPromise(Event.ROUTING_COMPLETED, {
+    let loginRenderedProimise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, {
         'path': 'login',
     });
 
     Routing.redirectLogin();
     await loginRenderedProimise;
 
-    let homeRenderedPromise = Event.getEventPromise(Event.ROUTING_COMPLETED, {
+    let homeRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, {
         'path': '',
     });
 
@@ -31,6 +31,24 @@ async function loginUser(displayName) {
     await homeRenderedPromise;
 }
 
+function checkCards(expectedLabelNames) {
+    const courseCardSpans = document.querySelectorAll('.cards-area .card span');
+    let actualLabelNames = courseCardSpans.values().map(function(element) {
+        return element.textContent;
+    }).toArray();
+
+    expect(actualLabelNames).toStrictEqual(expectedLabelNames);
+}
+
+function checkPageBasics(title, dataPage) {
+    expect(document.title).toContain(title);
+
+    let pageContent = document.querySelector(`.page-body .content[data-page="${dataPage}"]`);
+    expect(pageContent).not.toBeNull();
+}
+
 export {
+    checkCards,
+    checkPageBasics,
     loginUser,
 }

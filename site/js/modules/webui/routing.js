@@ -108,7 +108,7 @@ function route(rawPath = undefined) {
     return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, {});
 }
 
-function routeComponents({path = undefined, params = {}}) {
+function routeComponents({path = '', params = {}}) {
     route(formHashPath(path, params));
 }
 
@@ -211,7 +211,7 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
         'context': context,
         'container': container,
     };
-    Event.dispatchEvent(Event.ROUTING_COMPLETED, eventDetails);
+    Event.dispatchEvent(Event.EVENT_TYPE_ROUTING_COMPLETE, eventDetails);
 }
 
 function setContextUserDisplay() {

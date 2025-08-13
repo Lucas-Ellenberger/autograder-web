@@ -10,7 +10,7 @@
 const eventListeners = new Map();
 const eventElement = document.createElement(`div`);
 
-const ROUTING_COMPLETED = 'Routing Completed';
+const EVENT_TYPE_ROUTING_COMPLETE = 'autograder-routing-end';
 
 const DEFAULT_TIMEOUT_MS = 3000;
 
@@ -31,7 +31,7 @@ function addEventListener(eventName, onEventFunc, details = undefined) {
         if (matchesFilter(event.detail, details)) {
             onEventFunc(event);
         }
-    }
+    };
 
     eventElement.addEventListener(eventName, onEventFuncWithFilter);
 
@@ -108,5 +108,5 @@ export {
     getEventPromise,
     removeAllListeners,
 
-    ROUTING_COMPLETED,
+    EVENT_TYPE_ROUTING_COMPLETE,
 };
