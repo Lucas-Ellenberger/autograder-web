@@ -208,7 +208,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         return;
     }
 
-    Routing.loadingStart(container.querySelector(".results-area"), false);
+    Routing.loadingStart(document.querySelector(".results-area"), false);
 
     let inputParams = {};
     let errorMessages = [];
@@ -355,8 +355,10 @@ function submission(course, assignment, submission) {
 
     let html = `
         <div class='submission'>
-            <h2>${assignment.name}: Submission ${submission['short-id']}</h2>
-            <div class='submission-metadata'>
+            <div class='secondary-color drop-shadow'>
+                <h2>${assignment.name}: Submission ${submission['short-id']}</h2>
+            </div>
+            <div class='submission-metadata secondary-color drop-shadow'>
                 <h3>Summary</h3>
                 <table>
                     <tbody>
@@ -372,7 +374,7 @@ function submission(course, assignment, submission) {
                     </tbody>
                 </table>
             </div>
-            <div class='submission-questions-area'>
+            <div class='submission-questions-area secondary-color drop-shadow'>
                 <h3>Questions</h3>
                 ${submissionQuestions(submission.questions)}
             </div>

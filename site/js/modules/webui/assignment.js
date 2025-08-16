@@ -239,12 +239,14 @@ function handlerSubmit(path, params, context, container) {
     setAssignmentTitle(course, assignment);
 
     container.innerHTML = `
-        <div class='submit'>
-            <div class='submit-controls page-controls'>
-                <button disabled>Submit</button>
-                <div>
-                    <label for='files'>Files:</label>
-                    <input type='file' multiple='true' name='files' placeholder='Submission Files' />
+        <div class='submit-page'>
+            <div class='submit'>
+                <div class='submit-controls page-controls'>
+                    <button disabled>Submit</button>
+                    <div>
+                        <label for='files'>Files:</label>
+                        <input type='file' multiple='true' name='files' placeholder='Submission Files' />
+                    </div>
                 </div>
             </div>
             <div class='submit-results'>
@@ -278,7 +280,7 @@ function doSubmit(context, course, assignment, files, container) {
         return;
     }
 
-    Routing.loadingStart(container);
+    Routing.loadingStart(container, false);
 
     Autograder.Submissions.submit(course.id, assignment.id, files)
         .then(function(result) {

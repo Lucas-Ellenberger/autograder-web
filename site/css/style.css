@@ -43,11 +43,11 @@
     --curve-radius-small: 10px;
     --curve-radius-large: 20px;
 
-    --font-size-larger: 1.25rem;
-    --font-size-large: 1.15rem;
-    --font-size-normal: 1.00rem;
-    --font-size-small: 0.85rem;
-    --font-size-smaller: 0.75rem;
+    --font-size-larger: 1.40rem;
+    --font-size-large: 1.30rem;
+    --font-size-normal: 1.15rem;
+    --font-size-small: 1.00rem;
+    --font-size-smaller: 0.90rem;
 
     --font-weight-normal: 450;
     --font-weight-bold: 650;
@@ -559,13 +559,15 @@ fieldset {
     word-break: keep-all;
 }
 
-.home {
+.home,
+.submit-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.home-content {
+.home-content,
+.submit {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -577,13 +579,15 @@ fieldset {
     font-size: var(--font-size-larger);
 }
 
-.home-content > div {
+.home-content > div,
+.submit-results .submission > div {
     padding: 1.5em;
     margin: 1em;
     border-radius: var(--curve-radius-large);
 }
 
-.home-content > div p {
+.home-content > div p,
+.submit-results .submission > div h2 {
     margin-bottom: 0em;
 }
 
