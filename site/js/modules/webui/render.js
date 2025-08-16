@@ -424,7 +424,7 @@ function makePairedTableRow(label, value, name = undefined) {
     return `
         <tr ${nameHTML}>
             <th class='label'>${label}</th>
-            <td class='value'>${value}</td>
+            <td class='value'><span>${value}</span></td>
         </tr>
     `;
 }

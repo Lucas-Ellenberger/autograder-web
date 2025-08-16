@@ -493,19 +493,27 @@ function proxyResubmit(params, context, container, inputParams) {
 }
 
 function getSubmissionResultHTML(course, assignment, result) {
+    result.message = processMessage(result.message);
+
     if (result.rejected) {
         return `
             <h3>Submission Rejected</h3>
-            <p>${result.message}</p>
+            <p><pre>${result.message}</pre></p>
         `;
     } else if (!result['grading-success']) {
         return `
             <h3>Grading Failed</h3>
-            <p>${result.message}</p>
+            <p><pre>${result.message}</pre></p>
         `;
     } else {
         return Render.submission(course, assignment, result.result);
     }
+}
+
+function processMessage(message) {
+    return message.replace(/<timestamp:(\d+)>/g, function(match, timestamp) {
+        return Util.timestampToPretty(parseInt(timestamp))
+    });
 }
 
 function handlerAnalysisIndividual(path, params, context, container) {

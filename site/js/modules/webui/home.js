@@ -7,26 +7,34 @@ function init() {
 function handlerHome(path, params, context, container) {
     container.innerHTML = `
         <div class='home'>
-            <p>
-                Welcome to the EduLinq Autograder.
-            </p>
+            <div class='home-content'>
+                <div class='home-title secondary-color drop-shadow'>
+                    <p>
+                        Welcome to the EduLinq Autograder.
+                    </p>
+                </div>
 
-            <p>
-                You are currently using the <a href='https://github.com/edulinq/autograder-web'>web frontend</a>
-                for the autograder running on <a href='${document.location.href}'><strong>${document.location.hostname}</strong></a>.
-            </p>
+                <div class='secondary-color drop-shadow'>
+                    <p>
+                        You are currently using the <a href='https://github.com/edulinq/autograder-web'>web frontend</a>
+                        for the autograder running on <a href='${document.location.href}'><strong>${document.location.hostname}</strong></a>.
+                    </p>
 
-            <p>
-                This frontend has a subset of the full functionality,
-                which you access with command-line clients such as the <a href='https://github.com/edulinq/autograder-py'>Python CLI</a>.
-            </p>
+                    <p>
+                        This frontend has a subset of the full functionality,
+                        which you access with command-line clients such as the <a href='https://github.com/edulinq/autograder-py'>Python CLI</a>.
+                    </p>
+                </div>
 
-            <span>Other EduLinq Autograder Resources:</span>
-            <ul>
-                <li><a href='https://github.com/edulinq/autograder-server'>Server</a></li>
-                <li><a href='https://github.com/edulinq/autograder-web'>Web Frontend</a></li>
-                <li><a href='https://github.com/edulinq/autograder-py'>Python Interface</a></li>
-            </ul>
+                <div class='secondary-color drop-shadow'>
+                    <span>Other EduLinq Autograder Resources:</span>
+                    <ul>
+                        <li><a href='https://github.com/edulinq/autograder-server'>Server</a></li>
+                        <li><a href='https://github.com/edulinq/autograder-web'>Web Frontend</a></li>
+                        <li><a href='https://github.com/edulinq/autograder-py'>Python Interface</a></li>
+                    </ul>
+                </div>
+            </div>
         </home>
     `;
 }
