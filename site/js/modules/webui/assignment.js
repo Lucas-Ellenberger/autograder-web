@@ -240,7 +240,7 @@ function handlerSubmit(path, params, context, container) {
 
     container.innerHTML = `
         <div class='submit-page'>
-            <div class='submit'>
+            <div class='submit-content'>
                 <div class='submit-controls page-controls'>
                     <button disabled>Submit</button>
                     <div>
@@ -248,8 +248,8 @@ function handlerSubmit(path, params, context, container) {
                         <input type='file' multiple='true' name='files' placeholder='Submission Files' />
                     </div>
                 </div>
-            </div>
-            <div class='submit-results'>
+                <div class='submit-results'>
+                </div>
             </div>
         </div>
     `;

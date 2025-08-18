@@ -2,11 +2,12 @@
     --color-light-bg-primary: #e7e7ff;
     --color-light-bg-secondary: #f3f3ff;
     --color-light-bg-tertiary: #ffffff;
+    /* TODO: Do we need? */
     --color-light-bg-gradient: linear-gradient(45deg,rgba(248, 232, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 1) 80%, rgba(248, 232, 255, 1) 100%);
 
     --color-light-bg-accent-primary: rgb(134, 114, 231);
     --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
-    --color-light-bg-accent-gradient: #8672e7;
+    --color-light-bg-accent-gradient: linear-gradient(60deg, var(--color-light-bg-tertiary) 0%, var(--color-light-bg-secondary) 50%, var(--color-light-bg-primary) 100%);
 
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
     --color-light-text-secondary: rgba(0, 0, 0, 0.70);
@@ -23,6 +24,7 @@
     --color-dark-bg-primary: #383640;
     --color-dark-bg-secondary: #110d1b;
     --color-dark-bg-tertiary: #0c0814;
+    /* TODO: Do we need? */
     --color-dark-bg-gradient: linear-gradient(60deg,rgba(61, 54, 69, 1) 0%, rgba(56, 54, 64, 1) 20%, rgba(56, 54, 64, 1) 80%, rgba(61, 54, 69, 1) 100%);
 
     --color-dark-text-primary: rgba(255, 255, 255, 0.90);
@@ -39,7 +41,7 @@
 
     --color-dark-bg-accent-primary: rgb(134, 114, 231);
     --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.4);
-    --color-dark-bg-accent-gradient: #8672e7;
+    --color-dark-bg-accent-gradient: linear-gradient(60deg, var(--color-dark-bg-tertiary) 0%, var(--color-dark-bg-secondary) 50%, var(--color-dark-bg-primary) 100%);
 
     --color-bg-shadow: #0c0814;
     --color-text-error: #f40055;
@@ -94,7 +96,7 @@ html {
         --color-bg-gradient: var(--color-light-bg-gradient);
 
         --color-bg-accent-primary: var(--color-light-bg-accent-primary);
-		--color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+        --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
         --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
         --color-bg-error: var(--color-light-bg-error);
 
@@ -121,7 +123,7 @@ html {
         --color-bg-gradient: var(--color-dark-bg-gradient);
 
         --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
-		--color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
+        --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
         --color-bg-accent-gradient: var(--color-dark-bg-accent-gradient);
         --color-bg-error: var(--color-dark-bg-error);
 
@@ -282,10 +284,6 @@ html {
 
 .required-color {
     color: var(--color-text-error);
-}
-
-.gradient {
-    background-image: var(--color-bg-gradient);
 }
 
 a {
@@ -575,13 +573,14 @@ fieldset {
 }
 
 .card {
-    flex-basis: 0;
+    flex-basis: 20vw;
     flex-grow: 1;
 
     display: flex;
     flex-direction: column;
-    min-width: 20vw;
     justify-content: center;
+
+    min-width: min-content;
 
     border-radius: var(--curve-radius-large);
     font-size: var(--font-size-larger);
@@ -594,7 +593,8 @@ fieldset {
 .card:hover {
     transform: translateY(-3px);
     transition: all 0.3s ease;
-    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
+    background: var(--color-bg-accent-gradient);
+    box-shadow: var(--color-bg-accent-primary-low) 0px 8px 24px;
 }
 
 .card a {
@@ -603,15 +603,19 @@ fieldset {
     word-break: keep-all;
 }
 
-.home,
-.submit-page {
+.email-page,
+.home-page,
+.submit-page,
+.template-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
+.email-content,
 .home-content,
-.submit {
+.submit-content,
+.template-content {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -637,22 +641,6 @@ fieldset {
 
 .home-content > div a {
     color: var(--color-text-link);
-}
-
-.email-page,
-.template-page {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.email-content,
-.template-content {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    max-width: fit-content;
 }
 
 table.standard-table {
