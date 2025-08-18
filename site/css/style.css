@@ -2,8 +2,11 @@
     --color-light-bg-primary: #e7e7ff;
     --color-light-bg-secondary: #f3f3ff;
     --color-light-bg-tertiary: #ffffff;
+    --color-light-bg-gradient: linear-gradient(45deg,rgba(248, 232, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 1) 80%, rgba(248, 232, 255, 1) 100%);
 
-    --color-light-bg-accent-primary: #8672e7;
+    --color-light-bg-accent-primary: rgb(134, 114, 231);
+    --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
+    --color-light-bg-accent-gradient: #8672e7;
 
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
     --color-light-text-secondary: rgba(0, 0, 0, 0.70);
@@ -20,6 +23,7 @@
     --color-dark-bg-primary: #383640;
     --color-dark-bg-secondary: #110d1b;
     --color-dark-bg-tertiary: #0c0814;
+    --color-dark-bg-gradient: linear-gradient(60deg,rgba(61, 54, 69, 1) 0%, rgba(56, 54, 64, 1) 20%, rgba(56, 54, 64, 1) 80%, rgba(61, 54, 69, 1) 100%);
 
     --color-dark-text-primary: rgba(255, 255, 255, 0.90);
     --color-dark-text-secondary: rgba(255, 255, 255, 0.80);
@@ -33,7 +37,9 @@
     --color-dark-text-tertiary-low: rgba(255, 255, 255, 0.35);
     --color-dark-text-accent-low: rgba(255, 255, 255, 0.45);
 
-    --color-dark-bg-accent-primary: #8672e7;
+    --color-dark-bg-accent-primary: rgb(134, 114, 231);
+    --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.4);
+    --color-dark-bg-accent-gradient: #8672e7;
 
     --color-bg-shadow: #0c0814;
     --color-text-error: #f40055;
@@ -58,8 +64,11 @@ html {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
+    --color-bg-gradient: var(--color-light-bg-gradient);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+    --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+    --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
     --color-bg-error: var(--color-light-bg-error);
 
     --color-text-primary: var(--color-light-text-primary);
@@ -82,8 +91,11 @@ html {
         --color-bg-primary: var(--color-light-bg-primary);
         --color-bg-secondary: var(--color-light-bg-secondary);
         --color-bg-tertiary: var(--color-light-bg-tertiary);
+        --color-bg-gradient: var(--color-light-bg-gradient);
 
         --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+		--color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+        --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
         --color-bg-error: var(--color-light-bg-error);
 
         --color-text-primary: var(--color-light-text-primary);
@@ -106,8 +118,11 @@ html {
         --color-bg-primary: var(--color-dark-bg-primary);
         --color-bg-secondary: var(--color-dark-bg-secondary);
         --color-bg-tertiary: var(--color-dark-bg-tertiary);
+        --color-bg-gradient: var(--color-dark-bg-gradient);
 
         --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+		--color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
+        --color-bg-accent-gradient: var(--color-dark-bg-accent-gradient);
         --color-bg-error: var(--color-dark-bg-error);
 
         --color-text-primary: var(--color-dark-text-primary);
@@ -130,8 +145,11 @@ html.light {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
+    --color-bg-gradient: var(--color-light-bg-gradient);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+    --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+    --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
     --color-bg-error: var(--color-light-bg-error);
 
     --color-text-primary: var(--color-light-text-primary);
@@ -152,8 +170,11 @@ html.dark {
     --color-bg-primary: var(--color-dark-bg-primary);
     --color-bg-secondary: var(--color-dark-bg-secondary);
     --color-bg-tertiary: var(--color-dark-bg-tertiary);
+    --color-bg-gradient: var(--color-dark-bg-gradient);
 
     --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+    --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
+    --color-bg-accent-gradient: var(--color-dark-bg-accent-gradient);
     --color-bg-error: var(--color-dark-bg-error);
 
     --color-text-primary: var(--color-dark-text-primary);
@@ -263,6 +284,10 @@ html {
     color: var(--color-text-error);
 }
 
+.gradient {
+    background-image: var(--color-bg-gradient);
+}
+
 a {
     color: var(--color-text-link);
 }
@@ -275,7 +300,7 @@ textarea {
     color: var(--color-text-secondary);
 
     border-color: var(--color-text-secondary);
-    border-width: medium;
+    border-width: 2px;
     border-radius: var(--curve-radius-small);
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
 
@@ -312,6 +337,19 @@ select:focus,
 input:focus {
     accent-color: var(--color-bg-accent-primary);
     border-color: var(--color-bg-accent-primary);
+    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
+}
+
+button:hover,
+select:hover,
+input:hover {
+    transition: all 0.3s ease;
+    border-color: var(--color-text-primary);
+    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
+}
+
+button:hover {
+    transform: translateY(-1px);
 }
 
 input[type="checkbox"] {
@@ -549,8 +587,14 @@ fieldset {
     font-size: var(--font-size-larger);
     text-align: center;
 
-    outline: 5px solid var(--color-bg-accent-primary);
-    outline-offset: -3px;
+    outline: 3px solid var(--color-bg-accent-primary);
+    outline-offset: -2px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
 }
 
 .card a {
@@ -718,7 +762,7 @@ table.standard-table tr:not(:last-child) {
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    min-width: 50vw;
+    min-width: min(60vw, 1200px);
     max-width: 95vw;
 
     gap: 1em;
