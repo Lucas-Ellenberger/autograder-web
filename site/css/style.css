@@ -2,8 +2,6 @@
     --color-light-bg-primary: #e7e7ff;
     --color-light-bg-secondary: #f3f3ff;
     --color-light-bg-tertiary: #ffffff;
-    /* TODO: Do we need? */
-    --color-light-bg-gradient: linear-gradient(45deg,rgba(248, 232, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 1) 80%, rgba(248, 232, 255, 1) 100%);
 
     --color-light-bg-accent-primary: rgb(134, 114, 231);
     --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
@@ -24,8 +22,6 @@
     --color-dark-bg-primary: #383640;
     --color-dark-bg-secondary: #110d1b;
     --color-dark-bg-tertiary: #0c0814;
-    /* TODO: Do we need? */
-    --color-dark-bg-gradient: linear-gradient(60deg,rgba(61, 54, 69, 1) 0%, rgba(56, 54, 64, 1) 20%, rgba(56, 54, 64, 1) 80%, rgba(61, 54, 69, 1) 100%);
 
     --color-dark-text-primary: rgba(255, 255, 255, 0.90);
     --color-dark-text-secondary: rgba(255, 255, 255, 0.80);
@@ -43,6 +39,7 @@
     --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.4);
     --color-dark-bg-accent-gradient: linear-gradient(60deg, var(--color-dark-bg-tertiary) 0%, var(--color-dark-bg-secondary) 50%, var(--color-dark-bg-primary) 100%);
 
+    --color-highlighter: rgba(255, 255, 255, 0.1);
     --color-bg-shadow: #0c0814;
     --color-text-error: #f40055;
     --color-light-bg-error: rgba(0, 0, 0, 0.1);
@@ -66,7 +63,6 @@ html {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
-    --color-bg-gradient: var(--color-light-bg-gradient);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
@@ -93,7 +89,6 @@ html {
         --color-bg-primary: var(--color-light-bg-primary);
         --color-bg-secondary: var(--color-light-bg-secondary);
         --color-bg-tertiary: var(--color-light-bg-tertiary);
-        --color-bg-gradient: var(--color-light-bg-gradient);
 
         --color-bg-accent-primary: var(--color-light-bg-accent-primary);
         --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
@@ -120,7 +115,6 @@ html {
         --color-bg-primary: var(--color-dark-bg-primary);
         --color-bg-secondary: var(--color-dark-bg-secondary);
         --color-bg-tertiary: var(--color-dark-bg-tertiary);
-        --color-bg-gradient: var(--color-dark-bg-gradient);
 
         --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
         --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
@@ -147,7 +141,6 @@ html.light {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
-    --color-bg-gradient: var(--color-light-bg-gradient);
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
@@ -172,7 +165,6 @@ html.dark {
     --color-bg-primary: var(--color-dark-bg-primary);
     --color-bg-secondary: var(--color-dark-bg-secondary);
     --color-bg-tertiary: var(--color-dark-bg-tertiary);
-    --color-bg-gradient: var(--color-dark-bg-gradient);
 
     --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
@@ -454,7 +446,8 @@ fieldset {
 }
 
 .header {
-    padding: 1.5em;
+    padding-left: 1em;
+    padding-right: 1em;
     text-align: center;
 
     display: flex;
@@ -468,6 +461,10 @@ fieldset {
 .header > div {
     flex-grow: 1;
     flex-basis: 0;
+    word-break: keep-all;
+
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 .header .page-title {
@@ -479,14 +476,31 @@ fieldset {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 1.5em;
-    word-break: keep-all;
 
-    font-size: var(--font-size-large);
+    /* Remove the padding from the nav itself.
+     * The padding will be put on each nav link for better hover effects. */
+    padding-top: 0em;
+    padding-bottom: 0em;
+}
+
+.header .nav-item {
+    display: inherit;
+}
+
+.header .nav-link {
+    /* Add padding to the nav link class for better hover effects. */
+    padding-top: 1.5em;
+    padding-right: 1em;
+    padding-bottom: 1.5em;
+    padding-left: 1em;
 }
 
 .header a {
     text-decoration: none;
+}
+
+.header a:hover {
+    background: var(--color-highlighter);
 }
 
 .header .user-info {
@@ -750,7 +764,7 @@ table.standard-table tr:not(:last-child) {
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    min-width: min(60vw, 1200px);
+    min-width: min(95vw, 1200px);
     max-width: 95vw;
 
     gap: 1em;
