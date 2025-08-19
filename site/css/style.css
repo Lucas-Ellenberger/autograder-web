@@ -446,8 +446,8 @@ fieldset {
 }
 
 .header {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1.0em;
+    padding-right: 1.0em;
     text-align: center;
 
     display: flex;
@@ -617,7 +617,6 @@ fieldset {
     word-break: keep-all;
 }
 
-.email-page,
 .home-page,
 .submit-page,
 .template-page {
@@ -626,7 +625,6 @@ fieldset {
     justify-content: center;
 }
 
-.email-content,
 .home-content,
 .submit-content,
 .template-content {
@@ -756,15 +754,13 @@ table.standard-table tr:not(:last-child) {
     border-radius: var(--curve-radius-small);
 }
 
-.email-content > button,
-.email-content > div,
 .template-content > button,
 .template-content > div {
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    min-width: min(95vw, 1200px);
+    min-width: min(75vw, 1200px);
     max-width: 95vw;
 
     gap: 1em;
