@@ -496,9 +496,9 @@ fieldset {
     gap: min(0.5em, 0.5vw);
 
     /* Add padding to the nav link class for better hover effects. */
-    padding-top: min(1.5em, 1.5vw);
+    padding-top: 1.5em;
     padding-right: min(1em, 1vw);
-    padding-bottom: min(1.5em, 1.5vw);
+    padding-bottom: 1.5em;
     padding-left: min(1em, 1vw);
 }
 
