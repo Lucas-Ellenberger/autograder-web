@@ -108,7 +108,11 @@ function renderSelector(context, endpoints, selectedEndpoint) {
         defaultValue: selectedEndpoint,
     });
 
-    return selector.toHTML();
+    return `
+        <fieldset>
+            ${selector.toHTML()}
+        </fieldset>
+    `;
 }
 
 function getInputFields(endpoints, selectedEndpoint, context) {

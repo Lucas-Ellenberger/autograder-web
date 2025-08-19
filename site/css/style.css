@@ -48,6 +48,8 @@
     --curve-radius-small: 8px;
     --curve-radius-large: 16px;
 
+    --icon-size: 24px;
+
     --font-size-larger: 1.40rem;
     --font-size-large: 1.30rem;
     --font-size-normal: 1.15rem;
@@ -275,7 +277,7 @@ html {
 }
 
 .gradient-accent-color {
-    background-color: var(--color-bg-accent-gradient);
+    background: var(--color-bg-accent-gradient);
 }
 
 .error-color {
@@ -468,6 +470,7 @@ fieldset {
     padding-left: min(1.0em, 1vw);
     padding-right: min(1.0em, 1vw);
     text-align: center;
+    font-size: var(--font-size-smaller);
 
     display: flex;
     flex-direction: row;
@@ -482,12 +485,13 @@ fieldset {
     flex-basis: 0;
     word-break: keep-all;
 
-    padding-top: 1.5em;
-    padding-bottom: 1.5em;
+    padding-top: 1.0em;
+    padding-bottom: 1.0em;
 }
 
 .header .page-title {
     font-style: italic;
+    font-size: var(--font-size-small);
 }
 
 .header .nav {
@@ -520,7 +524,8 @@ fieldset {
 }
 
 .nav-link img {
-    height: 1.5em;
+    width: var(--icon-size);
+    height: auto;
 }
 
 .header a {
@@ -631,7 +636,7 @@ fieldset {
 .card:hover {
     transform: translateY(-3px);
     transition: all 0.3s ease;
-    background-color: var(--color-bg-accent-gradient);
+    background: var(--color-bg-accent-gradient);
     box-shadow: var(--color-bg-accent-primary-low) 0px 8px 24px;
 }
 
@@ -706,11 +711,49 @@ table.standard-table tr:not(:last-child) {
     max-width: 95vw;
 }
 
-.user-input-fields {
+.template-content .page-information {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding: min(1.75em, 4.5vw);
+    border-radius: var(--curve-radius-small);
+}
+
+.template-content .page-image {
+    flex-shrink: 1;
+    padding: 1.0em;
+    border-radius: var(--curve-radius-small);
+}
+
+.template-content .page-image img {
+    width: var(--icon-size);
+    height: auto;
+}
+
+.template-content .page-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    text-align: center;
+    flex: 0 1 auto;
+    gap: 1em;
+}
+
+.template-content .page-text > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
+}
+
+.user-input-fields,
+.template-content .template-control-area {
     display: flex;
     flex-direction: column;
     align-self: stretch;
-    max-width: 95vw;
 
     gap: 1em;
     padding: 1.5em;
@@ -718,35 +761,44 @@ table.standard-table tr:not(:last-child) {
     border-radius: var(--curve-radius-small);
 }
 
-.user-input-fields fieldset {
+.user-input-fields fieldset,
+.template-content .template-control-area fieldset {
     display: flex;
     flex-direction: column;
     align-self: stretch;
 }
 
-.user-input-fields fieldset > div {
+.user-input-fields fieldset > div,
+.template-content .template-control-area fieldset > div {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5em;
 }
 
-.user-input-fields fieldset > div.checkbox-field {
+.user-input-fields fieldset > div.checkbox-field,
+.template-content .template-control-area fieldset > div.checkbox-field {
     flex-direction: row;
     align-items: center;
 }
 
 .user-input-fields .input-field label,
-.template-control-area .input-field label {
+.template-content .template-control-area .input-field label {
     margin-bottom: 0.5em;
 }
 
 .user-input-fields .checkbox-field label,
-.template-control-area .checkbox-field label {
+.template-content .template-control-area .checkbox-field label {
     margin-bottom: 0em;
     margin-left: 0.5em;
 }
 
-.user-input-fields .input-field .error-message {
+.template-content .template-control-area .input-field label,
+.template-content .template-control-area .input-field select {
+    max-width: 80vw;
+}
+
+.user-input-fields .input-field .error-message,
+.template-content .template-control-area .input-field .error-message, {
     /* Hide the error message box by default. */
     display: none;
 
@@ -762,51 +814,14 @@ table.standard-table tr:not(:last-child) {
     padding-bottom: 0.5em;
 }
 
-.user-input-fields .input-field .error-message.show {
+.user-input-fields .input-field .error-message.show,
+.template-content .template-control-area .input-field .error-message.show {
     display: block;
 }
 
-.user-input-fields .input-field .error-message p {
+.user-input-fields .input-field .error-message p,
+.template-content .template-control-area .input-field .error-message p {
     margin: 0em;
-}
-
-.template-content .page-information {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-    padding: 1.5em;
-    border-radius: var(--curve-radius-small);
-}
-
-.template-content .page-image {
-    flex-shrink: 1;
-    padding: 1.0em;
-    border-radius: var(--curve-radius-small);
-}
-
-.template-content .page-image img {
-    width: 1.5em;
-    height: auto;
-}
-
-.template-content .page-text {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    text-align: center;
-    flex: 0 1 auto;
-    max-width: 90vw;
-    gap: 1em;
-}
-
-.template-content .page-text > div {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: start;
 }
 
 .template-content > button,
@@ -815,8 +830,9 @@ table.standard-table tr:not(:last-child) {
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    min-width: min(75vw, 1200px);
+    min-width: min(80vw, 1150px);
     max-width: 95vw;
+    box-sizing: border-box;
 
     gap: 1em;
     margin-top: 1em;
@@ -850,12 +866,7 @@ table.standard-table tr:not(:last-child) {
     border-radius: var(--curve-radius-small);
 }
 
-.template-control-area {
-    padding: 1.5em;
-    border-radius: var(--curve-radius-small);
-}
-
-.template-control-area .input-field {
+.template-content .template-control-area .input-field {
     display: flex;
     flex-direction: column;
     align-self: stretch;
