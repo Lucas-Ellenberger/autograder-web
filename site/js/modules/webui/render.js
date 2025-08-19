@@ -102,7 +102,7 @@ function makePage(
     let descriptionHTML = '';
     if ((description) && (description != '')) {
         descriptionHTML = `
-            <div class="template-description">
+            <div class="template-description secondary-color-low">
                 <p>
                     ${description}
                 </p>
@@ -113,9 +113,15 @@ function makePage(
     let infoHTML = '';
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
-            <div class="page-information secondary-color drop-shadow">
-                ${headerHTML}
-                ${descriptionHTML}
+            <div class='page-information secondary-color drop-shadow'>
+                <div class='page-image'>
+                    <img class='light-only' src='images/vendor/github-mark.png'>
+                    <img class='dark-only' src='images/vendor/github-mark-white.png'>
+                </div>
+                <div class='page-text'>
+                    ${headerHTML}
+                    ${descriptionHTML}
+                </div>
             </div>
         `;
     }

@@ -14,9 +14,9 @@
 
     --color-light-text-link: rgba(40, 40, 255, 0.75);
 
-    --color-light-text-primary-low: rgba(0, 0, 0, 0.45);
-    --color-light-text-secondary-low: rgba(0, 0, 0, 0.35);
-    --color-light-text-tertiary-low: rgba(0, 0, 0, 0.20);
+    --color-light-text-primary-low: rgba(0, 0, 0, 0.50);
+    --color-light-text-secondary-low: rgba(0, 0, 0, 0.45);
+    --color-light-text-tertiary-low: rgba(0, 0, 0, 0.40);
     --color-light-text-accent-low: rgba(0, 0, 0, 0.45);
 
     --color-dark-bg-primary: #383640;
@@ -30,9 +30,9 @@
 
     --color-dark-text-link: rgba(130, 130, 255, 0.85);
 
-    --color-dark-text-primary-low: rgba(255, 255, 255, 0.45);
-    --color-dark-text-secondary-low: rgba(255, 255, 255, 0.40);
-    --color-dark-text-tertiary-low: rgba(255, 255, 255, 0.35);
+    --color-dark-text-primary-low: rgba(255, 255, 255, 0.50);
+    --color-dark-text-secondary-low: rgba(255, 255, 255, 0.45);
+    --color-dark-text-tertiary-low: rgba(255, 255, 255, 0.40);
     --color-dark-text-accent-low: rgba(255, 255, 255, 0.45);
 
     --color-dark-bg-accent-primary: rgb(134, 114, 231);
@@ -268,6 +268,19 @@ html {
 
 .accent-color-low a {
     color: var(--color-text-accent-low);
+}
+
+.low-bg-accent-color {
+    background-color: var(--color-bg-accent-primary-low);
+}
+
+.gradient-accent-color {
+    background-color: var(--color-bg-accent-gradient);
+}
+
+.error-color {
+    background-color: var(--color-bg-error);
+    color: var(--color-text-error);
 }
 
 .drop-shadow {
@@ -618,7 +631,7 @@ fieldset {
 .card:hover {
     transform: translateY(-3px);
     transition: all 0.3s ease;
-    background: var(--color-bg-accent-gradient);
+    background-color: var(--color-bg-accent-gradient);
     box-shadow: var(--color-bg-accent-primary-low) 0px 8px 24px;
 }
 
@@ -737,8 +750,6 @@ table.standard-table tr:not(:last-child) {
     /* Hide the error message box by default. */
     display: none;
 
-    color: var(--color-text-error);
-    background-color: var(--color-bg-error);
     border-radius: var(--curve-radius-small);
 
     /* Add a small margin to account for the input field's drop shadow. */
@@ -760,9 +771,42 @@ table.standard-table tr:not(:last-child) {
 }
 
 .template-content .page-information {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
     padding: 1.5em;
-    text-align: center;
     border-radius: var(--curve-radius-small);
+}
+
+.template-content .page-image {
+    flex-shrink: 1;
+    padding: 1.0em;
+    border-radius: var(--curve-radius-small);
+}
+
+.template-content .page-image img {
+    width: 1.5em;
+    height: auto;
+}
+
+.template-content .page-text {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    text-align: center;
+    flex: 0 1 auto;
+    max-width: 90vw;
+    gap: 1em;
+}
+
+.template-content .page-text > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
 }
 
 .template-content > button,
