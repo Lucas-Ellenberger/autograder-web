@@ -114,7 +114,7 @@ function makePage(
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
             <div class='page-information secondary-color drop-shadow'>
-                <div class='page-image'>
+                <div class='page-image low-bg-accent-color'>
                     <img class='light-only' src='images/vendor/github-mark.png'>
                     <img class='dark-only' src='images/vendor/github-mark-white.png'>
                 </div>
