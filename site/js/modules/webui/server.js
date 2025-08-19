@@ -290,7 +290,7 @@ function displayTypes(typeData) {
             );
 
             fieldData = `
-            	<div class="api-type-details">
+                <div class="api-type-details">
                     <div>
                         <h4>Fields</h4>
                         ${fieldTypes}

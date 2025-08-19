@@ -45,8 +45,8 @@
     --color-light-bg-error: rgba(0, 0, 0, 0.1);
     --color-dark-bg-error: rgba(255, 255, 255, 0.1);
 
-    --curve-radius-small: 10px;
-    --curve-radius-large: 20px;
+    --curve-radius-small: 8px;
+    --curve-radius-large: 16px;
 
     --font-size-larger: 1.40rem;
     --font-size-large: 1.30rem;
@@ -427,6 +427,12 @@ fieldset {
     }
 }
 
+@media (max-width: 700px) {
+    .nav-link img {
+        display: none;
+    }
+}
+
 .bright-mode-toggle {
     cursor: pointer;
     color: var(--color-text-accent-low);
@@ -446,8 +452,8 @@ fieldset {
 }
 
 .header {
-    padding-left: 1.0em;
-    padding-right: 1.0em;
+    padding-left: min(1.0em, 1vw);
+    padding-right: min(1.0em, 1vw);
     text-align: center;
 
     display: flex;
@@ -483,24 +489,29 @@ fieldset {
     padding-bottom: 0em;
 }
 
-.header .nav-item {
-    display: inherit;
+.header .nav-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: min(0.5em, 0.5vw);
+
+    /* Add padding to the nav link class for better hover effects. */
+    padding-top: min(1.5em, 1.5vw);
+    padding-right: min(1em, 1vw);
+    padding-bottom: min(1.5em, 1.5vw);
+    padding-left: min(1em, 1vw);
 }
 
-.header .nav-link {
-    /* Add padding to the nav link class for better hover effects. */
-    padding-top: 1.5em;
-    padding-right: 1em;
-    padding-bottom: 1.5em;
-    padding-left: 1em;
+.header .nav-link:hover {
+    background: var(--color-highlighter);
+}
+
+.nav-link img {
+    height: 1.5em;
 }
 
 .header a {
     text-decoration: none;
-}
-
-.header a:hover {
-    background: var(--color-highlighter);
 }
 
 .header .user-info {
@@ -768,6 +779,10 @@ table.standard-table tr:not(:last-child) {
     margin-bottom: 1em;
     margin-right: 0.5em;
     margin-left: 0.5em;
+}
+
+.template-content .template-header h2 {
+    margin-bottom: 0em;
 }
 
 .template-content .template-description p {
