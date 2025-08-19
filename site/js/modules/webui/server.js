@@ -32,11 +32,11 @@ function handlerServer(path, params, context, container) {
     let cards = [
         Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
-        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args)),
+        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args), 'admin'),
     ];
 
     container.innerHTML = `
-        ${Render.cards(cards)}
+        ${Render.cards(context, cards)}
     `;
 }
 

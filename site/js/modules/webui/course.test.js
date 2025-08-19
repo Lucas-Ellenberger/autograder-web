@@ -21,19 +21,42 @@ test("Enrolled Courses", async function() {
 test("Nav Course101", async function() {
     Base.init(false);
 
-    await TestUtil.loginUser("course-student");
-
-    let targetCourse = 'course101';
-    await navigateToCourse(targetCourse);
-
-    TestUtil.checkPageBasics(targetCourse, 'course');
-
-    const expectedLabelNames = [
-        'Homework 0',
-        'Email Users',
-        'List Users',
+    // Each test case is a list of [user, [expected card labels]].
+    const testCases = [
+        [
+            "course-other",
+            [
+                'Homework 0',
+            ],
+        ],
+        [
+            "course-student",
+            [
+                'Homework 0',
+            ],
+        ],
+        [
+            "course-grader",
+            [
+                'Homework 0',
+                'Email Users',
+                'List Users',
+            ],
+        ],
     ];
-    TestUtil.checkCards(expectedLabelNames);
+
+    for (const testCase of testCases) {
+        const user = testCase[0];
+        await TestUtil.loginUser(user);
+
+        const targetCourse = 'course101';
+        await navigateToCourse(targetCourse);
+
+        TestUtil.checkPageBasics(targetCourse, 'course');
+
+        const expectedLabelNames = testCase[1];
+        TestUtil.checkCards(expectedLabelNames);
+    }
 });
 
 async function navigateToEnrolledCourses() {

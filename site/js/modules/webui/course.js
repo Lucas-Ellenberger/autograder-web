@@ -17,11 +17,11 @@ function handlerCourses(path, params, context, container) {
     let cards = [];
     for (const [id, course] of Object.entries(context.courses)) {
         let link = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
-        cards.push(Render.makeCardObject('course', course.name, link));
+        cards.push(Render.makeCardObject('course', course.name, link, 'user', 'other', id));
     }
 
     container.innerHTML = `
-        ${Render.cards(cards)}
+        ${Render.cards(context, cards)}
     `;
 }
 
@@ -38,7 +38,7 @@ function handlerCourse(path, params, context, container) {
         };
 
         let link = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-        assignmentCards.push(Render.makeCardObject('assignment', assignment.name, link));
+        assignmentCards.push(Render.makeCardObject('assignment', assignment.name, link, 'user', 'other', course.id));
     }
 
     let actionCards = [];
@@ -48,6 +48,9 @@ function handlerCourse(path, params, context, container) {
         Routing.formHashPath(Routing.PATH_EMAIL, {
             [Routing.PARAM_COURSE]: course.id,
         }),
+        'user',
+        'grader',
+        course.id,
     ));
 
     actionCards.push(Render.makeCardObject(
@@ -56,6 +59,9 @@ function handlerCourse(path, params, context, container) {
         Routing.formHashPath(Routing.PATH_COURSE_USERS_LIST, {
             [Routing.PARAM_COURSE]: course.id,
         }),
+        'user',
+        'grader',
+        course.id,
     ));
 
     let cardSections = [
@@ -65,7 +71,7 @@ function handlerCourse(path, params, context, container) {
 
     container.innerHTML = `
         <h2>${course.name}</h2>
-        ${Render.makeCardSections(cardSections)}
+        ${Render.makeCardSections(context, cardSections)}
     `;
 }
 

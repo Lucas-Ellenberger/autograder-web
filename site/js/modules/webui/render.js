@@ -1,16 +1,21 @@
+import * as Autograder from '../autograder/base.js';
+
 import * as Assignment from './assignment.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
-function makeCardObject(type = 'unknown', text = '', link = '#') {
+function makeCardObject(type = 'unknown', text = '', link = '#', minServerRole = 'unknown', minCourseRole = 'unknown', courseId = undefined) {
     return {
-        type: type,
-        text: text,
-        link: link,
+        type:               type,
+        text:               text,
+        link:               link,
+        minServerRoleValue: Autograder.Users.getServerRoleValue(minServerRole),
+        minCourseRoleValue: Autograder.Users.getCourseRoleValue(minCourseRole),
+        courseId:           courseId,
     };
 }
 
-function card(card = {type: 'unknown', text: '', link: '#'}) {
+function card(card = {type: 'unknown', text: '', link: '#', minServerRole: 'unknown', minCourseRole: 'unknown', courseId: undefined}) {
     return `
         <div class='card card-${card.type} secondary-color drop-shadow'>
             <a href='${card.link}' alt='${card.text}'>
@@ -22,14 +27,22 @@ function card(card = {type: 'unknown', text: '', link: '#'}) {
 
 // Render some cards to html.
 // This function takes ownership of the list of cards.
-function cards(cards) {
+function cards(context, cards) {
     cards.sort(function(a, b) {
         return Util.caseInsensitiveStringCompare(a.text, b.text);
     });
 
     let html = [];
     for (const item of cards) {
+        if (hideCard(context, item)) {
+            continue
+        }
+
         html.push(card(item));
+    }
+
+    if (html.length === 0) {
+        return undefined;
     }
 
     return `
@@ -39,12 +52,38 @@ function cards(cards) {
     `;
 }
 
+function hideCard(context, card) {
+    const userServerRoleValue = Autograder.Users.getServerRoleValue(context.user.role);
+
+    // Never hide cards from user that is a server admin or above.
+    if (userServerRoleValue >= Autograder.Users.getServerRoleValue('admin')) {
+        return false;
+    }
+
+    if (card.minServerRoleValue > userServerRoleValue) {
+        return true;
+    }
+
+    let userCourseRole = 'unknown';
+
+    const course = context.user.courses[card.courseId];
+    if (course) {
+        userCourseRole = course.role;
+    }
+
+    if (card.minCourseRoleValue > Autograder.Users.getCourseRoleValue(userCourseRole)) {
+        return true;
+    }
+
+    return false;
+}
+
 // Render a list of card sections to html.
 // A card section is [section name, a list of cards].
-function makeCardSections(sections) {
+function makeCardSections(context, sections) {
     let cardSections = [];
     for (const section of sections) {
-        cardSections.push(makeCardSection(section[0], section[1]));
+        cardSections.push(makeCardSection(context, section[0], section[1]));
     }
 
     return `
@@ -55,11 +94,16 @@ function makeCardSections(sections) {
 }
 
 // Render a section name and some cards to html.
-function makeCardSection(sectionName, sectionCards) {
+function makeCardSection(context, sectionName, sectionCards) {
+    const cardHTML = cards(context, sectionCards);
+    if (!cardHTML) {
+        return '';
+    }
+
     return `
         <div class='card-section'>
             <h3>${sectionName}</h3>
-            ${cards(sectionCards)}
+            ${cardHTML}
         </div>
     `;
 }
