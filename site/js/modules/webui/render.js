@@ -55,7 +55,7 @@ function cards(context, cards) {
 function hideCard(context, card) {
     const userServerRole = Autograder.Users.getServerRoleValue(context.user.role);
 
-    // Never hide cards from user that is a server admin or above.
+    // Never hide cards from server admins or above.
     if (userServerRole >= Autograder.Users.SERVER_ROLE_ADMIN) {
         return false;
     }
