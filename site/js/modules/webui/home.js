@@ -9,6 +9,10 @@ function handlerHome(path, params, context, container) {
         <div class='home-page'>
             <div class='home-content'>
                 <div class='home-title secondary-color drop-shadow'>
+                    <div class='page-image low-bg-accent-color'>
+                        <img class='light-only' src='images/vendor/github-mark.png'>
+                        <img class='dark-only' src='images/vendor/github-mark-white.png'>
+                    </div>
                     <p>
                         Welcome to the EduLinq Autograder.
                     </p>

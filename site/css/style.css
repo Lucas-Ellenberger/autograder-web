@@ -48,7 +48,8 @@
     --curve-radius-small: 8px;
     --curve-radius-large: 16px;
 
-    --icon-size: 24px;
+    --icon-size-large: 48px;
+    --icon-size-normal: 24px;
 
     --font-size-larger: 1.40rem;
     --font-size-large: 1.30rem;
@@ -524,7 +525,7 @@ fieldset {
 }
 
 .nav-link img {
-    width: var(--icon-size);
+    width: var(--icon-size-normal);
     height: auto;
 }
 
@@ -665,7 +666,23 @@ fieldset {
 }
 
 .home-content .home-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    gap: 0.75em;
     font-size: var(--font-size-larger);
+}
+
+.home-title .page-image {
+    padding: 0.75em;
+    border-radius: var(--curve-radius-small);
+}
+
+.home-title .page-image img {
+    width: var(--icon-size-large);
+    height: auto;
 }
 
 .home-content > div,
@@ -728,7 +745,7 @@ table.standard-table tr:not(:last-child) {
 }
 
 .template-content .page-image img {
-    width: var(--icon-size);
+    width: var(--icon-size-normal);
     height: auto;
 }
 
@@ -739,7 +756,7 @@ table.standard-table tr:not(:last-child) {
     align-items: flex-start;
     text-align: center;
     flex: 0 1 auto;
-    gap: 1em;
+    gap: 0.5em;
 }
 
 .template-content .page-text > div {
