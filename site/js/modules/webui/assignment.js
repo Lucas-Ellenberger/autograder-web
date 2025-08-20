@@ -54,24 +54,24 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Submit',
             Routing.formHashPath(Routing.PATH_SUBMIT, args),
-            'user',
-            'student',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_STUDENT,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Peek a Previous Submission',
             Routing.formHashPath(Routing.PATH_PEEK, args),
-            'user',
-            'student',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_STUDENT,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'View Submission History',
             Routing.formHashPath(Routing.PATH_HISTORY, args),
-            'user',
-            'student',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_STUDENT,
             course.id,
         ),
 
@@ -80,63 +80,68 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
-            'user',
-            'grader',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_GRADER,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Proxy Regrade',
             Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
-            'user',
-            'grader',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_GRADER,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Proxy Resubmit',
             Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
-            'user',
-            'grader',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_GRADER,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Individual Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
-            'user',
-            'admin',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_ADMIN,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Pairwise Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_PAIRWISE, args),
-            'user',
-            'admin',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_ADMIN,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'Remove Submission',
             Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
-            'user',
-            'grader',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_GRADER,
             course.id,
         ),
         Render.makeCardObject(
             'assignment-action',
             'View User History',
             Routing.formHashPath(Routing.PATH_USER_HISTORY, args),
-            'user',
-            'grader',
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_GRADER,
             course.id,
         ),
     ];
 
+    let cardHTML = Render.cards(context, cards);
+    if (!cardHTML) {
+        cardHTML = '';
+    }
+
     container.innerHTML = `
         <h2>${assignment.name}</h2>
-        ${Render.cards(context, cards)}
+        ${cardHTML}
     `;
 }
 

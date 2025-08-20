@@ -17,7 +17,14 @@ function handlerCourses(path, params, context, container) {
     let cards = [];
     for (const [id, course] of Object.entries(context.courses)) {
         let link = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
-        cards.push(Render.makeCardObject('course', course.name, link, 'user', 'other', id));
+        cards.push(Render.makeCardObject(
+            'course',
+            course.name,
+            link,
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_OTHER,
+            id,
+        ));
     }
 
     container.innerHTML = `
@@ -38,7 +45,14 @@ function handlerCourse(path, params, context, container) {
         };
 
         let link = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-        assignmentCards.push(Render.makeCardObject('assignment', assignment.name, link, 'user', 'other', course.id));
+        assignmentCards.push(Render.makeCardObject(
+            'assignment',
+            assignment.name,
+            link,
+            Autograder.Users.SERVER_ROLE_USER,
+            Autograder.Users.COURSE_ROLE_OTHER,
+            course.id,
+        ));
     }
 
     let actionCards = [];
@@ -48,8 +62,8 @@ function handlerCourse(path, params, context, container) {
         Routing.formHashPath(Routing.PATH_EMAIL, {
             [Routing.PARAM_COURSE]: course.id,
         }),
-        'user',
-        'grader',
+        Autograder.Users.SERVER_ROLE_USER,
+        Autograder.Users.COURSE_ROLE_GRADER,
         course.id,
     ));
 
@@ -59,8 +73,8 @@ function handlerCourse(path, params, context, container) {
         Routing.formHashPath(Routing.PATH_COURSE_USERS_LIST, {
             [Routing.PARAM_COURSE]: course.id,
         }),
-        'user',
-        'grader',
+        Autograder.Users.SERVER_ROLE_USER,
+        Autograder.Users.COURSE_ROLE_GRADER,
         course.id,
     ));
 

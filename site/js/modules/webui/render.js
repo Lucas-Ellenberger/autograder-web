@@ -4,18 +4,18 @@ import * as Assignment from './assignment.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
-function makeCardObject(type = 'unknown', text = '', link = '#', minServerRole = 'unknown', minCourseRole = 'unknown', courseId = undefined) {
+function makeCardObject(type = 'unknown', text = '', link = '#', minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN, minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN, courseId = undefined) {
     return {
-        type:               type,
-        text:               text,
-        link:               link,
-        minServerRoleValue: Autograder.Users.getServerRoleValue(minServerRole),
-        minCourseRoleValue: Autograder.Users.getCourseRoleValue(minCourseRole),
-        courseId:           courseId,
+        type:          type,
+        text:          text,
+        link:          link,
+        minServerRole: minServerRole,
+        minCourseRole: minCourseRole,
+        courseId:      courseId,
     };
 }
 
-function card(card = {type: 'unknown', text: '', link: '#', minServerRole: 'unknown', minCourseRole: 'unknown', courseId: undefined}) {
+function card(card = {type: 'unknown', text: '', link: '#', minServerRole: Autograder.Users.SERVER_ROLE_UNKNOWN, minCourseRole: Autograder.Users.COURSE_ROLE_UNKNOWN, courseId: undefined}) {
     return `
         <div class='card card-${card.type} secondary-color drop-shadow'>
             <a href='${card.link}' alt='${card.text}'>
@@ -53,25 +53,24 @@ function cards(context, cards) {
 }
 
 function hideCard(context, card) {
-    const userServerRoleValue = Autograder.Users.getServerRoleValue(context.user.role);
+    const userServerRole = Autograder.Users.getServerRoleValue(context.user.role);
 
     // Never hide cards from user that is a server admin or above.
-    if (userServerRoleValue >= Autograder.Users.getServerRoleValue('admin')) {
+    if (userServerRole >= Autograder.Users.SERVER_ROLE_ADMIN) {
         return false;
     }
 
-    if (card.minServerRoleValue > userServerRoleValue) {
+    if (card.minServerRole > userServerRole) {
         return true;
     }
 
-    let userCourseRole = 'unknown';
-
+    let userCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN;
     const course = context.user.courses[card.courseId];
     if (course) {
-        userCourseRole = course.role;
+        userCourseRole = Autograder.Users.getCourseRoleValue(course.role);
     }
 
-    if (card.minCourseRoleValue > Autograder.Users.getCourseRoleValue(userCourseRole)) {
+    if (card.minCourseRole > userCourseRole) {
         return true;
     }
 
