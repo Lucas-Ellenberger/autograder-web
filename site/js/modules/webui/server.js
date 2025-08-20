@@ -35,9 +35,11 @@ function handlerServer(path, params, context, container) {
         Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args), Autograder.Users.SERVER_ROLE_ADMIN),
     ];
 
-    container.innerHTML = `
-        ${Render.cards(context, cards)}
-    `;
+    let cardSections = [
+        ['', cards],
+    ];
+
+    container.innerHTML = Render.makeCardSections(context, 'Server Actions', cardSections);
 }
 
 function handlerCallAPI(path, params, context, container) {

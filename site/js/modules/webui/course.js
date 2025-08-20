@@ -27,9 +27,11 @@ function handlerCourses(path, params, context, container) {
         ));
     }
 
-    container.innerHTML = `
-        ${Render.cards(context, cards)}
-    `;
+    let cardSections = [
+        ['', cards],
+    ];
+
+    container.innerHTML = Render.makeCardSections(context, 'Enrolled Courses', cardSections);
 }
 
 function handlerCourse(path, params, context, container) {
@@ -83,10 +85,7 @@ function handlerCourse(path, params, context, container) {
         ['Actions', actionCards],
     ];
 
-    container.innerHTML = `
-        <h2>${course.name}</h2>
-        ${Render.makeCardSections(context, cardSections)}
-    `;
+    container.innerHTML = Render.makeCardSections(context, course.name, cardSections);
 }
 
 function handlerEmail(path, params, context, container) {

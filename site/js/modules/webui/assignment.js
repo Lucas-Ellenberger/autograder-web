@@ -134,15 +134,11 @@ function handlerAssignment(path, params, context, container) {
         ),
     ];
 
-    let cardHTML = Render.cards(context, cards);
-    if (!cardHTML) {
-        cardHTML = '';
-    }
+    let cardSections = [
+        ['', cards],
+    ];
 
-    container.innerHTML = `
-        <h2>${assignment.name}</h2>
-        ${cardHTML}
-    `;
+    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections);
 }
 
 function handlerPeek(path, params, context, container) {

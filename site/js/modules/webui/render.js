@@ -4,7 +4,11 @@ import * as Assignment from './assignment.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
-function makeCardObject(type = 'unknown', text = '', link = '#', minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN, minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN, courseId = undefined) {
+function makeCardObject(
+        type = 'unknown', text = '', link = '#',
+        minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN,
+        minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN,
+        courseId = undefined) {
     return {
         type:          type,
         text:          text,
@@ -53,7 +57,7 @@ function cards(context, cards) {
 }
 
 function hideCard(context, card) {
-    const userServerRole = Autograder.Users.getServerRoleValue(context.user.role);
+    const userServerRole = Autograder.Users.getServerRoleValue(context?.user?.role);
 
     // Never hide cards from server admins or above.
     if (userServerRole >= Autograder.Users.SERVER_ROLE_ADMIN) {
@@ -64,11 +68,8 @@ function hideCard(context, card) {
         return true;
     }
 
-    let userCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN;
-    const course = context.user.courses[card.courseId];
-    if (course) {
-        userCourseRole = Autograder.Users.getCourseRoleValue(course.role);
-    }
+    const course = context?.user?.courses[card.courseId];
+    const userCourseRole = Autograder.Users.getCourseRoleValue(course?.role);
 
     if (card.minCourseRole > userCourseRole) {
         return true;
@@ -79,7 +80,7 @@ function hideCard(context, card) {
 
 // Render a list of card sections to html.
 // A card section is [section name, a list of cards].
-function makeCardSections(context, sections) {
+function makeCardSections(context, sectionsName, sections) {
     let cardSections = [];
     for (const section of sections) {
         cardSections.push(makeCardSection(context, section[0], section[1]));
@@ -87,6 +88,7 @@ function makeCardSections(context, sections) {
 
     return `
         <div class='card-sections'>
+            <h2>${sectionsName}</h2>
             ${cardSections.join("\n")}
         <div>
     `;
