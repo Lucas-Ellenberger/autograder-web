@@ -288,14 +288,22 @@ function handlerSubmit(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
     setAssignmentTitle(course, assignment);
+    let allowLateField = new Input.FieldType(context, 'allow-late', 'Allow Late', {
+        type: Input.INPUT_TYPE_BOOL,
+    });
 
     container.innerHTML = `
         <div class='submit'>
             <div class='submit-controls page-controls'>
                 <button disabled>Submit</button>
-                <div>
-                    <label for='files'>Files:</label>
-                    <input type='file' multiple='true' name='files' placeholder='Submission Files' />
+                <div class="user-input-fields secondary-color drop-shadow">
+                    <fieldset>
+                        <div>
+                            <label for='files'>Files:</label>
+                            <input type='file' multiple='true' name='files' placeholder='Submission Files' />
+                        </div>
+                        ${allowLateField.toHTML()}
+                    </fieldset>
                 </div>
             </div>
             <div class='submit-results'>
@@ -304,7 +312,7 @@ function handlerSubmit(path, params, context, container) {
     `;
 
     let button = container.querySelector('.submit-controls button');
-    let input = container.querySelector('.submit-controls input');
+    let input = container.querySelector(`.submit-controls input[name="files"]`);
     let results = container.querySelector('.submit-results');
 
     // Enable the button if there are files.
@@ -317,11 +325,11 @@ function handlerSubmit(path, params, context, container) {
     });
 
     button.addEventListener('click', function() {
-        doSubmit(context, course, assignment, input.files, results);
+        doSubmit(context, course, assignment, allowLateField, input.files, results);
     });
 }
 
-function doSubmit(context, course, assignment, files, container) {
+function doSubmit(context, course, assignment, allowLateField, files, container) {
     if (files.length < 1) {
         container.innerHTML = `
             <p>No submission files provided.</p>
@@ -331,7 +339,11 @@ function doSubmit(context, course, assignment, files, container) {
 
     Routing.loadingStart(container);
 
-    Autograder.Submissions.submit(course.id, assignment.id, files)
+    // TODO: Class list bug.
+    let allowLateInstance = allowLateField.getFieldInstance(container);
+    console.log(allowLateInstance);
+
+    Autograder.Submissions.submit(course.id, assignment.id, false, files)
         .then(function(result) {
             container.innerHTML = getSubmissionResultHTML(course, assignment, result);
         })

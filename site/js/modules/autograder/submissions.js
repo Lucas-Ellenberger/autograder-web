@@ -32,13 +32,14 @@ function peek(course, assignment, submission = undefined) {
     });
 }
 
-function submit(course, assignment, files) {
+function submit(course, assignment, allowLate, files) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/submit',
         files: files,
         payload: {
             'course-id': course,
             'assignment-id': assignment,
+            'allow-late': allowLate,
         },
     });
 }
