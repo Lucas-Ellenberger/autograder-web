@@ -58,7 +58,8 @@ class Card {
         `;
     }
 
-    hide(context) {
+    // Signals the card should be hidden based on the context user's roles.
+    isHidden(context) {
         const userServerRole = Autograder.Users.getServerRoleValue(context?.user?.role);
 
         // Never hide cards from server admins or above.
@@ -90,7 +91,7 @@ function cards(context, cards) {
 
     let html = [];
     for (const card of cards) {
-        if (card.hide(context)) {
+        if (card.isHidden(context)) {
             continue
         }
 
