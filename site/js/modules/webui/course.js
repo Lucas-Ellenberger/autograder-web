@@ -39,7 +39,7 @@ function handlerCourses(path, params, context, container) {
 function handlerCourse(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
 
-    Render.makeTitle(course.id);
+    Render.setTabTitle(course.id);
 
     let assignmentCards = [];
     for (const [id, assignment] of Object.entries(course.assignments)) {
@@ -98,13 +98,8 @@ function handlerCourse(path, params, context, container) {
 
 function handlerEmail(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
-    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
-    let titleParts = [
-        [course.id, courseLink],
-        ["email"]
-    ];
-    Render.makeTitle(course.id, titleParts);
+    Render.setTabTitle(course.id);
 
     let description = `
         Send an email to course users.
@@ -184,13 +179,8 @@ function sendEmail(params, context, container, inputParams) {
 
 function handlerUsers(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
-    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
-    let titleParts = [
-        [course.id, courseLink],
-        ["users"]
-    ];
-    Render.makeTitle(course.id, titleParts);
+    Render.setTabTitle(course.id);
 
     let inputFields = [
         new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {

@@ -202,7 +202,7 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
     // Set the page inforamtion.
     if (pageName) {
         container.setAttribute('data-page', pageName.toLowerCase());
-        Render.makeTitle(pageName);
+        Render.setTabTitle(pageName);
     }
 
     // Call the handler.

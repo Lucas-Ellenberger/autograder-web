@@ -185,7 +185,7 @@ function callEndpoint(params, context, container, inputParams) {
 }
 
 function handlerDocs(path, params, context, container) {
-    Render.makeTitle("API Documentation");
+    Render.setTabTitle('API Documentation');
 
     Autograder.Server.describe()
         .then(function(result) {
@@ -322,7 +322,7 @@ function displayTypes(typeData) {
 }
 
 function handlerUsers(path, params, context, container) {
-    Render.makeTitle("List Users"); 
+    Render.setTabTitle('List Users');
 
     let inputFields = [
         new Input.FieldType(context, 'users', 'Target Users', {

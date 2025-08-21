@@ -342,34 +342,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     ;
 }
 
-// Set the page title given a list of title parts.
-// Each page title part is [display name, optional link].
-// If title parts is empty, the page title defaults to the tab title.
-function makeTitle(tabTitle, pageTitleParts = []) {
-    let titlePartsHTML = [];
-    for (const part of pageTitleParts) {
-        let displayName = part[0];
-        let link = part[1];
-
-        if (link) {
-            titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
-        } else {
-            titlePartsHTML.push(displayName);
-        }
-    }
-
-    let titleHTML = '';
-    if (titlePartsHTML.length > 0) {
-        titleHTML = `
-            <span>
-                ${titlePartsHTML.join(" / ")}
-            </span>
-        `;
-    } else {
-        titleHTML = `<span>${tabTitle}</span>`;
-    }
-
-    document.querySelector('.page .page-title').innerHTML = titleHTML;
+function setTabTitle(tabTitle) {
     document.title = `${tabTitle} :: Autograder`;
 }
 
@@ -586,7 +559,7 @@ export {
     makeCardSection,
     makeCardSections,
     makePage,
-    makeTitle,
+    setTabTitle,
     submission,
     submissionHistory,
     tableFromDictionaries,

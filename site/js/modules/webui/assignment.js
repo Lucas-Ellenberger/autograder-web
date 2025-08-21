@@ -21,27 +21,11 @@ function init() {
     Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', requirements);
 }
 
-function setAssignmentTitle(course, assignment) {
-    let args = {
-        [Routing.PARAM_COURSE]: course.id,
-        [Routing.PARAM_ASSIGNMENT]: assignment.id,
-    };
-
-    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
-    let assignmentLink = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-    let titleParts = [
-        [course.id, courseLink],
-        [assignment.id, assignmentLink],
-    ];
-
-    Render.makeTitle(assignment.id, titleParts);
-}
-
 function handlerAssignment(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let args = {
         [Routing.PARAM_COURSE]: course.id,
@@ -166,7 +150,7 @@ function handlerPeek(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let submission = params[Routing.PARAM_SUBMISSION] || '';
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submission', 'Submission ID', {
@@ -221,7 +205,7 @@ function handlerHistory(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     Render.makePage(
             params, context, container, history,
@@ -237,7 +221,7 @@ function handlerUserHistory(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'targetUser', 'Target User', {
@@ -287,7 +271,7 @@ function handlerSubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     container.innerHTML = `
         <div class='submit-page'>
@@ -348,7 +332,7 @@ function handlerSubmissionRemove(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let userEmail = context.user.email;
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'targetEmail', 'Target User Email', {
@@ -403,7 +387,7 @@ function handlerFetchCourseScores(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'target-users', 'Target Users', {
@@ -442,7 +426,7 @@ function handlerProxyRegrade(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'dryRun', 'Dry Run', {
@@ -498,7 +482,7 @@ function handlerProxyResubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'email', 'Target User', {
@@ -573,7 +557,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
@@ -622,7 +606,7 @@ function handlerAnalysisPairwise(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
