@@ -1,35 +1,105 @@
+import * as Autograder from '../autograder/base.js';
+
 import * as Assignment from './assignment.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
-function makeCardObject(type = 'unknown', text = '', link = '#') {
-    return {
-        type: type,
-        text: text,
-        link: link,
-    };
-}
+class Card {
+    constructor(
+        type = 'unknown', text = '', link = '#',
+        {
+            minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN,
+            minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN,
+            courseId = undefined
+        } = {}) {
+        // An optional card type that is added to the HTML class list.
+        this.type = type;
 
-function card(card = {type: 'unknown', text: '', link: '#'}) {
-    return `
-        <div class='card card-${card.type} secondary-color drop-shadow'>
-            <a href='${card.link}' alt='${card.text}'>
-                <span>${card.text}</span>
-            </a>
-        </div>
-    `;
+        // The display test of the card.
+        this.text = text;
+
+        // Routes to this link when the card is clicked.
+        // All routes must start with a '#'.
+        this.link = link;
+
+        // The minimum server role a user needs to have to view this card.
+        this.minServerRole = minServerRole;
+
+        // The minimum course role a user needs to have to view this card.
+        this.minCourseRole = minCourseRole;
+
+        // The course that is used for the course role check.
+        this.courseId = courseId;
+
+        this.validate();
+    }
+
+    validate() {
+        if (!this.link.startsWith('#')) {
+            console.error(`A card link must start with a '#': '${this.link}'.`);
+        }
+
+        if (!Number.isInteger(this.minServerRole)) {
+            console.error('A card must have an integer value for the min server role.');
+        }
+
+        if (!Number.isInteger(this.minCourseRole)) {
+            console.error('A card must have an integer value for the min course role.');
+        }
+    }
+
+    toHTML() {
+        return `
+            <div class='card card-${this.type} secondary-color drop-shadow'>
+                <a href='${this.link}' alt='${this.text}'>
+                    <span>${this.text}</span>
+                </a>
+            </div>
+        `;
+    }
+
+    // Signals the card should be hidden based on the context user's roles.
+    isHidden(context) {
+        const userServerRole = Autograder.Users.getServerRoleValue(context?.user?.role);
+
+        // Never hide cards from server admins or above.
+        if (userServerRole >= Autograder.Users.SERVER_ROLE_ADMIN) {
+            return false;
+        }
+
+        if (this.minServerRole > userServerRole) {
+            return true;
+        }
+
+        const course = context?.user?.courses[this.courseId];
+        const userCourseRole = Autograder.Users.getCourseRoleValue(course?.role);
+
+        if (this.minCourseRole > userCourseRole) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 // Render some cards to html.
 // This function takes ownership of the list of cards.
-function cards(cards) {
+function cards(context, cards) {
     cards.sort(function(a, b) {
         return Util.caseInsensitiveStringCompare(a.text, b.text);
     });
 
     let html = [];
-    for (const item of cards) {
-        html.push(card(item));
+    for (const card of cards) {
+        if (card.isHidden(context)) {
+            continue
+        }
+
+        html.push(card.toHTML());
+    }
+
+    if (html.length === 0) {
+        return undefined;
     }
 
     return `
@@ -41,25 +111,31 @@ function cards(cards) {
 
 // Render a list of card sections to html.
 // A card section is [section name, a list of cards].
-function makeCardSections(sections) {
+function makeCardSections(context, sectionsName, sections) {
     let cardSections = [];
     for (const section of sections) {
-        cardSections.push(makeCardSection(section[0], section[1]));
+        cardSections.push(makeCardSection(context, section[0], section[1]));
     }
 
     return `
         <div class='card-sections'>
+            <h2>${sectionsName}</h2>
             ${cardSections.join("\n")}
         <div>
     `;
 }
 
 // Render a section name and some cards to html.
-function makeCardSection(sectionName, sectionCards) {
+function makeCardSection(context, sectionName, sectionCards) {
+    const cardHTML = cards(context, sectionCards);
+    if (!cardHTML) {
+        return '';
+    }
+
     return `
         <div class='card-section'>
             <h3>${sectionName}</h3>
-            ${cards(sectionCards)}
+            ${cardHTML}
         </div>
     `;
 }
@@ -502,11 +578,11 @@ function displayJSON(json) {
 }
 
 export {
+    Card,
+
     autograderError,
-    card,
     cards,
     displayJSON,
-    makeCardObject,
     makeCardSection,
     makeCardSections,
     makePage,

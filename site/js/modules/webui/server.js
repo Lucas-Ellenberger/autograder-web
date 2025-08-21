@@ -30,14 +30,18 @@ function handlerServer(path, params, context, container) {
     };
 
     let cards = [
-        Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
-        Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
-        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args)),
+        new Render.Card('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
+        new Render.Card('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
+        new Render.Card('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args), {
+            minServerRole: Autograder.Users.SERVER_ROLE_ADMIN,
+        }),
     ];
 
-    container.innerHTML = `
-        ${Render.cards(cards)}
-    `;
+    let cardSections = [
+        ['', cards],
+    ];
+
+    container.innerHTML = Render.makeCardSections(context, 'Server Actions', cardSections);
 }
 
 function handlerCallAPI(path, params, context, container) {

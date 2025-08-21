@@ -17,12 +17,23 @@ function handlerCourses(path, params, context, container) {
     let cards = [];
     for (const [id, course] of Object.entries(context.courses)) {
         let link = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
-        cards.push(Render.makeCardObject('course', course.name, link));
+        cards.push(new Render.Card(
+            'course',
+            course.name,
+            link,
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_OTHER,
+                courseId: id,
+            },
+        ));
     }
 
-    container.innerHTML = `
-        ${Render.cards(cards)}
-    `;
+    let cardSections = [
+        ['', cards],
+    ];
+
+    container.innerHTML = Render.makeCardSections(context, 'Enrolled Courses', cardSections);
 }
 
 function handlerCourse(path, params, context, container) {
@@ -38,24 +49,43 @@ function handlerCourse(path, params, context, container) {
         };
 
         let link = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-        assignmentCards.push(Render.makeCardObject('assignment', assignment.name, link));
+        assignmentCards.push(new Render.Card(
+            'assignment',
+            assignment.name,
+            link,
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_OTHER,
+                courseId: course.id,
+            },
+        ));
     }
 
     let actionCards = [];
-    actionCards.push(Render.makeCardObject(
+    actionCards.push(new Render.Card(
         "course-action",
         "Email Users",
         Routing.formHashPath(Routing.PATH_EMAIL, {
             [Routing.PARAM_COURSE]: course.id,
         }),
+        {
+            minServerRole: Autograder.Users.SERVER_ROLE_USER,
+            minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+            courseId: course.id,
+        },
     ));
 
-    actionCards.push(Render.makeCardObject(
+    actionCards.push(new Render.Card(
         "course-action",
         "List Users",
         Routing.formHashPath(Routing.PATH_COURSE_USERS_LIST, {
             [Routing.PARAM_COURSE]: course.id,
         }),
+        {
+            minServerRole: Autograder.Users.SERVER_ROLE_USER,
+            minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+            courseId: course.id,
+        },
     ));
 
     let cardSections = [
@@ -63,10 +93,7 @@ function handlerCourse(path, params, context, container) {
         ['Actions', actionCards],
     ];
 
-    container.innerHTML = `
-        <h2>${course.name}</h2>
-        ${Render.makeCardSections(cardSections)}
-    `;
+    container.innerHTML = Render.makeCardSections(context, course.name, cardSections);
 }
 
 function handlerEmail(path, params, context, container) {

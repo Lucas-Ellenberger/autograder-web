@@ -50,64 +50,115 @@ function handlerAssignment(path, params, context, container) {
 
     let cards = [
         // Simple Actions
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Submit',
             Routing.formHashPath(Routing.PATH_SUBMIT, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Peek a Previous Submission',
             Routing.formHashPath(Routing.PATH_PEEK, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'View Submission History',
             Routing.formHashPath(Routing.PATH_HISTORY, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                courseId: course.id,
+            },
         ),
 
         // Advanced Actions
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Proxy Regrade',
             Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Proxy Resubmit',
             Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Individual Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_ADMIN,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Pairwise Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_PAIRWISE, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_ADMIN,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'Remove Submission',
             Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
         ),
-        Render.makeCardObject(
+        new Render.Card(
             'assignment-action',
             'View User History',
             Routing.formHashPath(Routing.PATH_USER_HISTORY, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
         ),
     ];
 
-    container.innerHTML = `
-        <h2>${assignment.name}</h2>
-        ${Render.cards(cards)}
-    `;
+    let cardSections = [
+        ['', cards],
+    ];
+
+    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections);
 }
 
 function handlerPeek(path, params, context, container) {
