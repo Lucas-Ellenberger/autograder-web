@@ -7,8 +7,8 @@
     --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
     --color-light-bg-accent-secondary: rgb(151, 227, 254);
     --color-light-bg-accent-secondary-low: rgba(151, 227, 254, 0.4);
-    --color-light-bg-accent-tertiary: rgb(186, 0, 120);
-    --color-light-bg-accent-tertiary-low: rgba(186, 0, 120, 0.4);
+    --color-light-bg-accent-tertiary: rgb(217, 4, 142);
+    --color-light-bg-accent-tertiary-low: rgba(217, 4, 142, 0.4);
     --color-light-bg-accent-gradient: linear-gradient(60deg, var(--color-light-bg-tertiary) 0%, var(--color-light-bg-secondary) 50%, var(--color-light-bg-primary) 100%);
 
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
@@ -561,7 +561,6 @@ fieldset {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 0px 10px 1px var(--color-bg-shadow);
 }
 
 .header > div {
@@ -588,6 +587,13 @@ fieldset {
      * The padding will be put on each nav link for better hover effects. */
     padding-top: 0em;
     padding-bottom: 0em;
+}
+
+.header .nav-link {
+}
+
+.header .nav-highlight {
+    border-bottom: solid var(--color-bg-accent-tertiary);
 }
 
 .header .nav-link {

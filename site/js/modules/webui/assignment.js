@@ -8,17 +8,17 @@ import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
-    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', requirements);
-    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', requirements);
-    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
-    Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
-    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', requirements);
-    Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
-    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
-    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
-    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
-    Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', requirements);
-    Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', requirements);
+    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', Routing.NAV_PARENT_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', Routing.NAV_PARENT_COURSES, requirements);
 }
 
 function handlerAssignment(path, params, context, container) {
