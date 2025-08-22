@@ -417,27 +417,20 @@ input:invalid.touched {
     border-color: var(--color-text-error);
 }
 
-button:focus,
-select:focus,
-input:focus {
-    accent-color: var(--color-bg-accent-secondary);
-    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
+button:hover:not([disabled]),
+select:hover:not([disabled]),
+input:hover:not([disabled]) {
+    box-shadow: var(--color-bg-accent-secondary-low) 0px 4px 12px;
 }
 
-input[type="checkbox"]:focus {
-    box-shadow: none;
-}
-
-button:hover,
-select:hover,
-input:hover {
-    transition: all 0.3s ease;
-    border-color: var(--color-text-primary);
-    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
-}
-
-button:hover {
+button:hover:not([disabled]) {
     transform: translateY(-1px);
+}
+
+button:focus:not([disabled]),
+select:focus:not([disabled]),
+input:focus:not([disabled]) {
+    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
 }
 
 input[type="checkbox"] {
@@ -445,7 +438,11 @@ input[type="checkbox"] {
     width: 1.25em;
 }
 
-input[type="checkbox"]:checked {
+input[type="checkbox"]:focus {
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+}
+
+input[type="checkbox"] {
     accent-color: var(--color-bg-accent-secondary);
 }
 
