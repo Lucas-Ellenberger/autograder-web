@@ -117,13 +117,24 @@ function makeCardSections(context, sectionsName, sections) {
         cardSections.push(makeCardSection(context, section[0], section[1]));
     }
 
+    let headerClasses = 'secondary-color drop-shadow';
+    if (sectionsName === '') {
+        headerClasses += ' hidden';
+    }
+
     return `
-        <div class='card-sections'>
+        <div class='card-header ${headerClasses}'>
+            <div class='page-image secondary-accent-color-bg-low'>
+                <img class='light-only' src='images/vendor/github-mark.png'>
+                <img class='dark-only' src='images/vendor/github-mark-white.png'>
+            </div>
             <div class='card-title'>
                 <h2>${sectionsName}</h2>
             </div>
+        </div>
+        <div class='card-sections'>
             ${cardSections.join("\n")}
-        <div>
+        </div>
     `;
 }
 
@@ -192,7 +203,7 @@ function makePage(
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
             <div class='page-information secondary-color drop-shadow'>
-                <div class='page-image low-bg-accent-color'>
+                <div class='page-image secondary-accent-color-bg-low'>
                     <img class='light-only' src='images/vendor/github-mark.png'>
                     <img class='dark-only' src='images/vendor/github-mark-white.png'>
                 </div>

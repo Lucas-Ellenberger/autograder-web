@@ -32,8 +32,8 @@ function handlerAssignment(path, params, context, container) {
         [Routing.PARAM_ASSIGNMENT]: assignment.id,
     };
 
-    let cards = [
-        // Simple Actions
+    // Simple Actions
+    let studentCards = [
         new Render.Card(
             'assignment-action',
             'Submit',
@@ -64,8 +64,10 @@ function handlerAssignment(path, params, context, container) {
                 courseId: course.id,
             },
         ),
+    ];
 
-        // Advanced Actions
+    // Advanced Actions
+    let staffCards = [
         new Render.Card(
             'assignment-action',
             'Fetch Course Scores',
@@ -139,7 +141,8 @@ function handlerAssignment(path, params, context, container) {
     ];
 
     let cardSections = [
-        ['', cards],
+        ['Student Actions', studentCards],
+        ['Course Staff Actions', staffCards],
     ];
 
     container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections);

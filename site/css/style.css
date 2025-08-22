@@ -5,6 +5,10 @@
 
     --color-light-bg-accent-primary: rgb(134, 114, 231);
     --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
+    --color-light-bg-accent-secondary: rgb(151, 227, 254);
+    --color-light-bg-accent-secondary-low: rgba(151, 227, 254, 0.4);
+    --color-light-bg-accent-tertiary: rgb(186, 0, 120);
+    --color-light-bg-accent-tertiary-low: rgba(186, 0, 120, 0.4);
     --color-light-bg-accent-gradient: linear-gradient(60deg, var(--color-light-bg-tertiary) 0%, var(--color-light-bg-secondary) 50%, var(--color-light-bg-primary) 100%);
 
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
@@ -37,6 +41,10 @@
 
     --color-dark-bg-accent-primary: rgb(134, 114, 231);
     --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.4);
+    --color-dark-bg-accent-secondary: rgb(186, 0, 120);
+    --color-dark-bg-accent-secondary-low: rgba(186, 0, 120, 0.4);
+    --color-dark-bg-accent-tertiary: rgb(151, 227, 254);
+    --color-dark-bg-accent-tertiary-low: rgba(151, 227, 254, 0.4);
     --color-dark-bg-accent-gradient: linear-gradient(60deg, var(--color-dark-bg-tertiary) 0%, var(--color-dark-bg-secondary) 50%, var(--color-dark-bg-primary) 100%);
 
     --color-highlighter: rgba(255, 255, 255, 0.1);
@@ -69,6 +77,10 @@ html {
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+    --color-bg-accent-secondary: var(--color-light-bg-accent-secondary);
+    --color-bg-accent-secondary-low: var(--color-light-bg-accent-secondary-low);
+    --color-bg-accent-tertiary: var(--color-light-bg-accent-tertiary);
+    --color-bg-accent-tertiary-low: var(--color-light-bg-accent-tertiary-low);
     --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
     --color-bg-error: var(--color-light-bg-error);
 
@@ -95,6 +107,10 @@ html {
 
         --color-bg-accent-primary: var(--color-light-bg-accent-primary);
         --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+        --color-bg-accent-secondary: var(--color-light-bg-accent-secondary);
+        --color-bg-accent-secondary-low: var(--color-light-bg-accent-secondary-low);
+        --color-bg-accent-tertiary: var(--color-light-bg-accent-tertiary);
+        --color-bg-accent-tertiary-low: var(--color-light-bg-accent-tertiary-low);
         --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
         --color-bg-error: var(--color-light-bg-error);
 
@@ -121,6 +137,10 @@ html {
 
         --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
         --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
+        --color-bg-accent-secondary: var(--color-dark-bg-accent-secondary);
+        --color-bg-accent-secondary-low: var(--color-dark-bg-accent-secondary-low);
+        --color-bg-accent-tertiary: var(--color-dark-bg-accent-tertiary);
+        --color-bg-accent-tertiary-low: var(--color-dark-bg-accent-tertiary-low);
         --color-bg-accent-gradient: var(--color-dark-bg-accent-gradient);
         --color-bg-error: var(--color-dark-bg-error);
 
@@ -147,6 +167,10 @@ html.light {
 
     --color-bg-accent-primary: var(--color-light-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-light-bg-accent-primary-low);
+    --color-bg-accent-secondary: var(--color-light-bg-accent-secondary);
+    --color-bg-accent-secondary-low: var(--color-light-bg-accent-secondary-low);
+    --color-bg-accent-tertiary: var(--color-light-bg-accent-tertiary);
+    --color-bg-accent-tertiary-low: var(--color-light-bg-accent-tertiary-low);
     --color-bg-accent-gradient: var(--color-light-bg-accent-gradient);
     --color-bg-error: var(--color-light-bg-error);
 
@@ -171,6 +195,10 @@ html.dark {
 
     --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
     --color-bg-accent-primary-low: var(--color-dark-bg-accent-primary-low);
+    --color-bg-accent-secondary: var(--color-dark-bg-accent-secondary);
+    --color-bg-accent-secondary-low: var(--color-dark-bg-accent-secondary-low);
+    --color-bg-accent-tertiary: var(--color-dark-bg-accent-tertiary);
+    --color-bg-accent-tertiary-low: var(--color-dark-bg-accent-tertiary-low);
     --color-bg-accent-gradient: var(--color-dark-bg-accent-gradient);
     --color-bg-error: var(--color-dark-bg-error);
 
@@ -206,6 +234,11 @@ html {
 }
 
 .hidden {
+    display: none;
+}
+
+/* Add additional selection elements to increase the power of the selector. */
+.page-body .content .hidden {
     display: none;
 }
 
@@ -255,26 +288,72 @@ html {
     color: var(--color-text-tertiary-low);
 }
 
-.accent-color {
+.primary-accent-color {
     background-color: var(--color-bg-accent-primary);
     color: var(--color-text-accent);
 }
 
-.accent-color a {
+.primary-accent-color a {
     color: var(--color-text-accent);
 }
 
-.accent-color-low {
+.primary-accent-color-text-low {
     background-color: var(--color-bg-accent-primary);
     color: var(--color-text-accent-low);
 }
 
-.accent-color-low a {
+.primary-accent-color-text-low a {
     color: var(--color-text-accent-low);
 }
 
-.low-bg-accent-color {
+.primary-accent-color-bg-low {
     background-color: var(--color-bg-accent-primary-low);
+}
+
+.secondary-accent-color {
+    background-color: var(--color-bg-accent-secondary);
+    color: var(--color-text-accent);
+}
+
+.secondary-accent-color a {
+    color: var(--color-text-accent);
+}
+
+.secondary-accent-color-text-low {
+    background-color: var(--color-bg-accent-secondary);
+    color: var(--color-text-accent-low);
+}
+
+.secondary-accent-color-text-low a {
+    color: var(--color-text-accent-low);
+}
+
+.secondary-accent-color-bg-low {
+    background-color: var(--color-bg-accent-secondary-low);
+    color: var(--color-text-accent-low);
+}
+
+.tertiary-accent-color {
+    background-color: var(--color-bg-accent-tertiary);
+    color: var(--color-text-accent);
+}
+
+.tertiary-accent-color a {
+    color: var(--color-text-accent);
+}
+
+.tertiary-accent-color-text-low {
+    background-color: var(--color-bg-accent-tertiary);
+    color: var(--color-text-accent-low);
+}
+
+.tertiary-accent-color-text-low a {
+    color: var(--color-text-accent-low);
+}
+
+.tertiary-accent-color-bg-low {
+    background-color: var(--color-bg-accent-tertiary-low);
+    color: var(--color-text-accent-low);
 }
 
 .gradient-accent-color {
@@ -341,9 +420,12 @@ input:invalid.touched {
 button:focus,
 select:focus,
 input:focus {
-    accent-color: var(--color-bg-accent-primary);
-    border-color: var(--color-bg-accent-primary);
-    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
+    accent-color: var(--color-bg-accent-secondary);
+    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
+}
+
+input[type="checkbox"]:focus {
+    box-shadow: none;
 }
 
 button:hover,
@@ -351,7 +433,7 @@ select:hover,
 input:hover {
     transition: all 0.3s ease;
     border-color: var(--color-text-primary);
-    box-shadow: var(--color-bg-accent-primary-low) 0px 4px 12px;
+    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
 }
 
 button:hover {
@@ -361,6 +443,10 @@ button:hover {
 input[type="checkbox"] {
     height: 1.25em;
     width: 1.25em;
+}
+
+input[type="checkbox"]:checked {
+    accent-color: var(--color-bg-accent-secondary);
 }
 
 /* Set basic relative font sizing. */
@@ -602,6 +688,49 @@ fieldset {
     margin-bottom: 0.75em;
 }
 
+.card-header,
+.template-content .page-information {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: min(1.75em, 4.5vw);
+    gap: 1.0em;
+    border-radius: var(--curve-radius-large);
+}
+
+.card-header .page-image,
+.template-content .page-image {
+    flex-shrink: 1;
+    padding: 1.0em;
+    border-radius: var(--curve-radius-large);
+}
+
+.card-header {
+    margin-bottom: 1.0em;
+}
+
+.card-header .page-image img
+.template-content .page-image img {
+    width: var(--icon-size-normal);
+    height: auto;
+}
+
+.card-header img {
+    width: var(--icon-size-large);
+    height: auto;
+}
+
+.card-header h2 {
+    margin-bottom: 0em;
+}
+
+.card-header .card-title {
+    display: flex;
+    align-self: center;
+    max-width: fit-content;
+}
+
 .card-sections {
     display: flex;
     flex-direction: column;
@@ -613,14 +742,12 @@ fieldset {
     border-radius: var(--curve-radius-large);
 }
 
-.card-sections .card-title {
-    display: flex;
-    align-self: center;
-    max-width: fit-content;
-}
-
 .card-section {
     margin-bottom: 1em;
+}
+
+.card-section:last-of-type {
+    margin-bottom: 0em;
 }
 
 .cards-area {
@@ -875,8 +1002,10 @@ table.standard-table tr:not(:last-child) {
 }
 
 .template-content button {
-    /* TODO: Fix ugly yellow. */
-    background-color: yellow;
+    max-width: fit-content;
+    align-self: center;
+    background-color: var(--color-bg-accent-secondary);
+    padding: 0.5em 0.75em;
 }
 
 .template-content .template-header h2 {
@@ -885,10 +1014,6 @@ table.standard-table tr:not(:last-child) {
 
 .template-content .template-description p {
     margin-bottom: 0em;
-}
-
-.template-content button {
-    padding: 0.5em 0.75em;
 }
 
 .results-area .result {
