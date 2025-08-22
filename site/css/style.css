@@ -1001,7 +1001,6 @@ table.standard-table tr:not(:last-child) {
 .template-content button {
     max-width: fit-content;
     align-self: center;
-    background-color: var(--color-bg-accent-secondary);
     padding: 0.5em 0.75em;
 }
 

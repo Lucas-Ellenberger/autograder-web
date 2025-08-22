@@ -233,7 +233,7 @@ function makePage(
 
     let buttonHTML = '';
     if (onSubmitFunc) {
-        buttonHTML = `<button class="template-button">${buttonName}</button>`;
+        buttonHTML = `<button class="template-button secondary-accent-color">${buttonName}</button>`;
     }
 
     let inputSectionHTML = `
