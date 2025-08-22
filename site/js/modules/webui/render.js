@@ -50,7 +50,7 @@ class Card {
 
     toHTML() {
         return `
-            <div class='card card-${this.type} secondary-color drop-shadow'>
+            <div class='card card-${this.type} tertiary-color drop-shadow'>
                 <a href='${this.link}' alt='${this.text}'>
                     <span>${this.text}</span>
                 </a>
@@ -119,7 +119,9 @@ function makeCardSections(context, sectionsName, sections) {
 
     return `
         <div class='card-sections'>
-            <h2>${sectionsName}</h2>
+            <div class='card-title'>
+                <h2>${sectionsName}</h2>
+            </div>
             ${cardSections.join("\n")}
         <div>
     `;
@@ -133,7 +135,7 @@ function makeCardSection(context, sectionName, sectionCards) {
     }
 
     return `
-        <div class='card-section'>
+        <div class='card-section secondary-color drop-shadow'>
             <h3>${sectionName}</h3>
             ${cardHTML}
         </div>

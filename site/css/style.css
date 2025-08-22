@@ -602,6 +602,23 @@ fieldset {
     margin-bottom: 0.75em;
 }
 
+.card-sections {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-sections > div {
+    display: block;
+    padding: 1.0em;
+    border-radius: var(--curve-radius-large);
+}
+
+.card-sections .card-title {
+    display: flex;
+    align-self: center;
+    max-width: fit-content;
+}
+
 .card-section {
     margin-bottom: 1em;
 }
@@ -841,7 +858,6 @@ table.standard-table tr:not(:last-child) {
     margin: 0em;
 }
 
-.template-content > button,
 .template-content > div {
     display: flex;
     flex-direction: column;
@@ -856,6 +872,11 @@ table.standard-table tr:not(:last-child) {
     margin-bottom: 1em;
     margin-right: 0.5em;
     margin-left: 0.5em;
+}
+
+.template-content button {
+    /* TODO: Fix ugly yellow. */
+    background-color: yellow;
 }
 
 .template-content .template-header h2 {

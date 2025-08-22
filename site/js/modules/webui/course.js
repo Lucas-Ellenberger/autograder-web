@@ -30,10 +30,10 @@ function handlerCourses(path, params, context, container) {
     }
 
     let cardSections = [
-        ['', cards],
+        ['Enrolled Courses', cards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, 'Enrolled Courses', cardSections);
+    container.innerHTML = Render.makeCardSections(context, '', cardSections);
 }
 
 function handlerCourse(path, params, context, container) {

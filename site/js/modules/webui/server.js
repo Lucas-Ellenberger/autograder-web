@@ -38,10 +38,10 @@ function handlerServer(path, params, context, container) {
     ];
 
     let cardSections = [
-        ['', cards],
+        ['Server Actions', cards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, 'Server Actions', cardSections);
+    container.innerHTML = Render.makeCardSections(context, '', cardSections);
 }
 
 function handlerCallAPI(path, params, context, container) {
