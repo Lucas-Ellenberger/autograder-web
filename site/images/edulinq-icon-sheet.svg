@@ -26,7 +26,7 @@
     </style>
   </defs>
 
-  <!-- Analysis Dark --!>
+  <!-- Analysis Dark -->
   <symbol id='icon-analysis-dark' viewBox='0 0 38.69 39.95'>
 	<path class="stroke-size stroke-black" d="M29.55,9.49c1.02,1.04,1.02,2.72,0,3.75s-2.67,1.04-3.69,0-1.02-2.72,0-3.75,2.67-1.04,3.69,0Z"/>
 	<g>
@@ -38,7 +38,7 @@
 	</g>
   </symbol>
 
-  <!-- Analysis Light --!>
+  <!-- Analysis Light -->
   <symbol id='icon-analysis-light' viewBox='0 0 38.67 39.95'>
     <path class="stroke-size stroke-white" d="M30.22,9.59c1.02,1.04,1.02,2.72,0,3.75s-2.67,1.04-3.69,0-1.02-2.72,0-3.75,2.67-1.04,3.69,0Z"/>
     <path class="fill-bg-white" d="M9.03,31.24V6.25s0-.01-.01-.01h-2.61v27.66s0,.01.01.01h27.17v-2.66s0-.01-.01-.01H9.03Z"/>
