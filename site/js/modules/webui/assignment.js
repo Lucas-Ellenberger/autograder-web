@@ -357,8 +357,7 @@ function handlerSubmissionRemove(path, params, context, container) {
                 description: 'Remove a specified submission. Defaults to the most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Remove Submission',
-                // TODO: Need the remove icon.
-                iconName: Icon.ICON_NAME_SUBMIT,
+                iconName: Icon.ICON_NAME_REMOVE,
             }
         )
     ;

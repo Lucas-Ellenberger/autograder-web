@@ -12,6 +12,7 @@ const ICON_NAME_PEEK = 'peek';
 const ICON_NAME_PROXY_REGRADE = 'proxy-regrade';
 const ICON_NAME_PROXY_RESUBMIT = 'proxy-resubmit';
 const ICON_NAME_PROXY_SUBMIT = 'proxy-submit';
+const ICON_NAME_REMOVE = 'remove';
 const ICON_NAME_SERVER = 'server';
 const ICON_NAME_SUBMIT = 'submit';
 
@@ -29,6 +30,7 @@ const KNOWN_ICON_NAMES = [
     ICON_NAME_PROXY_REGRADE,
     ICON_NAME_PROXY_RESUBMIT,
     ICON_NAME_PROXY_SUBMIT,
+    ICON_NAME_REMOVE,
     ICON_NAME_SERVER,
     ICON_NAME_SUBMIT,
 ];
@@ -67,6 +69,7 @@ export {
     ICON_NAME_PROXY_REGRADE,
     ICON_NAME_PROXY_RESUBMIT,
     ICON_NAME_PROXY_SUBMIT,
+    ICON_NAME_REMOVE,
     ICON_NAME_SERVER,
     ICON_NAME_SUBMIT,
 };
