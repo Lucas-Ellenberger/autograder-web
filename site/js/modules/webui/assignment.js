@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js'
 
+import * as Icon from './icon.js'
 import * as Input from './input.js'
 import * as Log from './log.js'
 import * as Render from './render.js'
@@ -168,6 +169,7 @@ function handlerPeek(path, params, context, container) {
                 description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
                 inputs: inputFields,
                 buttonName: 'Peek',
+                iconName: Icon.ICON_NAME_PEEK,
                 // Auto-submit if we were passed an existing submission ID.
                 submitOnCreation: (submission != ''),
             },
@@ -215,6 +217,7 @@ function handlerHistory(path, params, context, container) {
             {
                 header: 'Fetch Submission History',
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_HISTORY,
             },
         )
     ;
@@ -240,6 +243,7 @@ function handlerUserHistory(path, params, context, container) {
                 description: 'Fetch a summary of the submissions for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_HISTORY,
             },
         )
     ;
@@ -352,7 +356,9 @@ function handlerSubmissionRemove(path, params, context, container) {
                 header: 'Remove Assignment Submission',
                 description: 'Remove a specified submission. Defaults to the most recent submission.',
                 inputs: inputFields,
-                buttonName: 'Remove Submission'
+                buttonName: 'Remove Submission',
+                // TODO: Need the remove icon.
+                iconName: Icon.ICON_NAME_SUBMIT,
             }
         )
     ;
@@ -405,6 +411,7 @@ function handlerFetchCourseScores(path, params, context, container) {
                 description: 'Fetch the most recent scores for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_FETCH,
             },
         )
     ;
@@ -457,6 +464,7 @@ function handlerProxyRegrade(path, params, context, container) {
                 description: 'Proxy regrade an assignment for all target users using their most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Regrade',
+                iconName: Icon.ICON_NAME_PROXY_REGRADE,
             },
         )
     ;
@@ -508,6 +516,7 @@ function handlerProxyResubmit(path, params, context, container) {
                 description: 'Proxy resubmit an assignment submission to the autograder.',
                 inputs: inputFields,
                 buttonName: 'Resubmit',
+                iconName: Icon.ICON_NAME_PROXY_RESUBMIT,
             },
         )
     ;
@@ -585,6 +594,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
                 description: 'Get the result of an individual analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
+                iconName: Icon.ICON_NAME_ANALYSIS,
             },
         )
     ;
@@ -634,6 +644,7 @@ function handlerAnalysisPairwise(path, params, context, container) {
                 description: 'Get the result of a pairwise analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
+                iconName: Icon.ICON_NAME_ANALYSIS,
             },
         )
     ;

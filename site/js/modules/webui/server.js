@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js';
 
+import * as Icon from './icon.js';
 import * as Input from './input.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
@@ -86,6 +87,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
                 description: description,
                 inputs: inputFields,
                 buttonName: 'Call Endpoint',
+                iconName: Icon.ICON_NAME_CALL_ENDPOINT,
             },
         )
     ;

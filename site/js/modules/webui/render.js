@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js';
 
 import * as Assignment from './assignment.js';
+import * as Icon from './icon.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
@@ -170,6 +171,7 @@ function makePage(
             buttonName = 'Submit',
             // Click the submit button as soon as the page is created.
             submitOnCreation = false,
+            iconName = Icon.ICON_NAME_DEFAULT,
         }) {
     if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
@@ -204,8 +206,7 @@ function makePage(
         infoHTML = `
             <div class='page-information secondary-color drop-shadow'>
                 <div class='page-image secondary-accent-color-bg-low'>
-                    <img class='light-only' src='images/vendor/github-mark.png'>
-                    <img class='dark-only' src='images/vendor/github-mark-white.png'>
+                    ${Icon.getIconHTML(iconName)}
                 </div>
                 <div class='page-text'>
                     ${headerHTML}

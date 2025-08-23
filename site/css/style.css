@@ -517,6 +517,16 @@ fieldset {
     animation: rotation 4s infinite linear;
 }
 
+.nav .icon {
+    height: var(--icon-size-normal);
+    width: var(--icon-size-normal);
+}
+
+.page-body .icon {
+    height: var(--icon-size-large);
+    width: var(--icon-size-large);
+}
+
 @keyframes rotation {
     from {
         transform: rotate(0deg);
