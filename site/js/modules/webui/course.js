@@ -94,7 +94,7 @@ function handlerCourse(path, params, context, container) {
         ['Actions', actionCards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, course.name, cardSections);
+    container.innerHTML = Render.makeCardSections(context, course.name, cardSections, Icon.ICON_NAME_COURSES);
 }
 
 function handlerEmail(path, params, context, container) {

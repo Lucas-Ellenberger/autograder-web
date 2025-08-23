@@ -146,7 +146,7 @@ function handlerAssignment(path, params, context, container) {
         ['Course Staff Actions', staffCards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections);
+    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections, Icon.ICON_NAME_COURSES);
 }
 
 function handlerPeek(path, params, context, container) {

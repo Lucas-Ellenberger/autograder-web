@@ -112,7 +112,7 @@ function cards(context, cards) {
 
 // Render a list of card sections to html.
 // A card section is [section name, a list of cards].
-function makeCardSections(context, sectionsName, sections) {
+function makeCardSections(context, sectionsName, sections, iconName = Icon.ICON_NAME_DEFAULT) {
     let cardSections = [];
     for (const section of sections) {
         cardSections.push(makeCardSection(context, section[0], section[1]));
@@ -126,8 +126,7 @@ function makeCardSections(context, sectionsName, sections) {
     return `
         <div class='card-header ${headerClasses}'>
             <div class='page-image secondary-accent-color-bg-low'>
-                <img class='light-only' src='images/vendor/github-mark.png'>
-                <img class='dark-only' src='images/vendor/github-mark-white.png'>
+                ${Icon.getIconHTML(iconName)}
             </div>
             <div class='card-title'>
                 <h2>${sectionsName}</h2>
