@@ -1,3 +1,4 @@
+import * as Icon from './icon.js'
 import * as Render from './render.js'
 import * as Routing from './routing.js'
 
@@ -11,8 +12,7 @@ function handlerHome(path, params, context, container) {
             <div class='home-content'>
                 <div class='home-title secondary-color drop-shadow'>
                     <div class='page-image secondary-accent-color-bg-low'>
-                        <img class='light-only' src='images/vendor/github-mark.png'>
-                        <img class='dark-only' src='images/vendor/github-mark-white.png'>
+                        ${Icon.getIconHTML(Icon.ICON_NAME_HOME)}
                     </div>
                     <p>
                         Welcome to the EduLinq Autograder.
