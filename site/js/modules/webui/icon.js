@@ -43,11 +43,11 @@ function getIconHTML(iconName) {
 
     return `
         <svg class='light-only icon'>
-            <use href="#icon-${iconName}-light">
+            <use href="images/edulinq-icon-sheet.svg#icon-${iconName}-light">
             </use>
         </svg>
         <svg class='dark-only icon'>
-            <use href="#icon-${iconName}-dark">
+            <use href="images/edulinq-icon-sheet.svg#icon-${iconName}-dark">
             </use>
         </svg>
     `;

@@ -1,7 +1,6 @@
 let _isLightMode = undefined;
 
 function init() {
-    initIconSheet();
     initBrightMode();
 }
 
@@ -22,12 +21,6 @@ function initBrightMode() {
             setBrightMode(!event.matches);
         });
     }
-}
-
-async function initIconSheet() {
-    const iconSheet = await fetch('images/edulinq-icon-sheet.svg');
-    const iconSVGs = await iconSheet.text();
-    document.querySelector('.icon-sheet').innerHTML = iconSVGs;
 }
 
 function setBrightMode(isLight) {
