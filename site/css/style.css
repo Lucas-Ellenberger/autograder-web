@@ -57,7 +57,8 @@
     --curve-radius-large: 16px;
 
     --icon-size-large: 48px;
-    --icon-size-normal: 24px;
+    --icon-size-normal: 36px;
+    --icon-size-small: 24px;
 
     --font-size-larger: 1.40rem;
     --font-size-large: 1.30rem;
@@ -420,7 +421,7 @@ input:invalid.touched {
 button:hover:not([disabled]),
 select:hover:not([disabled]),
 input:hover:not([disabled]) {
-    box-shadow: var(--color-bg-accent-secondary-low) 0px 4px 12px;
+    box-shadow: var(--color-text-primary-low) 0px 0px 0.5em;
 }
 
 button:hover:not([disabled]) {
@@ -430,7 +431,7 @@ button:hover:not([disabled]) {
 button:focus:not([disabled]),
 select:focus:not([disabled]),
 input:focus:not([disabled]) {
-    box-shadow: var(--color-bg-accent-secondary) 0px 4px 12px;
+    box-shadow: var(--color-text-primary) 0px 0px 0.5em;
 }
 
 input[type="checkbox"] {
@@ -517,9 +518,9 @@ fieldset {
     animation: rotation 4s infinite linear;
 }
 
-.nav .icon {
-    height: var(--icon-size-normal);
-    width: var(--icon-size-normal);
+.header .icon {
+    height: var(--icon-size-small);
+    width: var(--icon-size-small);
 }
 
 .page-body .icon {
@@ -537,7 +538,8 @@ fieldset {
 }
 
 @media (max-width: 700px) {
-    .nav-link img {
+    .header .nav-link .icon,
+    .header .page-branding .icon {
         display: none;
     }
 }
@@ -582,11 +584,6 @@ fieldset {
     padding-bottom: 1.0em;
 }
 
-.header .page-title {
-    font-style: italic;
-    font-size: var(--font-size-small);
-}
-
 .header .nav {
     display: flex;
     flex-direction: row;
@@ -599,19 +596,19 @@ fieldset {
     padding-bottom: 0em;
 }
 
-.header .nav-link {
-}
-
 .header .nav-highlight {
     border-bottom: solid var(--color-bg-accent-tertiary);
 }
 
-.header .nav-link {
+.header .nav-link,
+.header .page-branding {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: min(0.5em, 0.5vw);
+}
 
+.header .nav-link {
     /* Add padding to the nav link class for better hover effects. */
     padding-top: 1.5em;
     padding-right: min(1em, 1vw);
@@ -619,13 +616,18 @@ fieldset {
     padding-left: min(1em, 1vw);
 }
 
-.header .nav-link:hover {
-    background: var(--color-highlighter);
+.header .page-branding {
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
 }
 
-.nav-link img {
+.header .page-branding .icon {
+    height: var(--icon-size-normal);
     width: var(--icon-size-normal);
-    height: auto;
+}
+
+.header .nav-link:hover {
+    background: var(--color-highlighter);
 }
 
 .header a {
@@ -637,7 +639,7 @@ fieldset {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap: 1em;
+    gap: min(1.0em, 1.0vw);
 }
 
 .header .user-info .current-user {
@@ -725,7 +727,7 @@ fieldset {
 
 .card-header .page-image img
 .template-content .page-image img {
-    width: var(--icon-size-normal);
+    width: var(--icon-size-small);
     height: auto;
 }
 
@@ -795,7 +797,7 @@ fieldset {
     transform: translateY(-3px);
     transition: all 0.3s ease;
     background: var(--color-bg-accent-gradient);
-    box-shadow: var(--color-bg-accent-primary-low) 0px 8px 24px;
+    box-shadow: var(--color-text-primary-low) 0px 0px 24px;
 }
 
 .card a {
@@ -902,7 +904,7 @@ table.standard-table tr:not(:last-child) {
 }
 
 .template-content .page-image img {
-    width: var(--icon-size-normal);
+    width: var(--icon-size-small);
     height: auto;
 }
 

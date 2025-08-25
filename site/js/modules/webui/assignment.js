@@ -544,20 +544,26 @@ function getSubmissionResultHTML(course, assignment, result) {
     result.message = processMessage(result.message);
 
     if (result.rejected) {
-        return `
-            <h3>Submission Rejected</h3>
-            <p><pre>${result.message}</pre></p>
-        `;
+        return getSubmissionErrorHTML('Submission Rejected', result.message);
     } else if (!result['grading-success']) {
-        return `
-            <h3>Grading Failed</h3>
-            <p><pre>${result.message}</pre></p>
-        `;
+        return getSubmissionErrorHTML('Grading Failed', result.message);
     } else {
         return Render.submission(course, assignment, result.result);
     }
 }
 
+function getSubmissionErrorHTML(header, message) {
+    return `
+        <div class="submission">
+            <div class="secondary-color drop-shadow">
+                <h3>${header}</h3>
+                <span>${message}</span>
+            </div>
+        </div>
+    `;
+}
+
+// Find timestamps in an autograder message and replace them with the pretty version.
 function processMessage(message) {
     return message.replace(/<timestamp:(\d+)>/g, function(match, timestamp) {
         return Util.timestampToPretty(parseInt(timestamp))

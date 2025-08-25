@@ -15,7 +15,7 @@ function handlerHome(path, params, context, container) {
                         ${Icon.getIconHTML(Icon.ICON_NAME_HOME)}
                     </div>
                     <p>
-                        Welcome to the EduLinq Autograder.
+                        Welcome to the EduLinq LynxGrader!
                     </p>
                 </div>
 
