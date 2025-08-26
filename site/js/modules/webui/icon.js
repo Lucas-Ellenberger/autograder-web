@@ -1,5 +1,4 @@
-// TODO: Choose a default icon.
-const ICON_NAME_DEFAULT = 'peek';
+const ICON_NAME_DEFAULT = 'default';
 const ICON_NAME_ANALYSIS = 'analysis';
 const ICON_NAME_CALL_ENDPOINT = 'call-endpoint';
 const ICON_NAME_COURSES = 'courses';
@@ -8,6 +7,7 @@ const ICON_NAME_HISTORY = 'history';
 const ICON_NAME_HOME = 'home';
 const ICON_NAME_LIST = 'list';
 const ICON_NAME_MAIL = 'mail';
+const ICON_NAME_MOON = 'moon';
 const ICON_NAME_PEEK = 'peek';
 const ICON_NAME_PROXY_REGRADE = 'proxy-regrade';
 const ICON_NAME_PROXY_RESUBMIT = 'proxy-resubmit';
@@ -15,6 +15,7 @@ const ICON_NAME_PROXY_SUBMIT = 'proxy-submit';
 const ICON_NAME_REMOVE = 'remove';
 const ICON_NAME_SERVER = 'server';
 const ICON_NAME_SUBMIT = 'submit';
+const ICON_NAME_SUN = 'sun';
 
 const KNOWN_ICON_NAMES = [
     ICON_NAME_DEFAULT,
@@ -26,6 +27,7 @@ const KNOWN_ICON_NAMES = [
     ICON_NAME_HOME,
     ICON_NAME_LIST,
     ICON_NAME_MAIL,
+    ICON_NAME_MOON,
     ICON_NAME_PEEK,
     ICON_NAME_PROXY_REGRADE,
     ICON_NAME_PROXY_RESUBMIT,
@@ -33,6 +35,7 @@ const KNOWN_ICON_NAMES = [
     ICON_NAME_REMOVE,
     ICON_NAME_SERVER,
     ICON_NAME_SUBMIT,
+    ICON_NAME_SUN,
 ];
 
 function getIconHTML(iconName) {
@@ -65,6 +68,7 @@ export {
     ICON_NAME_HOME,
     ICON_NAME_LIST,
     ICON_NAME_MAIL,
+    ICON_NAME_MOON,
     ICON_NAME_PEEK,
     ICON_NAME_PROXY_REGRADE,
     ICON_NAME_PROXY_RESUBMIT,
@@ -72,4 +76,5 @@ export {
     ICON_NAME_REMOVE,
     ICON_NAME_SERVER,
     ICON_NAME_SUBMIT,
+    ICON_NAME_SUN,
 };
