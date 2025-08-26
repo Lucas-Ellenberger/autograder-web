@@ -22,7 +22,7 @@ function handlerHome(path, params, context, container) {
                 <div class='secondary-color drop-shadow'>
                     <p>
                         You are currently using the <a href='https://github.com/edulinq/autograder-web'>web frontend</a>
-                        for the autograder running on <a href='${document.location.href}'><strong>${document.location.hostname}</strong></a>.
+                        for the LynxGrader running on <a href='${document.location.href}'><strong>${document.location.hostname}</strong></a>.
                     </p>
 
                     <p>
@@ -32,7 +32,7 @@ function handlerHome(path, params, context, container) {
                 </div>
 
                 <div class='secondary-color drop-shadow'>
-                    <span>Other EduLinq Autograder Resources:</span>
+                    <span>Other EduLinq LynxGrader Resources:</span>
                     <ul>
                         <li><a href='https://github.com/edulinq/autograder-server'>Server</a></li>
                         <li><a href='https://github.com/edulinq/autograder-web'>Web Frontend</a></li>

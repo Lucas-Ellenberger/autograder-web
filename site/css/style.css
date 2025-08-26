@@ -576,6 +576,8 @@ fieldset {
 }
 
 .header > div {
+    display: flex;
+    align-items: center;
     flex-grow: 1;
     flex-basis: 0;
     word-break: keep-all;
@@ -829,7 +831,6 @@ fieldset {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    align-content: center;
     gap: 0.75em;
     font-size: var(--font-size-larger);
 }
@@ -847,7 +848,8 @@ fieldset {
 .home-content > div,
 .submit-results .submission > div {
     padding: 1.5em;
-    margin: 1em;
+    /* Do not use relative margins as the title cards will be spaced differently. */
+    margin: min(18px, 1vw);
     border-radius: var(--curve-radius-large);
 }
 
