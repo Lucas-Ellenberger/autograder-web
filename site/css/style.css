@@ -367,7 +367,7 @@ html {
 }
 
 .drop-shadow {
-    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+    box-shadow: 2px 2px 0px var(--color-bg-shadow);
 }
 
 .required-color {
@@ -395,7 +395,8 @@ textarea {
 
 button:disabled,
 input:disabled,
-select:disabled {
+select:disabled,
+textarea:disabled {
     background-color: var(--color-bg-secondary-low);
     color: var(--color-text-secondary-low);
     border-color: var(--color-text-secondary-low);
@@ -419,9 +420,10 @@ input:invalid.touched {
 }
 
 button:hover:not([disabled]),
+input:hover:not([disabled]),
 select:hover:not([disabled]),
-input:hover:not([disabled]) {
-    box-shadow: var(--color-text-primary-low) 0px 0px 0.5em;
+textarea:hover:not([disabled]) {
+    box-shadow: -1px -1px 0px var(--color-bg-shadow);
 }
 
 button:hover:not([disabled]) {
@@ -429,9 +431,10 @@ button:hover:not([disabled]) {
 }
 
 button:focus:not([disabled]),
+input:focus:not([disabled]),
 select:focus:not([disabled]),
-input:focus:not([disabled]) {
-    box-shadow: var(--color-text-primary) 0px 0px 0.5em;
+textarea:focus:not([disabled]) {
+    box-shadow: none;
 }
 
 input[type="checkbox"] {
@@ -799,7 +802,6 @@ fieldset {
     transform: translateY(-3px);
     transition: all 0.3s ease;
     background: var(--color-bg-accent-gradient);
-    box-shadow: var(--color-text-primary-low) 0px 0px 24px;
 }
 
 .card a {
