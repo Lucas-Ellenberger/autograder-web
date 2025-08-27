@@ -1,38 +1,38 @@
 :root {
-    --color-light-bg-primary: #e7e7ff;
-    --color-light-bg-secondary: #f3f3ff;
+    --color-light-bg-primary: #dcdcfb;
+    --color-light-bg-secondary: #ebebff;
     --color-light-bg-tertiary: #ffffff;
 
     --color-light-bg-accent-primary: rgb(134, 114, 231);
-    --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.4);
+    --color-light-bg-accent-primary-low: rgba(134, 114, 231, 0.8);
     --color-light-bg-accent-secondary: rgb(151, 227, 254);
-    --color-light-bg-accent-secondary-low: rgba(151, 227, 254, 0.4);
+    --color-light-bg-accent-secondary-low: rgba(151, 227, 254, 0.8);
     --color-light-bg-accent-tertiary: rgb(217, 4, 142);
-    --color-light-bg-accent-tertiary-low: rgba(217, 4, 142, 0.4);
+    --color-light-bg-accent-tertiary-low: rgba(217, 4, 142, 0.8);
     --color-light-bg-accent-gradient: linear-gradient(60deg, var(--color-light-bg-tertiary) 0%, var(--color-light-bg-secondary) 50%, var(--color-light-bg-primary) 100%);
 
     --color-light-text-primary: rgba(0, 0, 0, 0.90);
-    --color-light-text-secondary: rgba(0, 0, 0, 0.70);
-    --color-light-text-tertiary: rgba(0, 0, 0, 0.50);
+    --color-light-text-secondary: rgba(0, 0, 0, 0.75);
+    --color-light-text-tertiary: rgba(0, 0, 0, 0.65);
     --color-light-text-accent: rgba(0, 0, 0, 0.90);
 
-    --color-light-text-link: rgba(40, 40, 255, 0.75);
+    --color-light-text-link: rgb(0, 68, 204);
 
-    --color-light-text-primary-low: rgba(0, 0, 0, 0.50);
-    --color-light-text-secondary-low: rgba(0, 0, 0, 0.45);
-    --color-light-text-tertiary-low: rgba(0, 0, 0, 0.40);
+    --color-light-text-primary-low: rgba(0, 0, 0, 0.60);
+    --color-light-text-secondary-low: rgba(0, 0, 0, 0.55);
+    --color-light-text-tertiary-low: rgba(0, 0, 0, 0.45);
     --color-light-text-accent-low: rgba(0, 0, 0, 0.45);
 
-    --color-dark-bg-primary: #383640;
-    --color-dark-bg-secondary: #110d1b;
-    --color-dark-bg-tertiary: #0c0814;
+    --color-dark-bg-primary: #2c2934;
+    --color-dark-bg-secondary: #171322;
+    --color-dark-bg-tertiary: #0b0812;
 
     --color-dark-text-primary: rgba(255, 255, 255, 0.90);
     --color-dark-text-secondary: rgba(255, 255, 255, 0.80);
     --color-dark-text-tertiary: rgba(255, 255, 255, 0.70);
     --color-dark-text-accent: rgba(255, 255, 255, 0.90);
 
-    --color-dark-text-link: rgba(130, 130, 255, 0.85);
+    --color-dark-text-link: rgb(122, 170, 255);
 
     --color-dark-text-primary-low: rgba(255, 255, 255, 0.50);
     --color-dark-text-secondary-low: rgba(255, 255, 255, 0.45);
@@ -40,11 +40,11 @@
     --color-dark-text-accent-low: rgba(255, 255, 255, 0.45);
 
     --color-dark-bg-accent-primary: rgb(134, 114, 231);
-    --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.4);
-    --color-dark-bg-accent-secondary: rgb(186, 0, 120);
-    --color-dark-bg-accent-secondary-low: rgba(186, 0, 120, 0.4);
-    --color-dark-bg-accent-tertiary: rgb(151, 227, 254);
-    --color-dark-bg-accent-tertiary-low: rgba(151, 227, 254, 0.4);
+    --color-dark-bg-accent-primary-low: rgb(134, 114, 231, 0.8);
+    --color-dark-bg-accent-secondary: rgba(176, 0, 120, 1);
+    --color-dark-bg-accent-secondary-low: rgba(176, 0, 120, 0.8);
+    --color-dark-bg-accent-tertiary: rgb(77, 204, 233);
+    --color-dark-bg-accent-tertiary-low: rgba(77, 204, 233, 0.8);
     --color-dark-bg-accent-gradient: linear-gradient(60deg, var(--color-dark-bg-tertiary) 0%, var(--color-dark-bg-secondary) 50%, var(--color-dark-bg-primary) 100%);
 
     --color-highlighter: rgba(255, 255, 255, 0.1);
@@ -753,6 +753,10 @@ svg {
 
 .card-section:last-of-type {
     margin-bottom: 0em;
+}
+
+.card-section h2 {
+    text-align: start;
 }
 
 .cards-area {

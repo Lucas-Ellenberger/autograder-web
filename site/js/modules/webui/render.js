@@ -127,7 +127,7 @@ function makeCardSections(context, sectionsName, sections, iconName = Icon.ICON_
         <div class='card-header ${headerClasses}'>
             ${Icon.getIconHTML(iconName)}
             <div class='card-title'>
-                <h2>${sectionsName}</h2>
+                <h1>${sectionsName}</h1>
             </div>
         </div>
         <div class='card-sections'>
@@ -145,7 +145,7 @@ function makeCardSection(context, sectionName, sectionCards) {
 
     return `
         <div class='card-section secondary-color drop-shadow'>
-            <h3>${sectionName}</h3>
+            <h2>${sectionName}</h2>
             ${cardHTML}
         </div>
     `;
