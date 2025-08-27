@@ -11,9 +11,7 @@ function handlerHome(path, params, context, container) {
         <div class='home-page'>
             <div class='home-content'>
                 <div class='home-title secondary-color drop-shadow'>
-                    <div class='page-image secondary-accent-color-bg-low'>
-                        ${Icon.getIconHTML(Icon.ICON_NAME_HOME)}
-                    </div>
+                    ${Icon.getIconHTML(Icon.ICON_NAME_HOME)}
                     <p>
                         Welcome to the EduLinq LynxGrader!
                     </p>

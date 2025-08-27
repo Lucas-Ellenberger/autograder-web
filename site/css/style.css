@@ -527,8 +527,16 @@ fieldset {
 }
 
 .page-body .icon {
+    flex-shrink: 1;
     height: var(--icon-size-large);
     width: var(--icon-size-large);
+    padding: 1.0em;
+    border-radius: var(--curve-radius-large);
+}
+
+svg {
+    height: inherit;
+    width: inherit;
 }
 
 @keyframes rotation {
@@ -626,11 +634,6 @@ fieldset {
     font-weight: var(--font-weight-bold);
 }
 
-.header .page-branding .icon {
-    height: var(--icon-size-normal);
-    width: var(--icon-size-normal);
-}
-
 .header .nav-link:hover {
     background: var(--color-highlighter);
 }
@@ -719,26 +722,8 @@ fieldset {
     border-radius: var(--curve-radius-large);
 }
 
-.card-header .page-image,
-.template-content .page-image {
-    flex-shrink: 1;
-    padding: 1.0em;
-    border-radius: var(--curve-radius-large);
-}
-
 .card-header {
     margin-bottom: 1.0em;
-}
-
-.card-header .page-image img
-.template-content .page-image img {
-    width: var(--icon-size-small);
-    height: auto;
-}
-
-.card-header img {
-    width: var(--icon-size-large);
-    height: auto;
 }
 
 .card-header h2 {
@@ -842,11 +827,6 @@ fieldset {
     border-radius: var(--curve-radius-small);
 }
 
-.home-title .page-image img {
-    width: var(--icon-size-large);
-    height: auto;
-}
-
 .home-content > div,
 .submit-results .submission > div {
     padding: 1.5em;
@@ -905,11 +885,6 @@ table.standard-table tr:not(:last-child) {
     flex-shrink: 1;
     padding: 1.0em;
     border-radius: var(--curve-radius-small);
-}
-
-.template-content .page-image img {
-    width: var(--icon-size-small);
-    height: auto;
 }
 
 .template-content .page-text {

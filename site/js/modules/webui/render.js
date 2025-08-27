@@ -125,9 +125,7 @@ function makeCardSections(context, sectionsName, sections, iconName = Icon.ICON_
 
     return `
         <div class='card-header ${headerClasses}'>
-            <div class='page-image secondary-accent-color-bg-low'>
-                ${Icon.getIconHTML(iconName)}
-            </div>
+            ${Icon.getIconHTML(iconName)}
             <div class='card-title'>
                 <h2>${sectionsName}</h2>
             </div>
@@ -204,9 +202,7 @@ function makePage(
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
             <div class='page-information secondary-color drop-shadow'>
-                <div class='page-image secondary-accent-color-bg-low'>
-                    ${Icon.getIconHTML(iconName)}
-                </div>
+                ${Icon.getIconHTML(iconName)}
                 <div class='page-text'>
                     ${headerHTML}
                     ${descriptionHTML}
