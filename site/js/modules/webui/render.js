@@ -422,10 +422,8 @@ function submission(course, assignment, submission) {
 
     let html = `
         <div class='submission'>
-            <div class='secondary-color drop-shadow'>
-                <h2>${assignment.name}: Submission ${submission['short-id']}</h2>
-            </div>
-            <div class='submission-metadata secondary-color drop-shadow'>
+            <h2>${assignment.name}: Submission ${submission['short-id']}</h2>
+            <div class='submission-metadata'>
                 <h3>Summary</h3>
                 <table>
                     <tbody>
@@ -441,7 +439,7 @@ function submission(course, assignment, submission) {
                     </tbody>
                 </table>
             </div>
-            <div class='submission-questions-area secondary-color drop-shadow'>
+            <div class='submission-questions-area'>
                 <h3>Questions</h3>
                 ${submissionQuestions(submission.questions)}
             </div>

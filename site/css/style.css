@@ -438,16 +438,18 @@ textarea:focus:not([disabled]) {
 }
 
 input[type="checkbox"] {
+    accent-color: var(--color-bg-accent-secondary);
     height: 1.25em;
     width: 1.25em;
 }
 
-input[type="checkbox"]:focus {
-    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+/* Use the standard box shadow on checkboxes because the hover effect looks bad on this element. */
+input[type="checkbox"]:hover:not([disabled]) {
+    box-shadow: 2px 2px 0px var(--color-bg-shadow);
 }
 
-input[type="checkbox"] {
-    accent-color: var(--color-bg-accent-secondary);
+input[type="checkbox"]:focus {
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
 /* Set basic relative font sizing. */
@@ -521,23 +523,25 @@ fieldset {
     animation: rotation 4s infinite linear;
 }
 
-.footer .icon,
-.header .icon {
+svg {
+    height: var(--icon-size-small);
+    width: var(--icon-size-small);
+}
+
+.footer svg,
+.header svg {
     height: var(--icon-size-small);
     width: var(--icon-size-small);
 }
 
 .page-body .icon {
-    flex-shrink: 1;
-    height: var(--icon-size-large);
-    width: var(--icon-size-large);
     padding: 1.0em;
     border-radius: var(--curve-radius-large);
 }
-
-svg {
-    height: inherit;
-    width: inherit;
+.page-body .icon svg {
+    flex-shrink: 1;
+    height: var(--icon-size-large);
+    width: var(--icon-size-large);
 }
 
 @keyframes rotation {
@@ -797,7 +801,6 @@ svg {
 }
 
 .home-page,
-.submit-page,
 .template-page {
     display: flex;
     flex-direction: row;
@@ -805,7 +808,6 @@ svg {
 }
 
 .home-content,
-.submit-content,
 .template-content {
     display: flex;
     flex-direction: column;
@@ -828,16 +830,14 @@ svg {
     border-radius: var(--curve-radius-small);
 }
 
-.home-content > div,
-.submit-results .submission > div {
+.home-content > div {
     padding: 1.5em;
     /* Do not use relative margins as the title cards will be spaced differently. */
     margin: min(18px, 1vw);
     border-radius: var(--curve-radius-large);
 }
 
-.home-content > div p,
-.submit-results .submission > div h2 {
+.home-content > div p {
     margin-bottom: 0em;
 }
 
