@@ -6,6 +6,8 @@ const ICON_NAME_FETCH = 'fetch';
 const ICON_NAME_HISTORY = 'history';
 const ICON_NAME_HOME = 'home';
 const ICON_NAME_LIST = 'list';
+const ICON_NAME_LOGIN = 'login';
+const ICON_NAME_LOGOUT = 'logout';
 const ICON_NAME_MAIL = 'mail';
 const ICON_NAME_MOON = 'moon';
 const ICON_NAME_PEEK = 'peek';
@@ -26,6 +28,8 @@ const KNOWN_ICON_NAMES = [
     ICON_NAME_HISTORY,
     ICON_NAME_HOME,
     ICON_NAME_LIST,
+    ICON_NAME_LOGIN,
+    ICON_NAME_LOGOUT,
     ICON_NAME_MAIL,
     ICON_NAME_MOON,
     ICON_NAME_PEEK,
@@ -38,14 +42,18 @@ const KNOWN_ICON_NAMES = [
     ICON_NAME_SUN,
 ];
 
-function getIconHTML(iconName) {
+function getIconHTML(iconName, additionalClasses = 'secondary-accent-color-bg-low') {
     if (!KNOWN_ICON_NAMES.includes(iconName)) {
         console.warn(`Unknown icon name '${iconName}'. Falling back to the default icon.`);
         iconName = ICON_NAME_DEFAULT;
     }
 
+    if (!additionalClasses) {
+        additionalClasses = '';
+    }
+
     return `
-        <div class='icon secondary-accent-color-bg-low'>
+        <div class='icon ${additionalClasses}'>
             <svg class='light-only'>
                 <use href="images/edulinq-icon-sheet.svg#icon-${iconName}-light">
                 </use>
@@ -69,6 +77,8 @@ export {
     ICON_NAME_HISTORY,
     ICON_NAME_HOME,
     ICON_NAME_LIST,
+    ICON_NAME_LOGIN,
+    ICON_NAME_LOGOUT,
     ICON_NAME_MAIL,
     ICON_NAME_MOON,
     ICON_NAME_PEEK,

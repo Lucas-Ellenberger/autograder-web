@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js';
 import * as Context from './context.js';
 import * as Event from './event.js';
+import * as Icon from './icon.js';
 import * as Log from './log.js';
 import * as Render from './render.js';
 
@@ -236,12 +237,12 @@ function setContextUserDisplay() {
         `;
 
         loginAreaHTML = `
-            <a href='#logout'>Log Out</span>
+            <a href='#logout'>${Icon.getIconHTML(Icon.ICON_NAME_LOGOUT, '')}</span>
         `;
     } else {
         currentUserHTML = '';
         loginAreaHTML = `
-            <a href='#login'>Login</span>
+            <a href='#login'>${Icon.getIconHTML(Icon.ICON_NAME_LOGIN, '')}</span>
         `;
     }
 

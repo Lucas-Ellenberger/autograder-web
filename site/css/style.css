@@ -521,6 +521,7 @@ fieldset {
     animation: rotation 4s infinite linear;
 }
 
+.footer .icon,
 .header .icon {
     height: var(--icon-size-small);
     width: var(--icon-size-small);
@@ -652,7 +653,6 @@ svg {
 
 .header .user-info .current-user {
     font-size: var(--font-size-small);
-    font-style: italic;
 }
 
 .footer {
@@ -675,11 +675,8 @@ svg {
 }
 
 .footer div.right {
+    gap: 1em;
     justify-content: flex-end;
-}
-
-.footer img {
-    height: 1.5em;
 }
 
 .page-body {
