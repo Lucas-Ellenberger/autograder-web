@@ -22,49 +22,71 @@
                     <div class='nav-item' data-target='home'>
                         <a href='#'>
                             <div class='nav-link'>
-                                <div class='icon'>
-                                    <svg class='light-only'><use href="images/edulinq-icon-sheet.svg#icon-home-light"></use></svg>
-                                    <svg class='dark-only'><use href="images/edulinq-icon-sheet.svg#icon-home-dark"></use></svg>
+                                <div>
+                                    <svg class='light-only' role='img' aria-labelledby='home-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-home-light"></use>
+                                    </svg>
+                                    <svg class='dark-only' role='img' aria-labelledby='home-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-home-dark"></use>
+                                    </svg>
                                 </div>
-                                <span>Home</span>
+                                <span id='home-label'>Home</span>
                             </div>
                         </a>
                     </div>
                     <div class='nav-item' data-target='courses'>
                         <a href='#courses'>
                             <div class='nav-link'>
-                                <div class='icon'>
-                                    <svg class='light-only'><use href="images/edulinq-icon-sheet.svg#icon-courses-light"></use></svg>
-                                    <svg class='dark-only'><use href="images/edulinq-icon-sheet.svg#icon-courses-dark"></use></svg>
+                                <div>
+                                    <svg class='light-only' role='img' aria-labelledby='courses-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-courses-light"></use>
+                                    </svg>
+                                    <svg class='dark-only' role='img' aria-labelledby='courses-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-courses-dark"></use>
+                                    </svg>
                                 </div>
-                                <span>Courses</span>
+                                <span id='courses-label'>Courses</span>
                             </div>
                         </a>
                     </div>
                     <div class='nav-item' data-target='server'>
                         <a href='#server'>
                             <div class='nav-link'>
-                                <div class='icon'>
-                                    <svg class='light-only'><use href="images/edulinq-icon-sheet.svg#icon-server-light"></use></svg>
-                                    <svg class='dark-only'><use href="images/edulinq-icon-sheet.svg#icon-server-dark"></use></svg>
+                                <div>
+                                    <svg class='light-only' role='img' aria-labelledby='server-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-server-light"></use>
+                                    </svg>
+                                    <svg class='dark-only' role='img' aria-labelledby='server-label'>
+                                        <use href="images/edulinq-icon-sheet.svg#icon-server-dark"></use>
+                                    </svg>
                                 </div>
-                                <span>Server</span>
+                                <span id='server-label'>Server</span>
                             </div>
                         </a>
                     </div>
                 </div>
                 <div class='page-branding'>
-                    <div class='icon'>
-                        <svg class='light-only'><use href="images/edulinq-icon-sheet.svg#icon-default-light"></use></svg>
-                        <svg class='dark-only'><use href="images/edulinq-icon-sheet.svg#icon-default-dark"></use></svg>
+                    <div>
+                        <svg class='light-only' role='img' aria-labelledby='logo-label'>
+                            <use href="images/edulinq-icon-sheet.svg#icon-default-light"></use>
+                        </svg>
+                        <svg class='dark-only' role='img' aria-labelledby='logo-label'>
+                            <use href="images/edulinq-icon-sheet.svg#icon-default-dark"></use>
+                        </svg>
                     </div>
-                    <span>LynxGrader</span>
+                    <span id='logo-label'>LynxGrader</span>
                 </div>
                 <div class='user-info'>
                     <div class='bright-mode-toggle'>
-                        <div class='icon'>
-                            <svg class='selector light light-only icon'><use href="images/edulinq-icon-sheet.svg#icon-moon-light"></use></svg>
-                            <svg class='selector dark dark-only icon'><use href="images/edulinq-icon-sheet.svg#icon-sun-dark"></use></svg>
+                        <div>
+                            <svg class='selector light light-only icon' role='img' aria-labelledby='moon-label'>
+                                <title id='moon-label'>Toggle light mode</title>
+                                <use href="images/edulinq-icon-sheet.svg#icon-moon-light"></use>
+                            </svg>
+                            <svg class='selector dark dark-only icon' role='img' aria-labelledby='sun-label'>
+                                <title id='sun-label'>Toggle dark mode</title>
+                                <use href="images/edulinq-icon-sheet.svg#icon-sun-dark"></use>
+                            </svg>
                         </div>
                     </div>
                     <div class='login-area'>
@@ -86,16 +108,24 @@
                 <div class='middle'>
                 </div>
                 <div class='right'>
-                    <a href='https://discord.gg/xRxdbWqtWS'>
-                        <div class='icon'>
-                            <svg class='light-only icon'><use href="images/edulinq-icon-sheet.svg#icon-discord-light"></use></svg>
-                            <svg class='dark-only icon'><use href="images/edulinq-icon-sheet.svg#icon-discord-dark"></use></svg>
+                    <a href='https://discord.gg/xRxdbWqtWS' aria-label='Join us on Discord'>
+                        <div>
+                            <svg class='light-only icon' aria-hidden='true' focusable='false'>
+                                <use href="images/edulinq-icon-sheet.svg#icon-discord-light"></use>
+                            </svg>
+                            <svg class='dark-only icon' aria-hidden='true' focusable='false'>
+                                <use href="images/edulinq-icon-sheet.svg#icon-discord-dark"></use>
+                            </svg>
                         </div>
                     </a>
-                    <a href='https://github.com/edulinq'>
-                        <div class='icon'>
-                            <svg class='light-only icon'><use href="images/edulinq-icon-sheet.svg#icon-github-light"></use></svg>
-                            <svg class='dark-only icon'><use href="images/edulinq-icon-sheet.svg#icon-github-dark"></use></svg>
+                    <a href='https://github.com/edulinq' aria-label='See our work on GitHub'>
+                        <div>
+                            <svg class='light-only icon' aria-hidden='true' focusable='false'>
+                                <use href="images/edulinq-icon-sheet.svg#icon-github-light"></use>
+                            </svg>
+                            <svg class='dark-only icon' aria-hidden='true' focusable='false'>
+                                <use href="images/edulinq-icon-sheet.svg#icon-github-dark"></use>
+                            </svg>
                         </div>
                     </a>
                 </div>
