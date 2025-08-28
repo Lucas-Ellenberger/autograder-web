@@ -32,14 +32,21 @@ function peek(course, assignment, submission = undefined) {
     });
 }
 
-function submit(course, assignment, files) {
+function submit(course, assignment, files, allowLate = false, message = '') {
+    let args = {
+        'course-id': course,
+        'assignment-id': assignment,
+        'allow-late': allowLate,
+    }
+
+    if (message.length > 0) {
+        args.message = message;
+    }
+
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/submit',
         files: files,
-        payload: {
-            'course-id': course,
-            'assignment-id': assignment,
-        },
+        payload: args,
     });
 }
 

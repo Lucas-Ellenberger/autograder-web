@@ -20,13 +20,30 @@ global.fetch = function(url, options = {}) {
     // Create arguments by lexicographically traversing the content.
     let args = {};
     for (const key of Object.keys(content).sort()) {
-        args[key] = content[key]
+        args[key] = content[key];
+
+        // Capitalize Course ID to match test data format.
+        if (key === 'course-id') {
+            args[key] = args[key].toUpperCase();
+        }
+    }
+
+    // Extract files from response body object,
+    // keys (other than reponse content) are file names.
+    let files = [];
+    for (const key of options?.body.keys()) {
+        if (key === "content") {
+            continue;
+        }
+
+        // Format file name to match test data format.
+        files.push(`__DATA_DIR__(${key})`);
     }
 
     let keyData = {
         'arguments': args,
         'endpoint': endpoint,
-        'files': [],
+        'files': files,
     };
     let key = JSON.stringify(keyData);
 
