@@ -38,6 +38,7 @@ describe('Nav Course101', function() {
                 'Homework 0',
                 'Email Users',
                 'List Users',
+                'Update Course',
             ],
             undefined,
         ],
