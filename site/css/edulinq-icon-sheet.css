@@ -1,0 +1,41 @@
+/* For cross browser support, this style needs to be here and in site/images/edulinq-icon-sheet.svg */
+symbol.icon .fill-bg-grey {
+    fill: #231f20;
+}
+
+symbol.icon .fill-bg-white {
+    fill: #fff;
+}
+
+symbol.icon .fill-none {
+    fill: none;
+}
+
+symbol.icon .stroke-black {
+    stroke: #000;
+}
+
+symbol.icon .stroke-grey {
+    stroke: #231f20;
+}
+
+symbol.icon .stroke-white {
+    stroke: #fff;
+}
+
+symbol.icon .stroke-size {
+    stroke-miterlimit: 10;
+}
+
+symbol.icon .stroke-width-large {
+    stroke-width: 2;
+}
+
+symbol.icon .stroke-width-small {
+    stroke-width: 1.5;
+}
+
+symbol.icon .stroke-line-shape {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}

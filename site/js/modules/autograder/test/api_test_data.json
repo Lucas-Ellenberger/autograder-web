@@ -1,169 +1,4 @@
 {
-    "{\"arguments\":{\"bcc\":[\"course-other@test.edulinq.org\"],\"body\":\"Body\",\"cc\":[\"course-owner@test.edulinq.org\"],\"course-id\":\"COURSE101\",\"dry-run\":false,\"subject\":\"Subject\",\"to\":[\"course-student@test.edulinq.org\"],\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/admin/email\",\"files\":[]}": {
-        "endpoint": "courses/admin/email",
-        "module_name": "autograder.api.courses.admin.email",
-        "arguments": {
-            "user": "server-admin@test.edulinq.org",
-            "pass": "server-admin",
-            "dry-run": false,
-            "to": [
-                "course-student@test.edulinq.org"
-            ],
-            "cc": [
-                "course-owner@test.edulinq.org"
-            ],
-            "bcc": [
-                "course-other@test.edulinq.org"
-            ],
-            "subject": "Subject",
-            "body": "Body"
-        },
-        "output": {
-            "to": [
-                "course-student@test.edulinq.org"
-            ],
-            "cc": [
-                "course-owner@test.edulinq.org"
-            ],
-            "bcc": [
-                "course-other@test.edulinq.org"
-            ]
-        }
-    },
-    "{\"arguments\":{\"bcc\":[\"course-grader@test.edulinq.org\"],\"body\":\"Body\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"subject\":\"Subject\",\"to\":[\"student\",\"course-other@test.edulinq.org\"],\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/admin/email\",\"files\":[]}": {
-        "endpoint": "courses/admin/email",
-        "module_name": "autograder.api.courses.admin.email",
-        "arguments": {
-            "user": "server-admin@test.edulinq.org",
-            "pass": "server-admin",
-            "dry-run": false,
-            "to": [
-                "student",
-                "course-other@test.edulinq.org"
-            ],
-            "bcc": [
-                "course-grader@test.edulinq.org"
-            ],
-            "subject": "Subject",
-            "body": "Body"
-        },
-        "output": {
-            "to": [
-                "course-other@test.edulinq.org",
-                "course-student@test.edulinq.org"
-            ],
-            "cc": [],
-            "bcc": [
-                "course-grader@test.edulinq.org"
-            ]
-        }
-    },
-    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/admin/update\",\"files\":[]}": {
-        "endpoint": "courses/admin/update",
-        "module_name": "autograder.api.courses.admin.update",
-        "arguments": {
-            "course": "course101"
-        },
-        "output": {
-            "result": {
-                "course-id": "course101",
-                "success": true,
-                "message": "",
-                "created": false,
-                "updated": true,
-                "lms-sync-result": {
-                    "user-sync": [
-                        {
-                            "email": "course-admin@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-grader@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-other@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-owner@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-student@test.edulinq.org",
-                            "skipped": true
-                        }
-                    ],
-                    "assignment-sync": {
-                        "synced-assignments": [],
-                        "ambiguous-matches": [],
-                        "non-matched-assignments": [],
-                        "unchanged-assignments": []
-                    }
-                },
-                "built-assignment-images": [
-                    "autograder.course101.hw0"
-                ],
-                "assignment-template-files": {
-                    "hw0": [
-                        "submission.py"
-                    ]
-                }
-            }
-        }
-    },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/admin/update\",\"files\":[]}": {
-        "endpoint": "courses/admin/update",
-        "module_name": "autograder.api.courses.admin.update",
-        "arguments": {},
-        "output": {
-            "result": {
-                "course-id": "course101",
-                "success": true,
-                "message": "",
-                "created": false,
-                "updated": true,
-                "lms-sync-result": {
-                    "user-sync": [
-                        {
-                            "email": "course-admin@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-grader@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-other@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-owner@test.edulinq.org",
-                            "skipped": true
-                        },
-                        {
-                            "email": "course-student@test.edulinq.org",
-                            "skipped": true
-                        }
-                    ],
-                    "assignment-sync": {
-                        "synced-assignments": [],
-                        "ambiguous-matches": [],
-                        "non-matched-assignments": [],
-                        "unchanged-assignments": []
-                    }
-                },
-                "built-assignment-images": [
-                    "autograder.course101.hw0"
-                ],
-                "assignment-template-files": {
-                    "hw0": [
-                        "submission.py"
-                    ]
-                }
-            }
-        }
-    },
     "{\"arguments\":{\"dry-run\":false,\"overwrite-records\":false,\"submissions\":[\"course101::hw0::course-student@test.edulinq.org::1697406256\",\"course101::hw0::course-student@test.edulinq.org::1697406265\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/analysis/individual\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/analysis/individual",
         "module_name": "autograder.api.courses.assignments.submissions.analysis.individual",
@@ -523,7 +358,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -550,7 +394,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -676,7 +529,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -703,7 +565,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -915,7 +786,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -942,7 +822,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1068,7 +957,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -1095,7 +993,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1311,7 +1218,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-ids": "course101::hw0::course-student@test.edulinq.org::1697406256||course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1393,7 +1309,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-ids": "course101::hw0::course-student@test.edulinq.org::1697406256||course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1519,7 +1444,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-ids": "course101::hw0::course-student@test.edulinq.org::1697406256||course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1601,7 +1535,16 @@
                                 "type": "path",
                                 "path": "test-submissions/not_implemented/submission.py"
                             }
-                        ]
+                        ],
+                        "engine-options": {
+                            "dolos": {
+                                "kgram-length": 22,
+                                "kgrams-in-window": 18
+                            },
+                            "jplag": {
+                                "min-tokens": 5
+                            }
+                        }
                     },
                     "analysis-timestamp": 1234567890123,
                     "submission-ids": "course101::hw0::course-student@test.edulinq.org::1697406256||course101::hw0::course-student@test.edulinq.org::1697406265",
@@ -1624,7 +1567,7 @@
             "work-errors": {}
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-users\":[\"*\",\"-student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-users\":[\"*\",\"-student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
         "arguments": {
@@ -1642,7 +1585,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
         "arguments": {},
@@ -1711,7 +1654,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
         "arguments": {
@@ -1780,7 +1723,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-users\":[\"*\",\"-student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-users\":[\"*\",\"-student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/scores",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
         "arguments": {
@@ -1798,7 +1741,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/scores",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
         "arguments": {},
@@ -1822,7 +1765,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/course/scores",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
         "arguments": {
@@ -1846,7 +1789,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempt",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
         "arguments": {
@@ -1858,7 +1801,7 @@
             "grading-result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempt",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
         "arguments": {
@@ -1925,7 +1868,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempt",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
         "arguments": {
@@ -1993,7 +1936,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempt",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
         "arguments": {},
@@ -2003,7 +1946,7 @@
             "grading-result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-grader@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-grader@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
         "arguments": {
@@ -2014,7 +1957,7 @@
             "grading-results": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
         "arguments": {
@@ -2025,7 +1968,7 @@
             "grading-results": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
         "arguments": {
@@ -2205,7 +2148,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/attempts",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
         "arguments": {},
@@ -2214,7 +2157,7 @@
             "grading-results": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/history",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
         "arguments": {
@@ -2259,7 +2202,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-other@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-other@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/history",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
         "arguments": {
@@ -2270,7 +2213,7 @@
             "history": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/history",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
         "arguments": {
@@ -2281,7 +2224,7 @@
             "history": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/history",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
         "arguments": {},
@@ -2290,7 +2233,7 @@
             "history": []
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/peek",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
         "arguments": {
@@ -2302,7 +2245,7 @@
             "submission-result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/peek",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
         "arguments": {
@@ -2359,7 +2302,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/peek",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
         "arguments": {
@@ -2417,7 +2360,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/fetch/user/peek",
         "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
         "arguments": {},
@@ -2427,7 +2370,7 @@
             "submission-result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2457,7 +2400,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":true,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":true,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2487,7 +2430,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":false,\"target-users\":[\"*\",\"-course-admin@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":false,\"target-users\":[\"*\",\"-course-admin@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2521,7 +2464,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":true,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":true,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2551,7 +2494,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":false,\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":false,\"target-users\":[\"student\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2580,7 +2523,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":false,\"regrade-cutoff\":0,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":false,\"regrade-cutoff\":0,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2623,7 +2566,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"dry-run\":false,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":true},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"dry-run\":false,\"overwrite-records\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":true},\"endpoint\":\"courses/assignments/submissions/proxy/regrade\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/regrade",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.regrade",
         "arguments": {
@@ -2669,7 +2612,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/resubmit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.resubmit",
         "arguments": {
@@ -2732,7 +2675,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/resubmit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.resubmit",
         "arguments": {
@@ -2748,7 +2691,7 @@
             "result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"zzz@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"zzz@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/resubmit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.resubmit",
         "arguments": {
@@ -2763,7 +2706,7 @@
             "result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406256\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406256\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/resubmit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.resubmit",
         "arguments": {
@@ -2827,7 +2770,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"proxy-time\":999999999999,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"proxy-time\":999999999999,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/resubmit\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/proxy/resubmit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.resubmit",
         "arguments": {
@@ -2891,7 +2834,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
         "endpoint": "courses/assignments/submissions/proxy/submit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.submit",
         "arguments": {
@@ -2953,7 +2896,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"zzz@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"zzz@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
         "endpoint": "courses/assignments/submissions/proxy/submit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.submit",
         "arguments": {
@@ -2967,7 +2910,7 @@
             "result": null
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_no_compile.py)\"]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_no_compile.py)\"]}": {
         "endpoint": "courses/assignments/submissions/proxy/submit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.submit",
         "arguments": {
@@ -3029,7 +2972,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"proxy-time\":999999999999,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"proxy-email\":\"course-student@test.edulinq.org\",\"proxy-time\":999999999999,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/proxy/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
         "endpoint": "courses/assignments/submissions/proxy/submit",
         "module_name": "autograder.api.courses.assignments.submissions.proxy.submit",
         "arguments": {
@@ -3092,7 +3035,7 @@
             }
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/remove",
         "module_name": "autograder.api.courses.assignments.submissions.remove",
         "arguments": {
@@ -3103,7 +3046,7 @@
             "found-submission": false
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/remove",
         "module_name": "autograder.api.courses.assignments.submissions.remove",
         "arguments": {
@@ -3114,7 +3057,7 @@
             "found-submission": true
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/remove",
         "module_name": "autograder.api.courses.assignments.submissions.remove",
         "arguments": {
@@ -3126,7 +3069,7 @@
             "found-submission": true
         }
     },
-    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
         "endpoint": "courses/assignments/submissions/remove",
         "module_name": "autograder.api.courses.assignments.submissions.remove",
         "arguments": {},
@@ -3135,7 +3078,7 @@
             "found-submission": false
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/report\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/report\",\"files\":[]}": {
         "endpoint": "courses/assignments/report",
         "module_name": "autograder.api.courses.assignments.report",
         "arguments": {},
@@ -3186,7 +3129,7 @@
             }
         }
     },
-    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
+    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
         "endpoint": "courses/assignments/submissions/submit",
         "module_name": "autograder.api.courses.assignments.submissions.submit",
         "arguments": {
@@ -3299,7 +3242,7 @@
             "result": null
         }
     },
-    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_no_compile.py)\"]}": {
+    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_no_compile.py)\"]}": {
         "endpoint": "courses/assignments/submissions/submit",
         "module_name": "autograder.api.courses.assignments.submissions.submit",
         "arguments": {
@@ -3357,7 +3300,339 @@
             }
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-grader@test.edulinq.org\",\"user-pass\":\"6be92840236110ea654fc87be7e023f3b7cc0a965681f4371679cf6aedfaa822\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-grader@test.edulinq.org",
+            "pass": "course-grader",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"course-grader@test.edulinq.org\",\"user-pass\":\"6be92840236110ea654fc87be7e023f3b7cc0a965681f4371679cf6aedfaa822\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-grader@test.edulinq.org",
+            "pass": "course-grader",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-other@test.edulinq.org\",\"user-pass\":\"eb79491a5f22c9d9d5a4b9c6ec5707e2480298ff552272fa8e2b84fb6e58fef4\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-other@test.edulinq.org",
+            "pass": "course-other",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"course-other@test.edulinq.org\",\"user-pass\":\"eb79491a5f22c9d9d5a4b9c6ec5707e2480298ff552272fa8e2b84fb6e58fef4\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-other@test.edulinq.org",
+            "pass": "course-other",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-owner@test.edulinq.org\",\"user-pass\":\"b64e37dd98e0a08dd96bcbebb2d9f5b6b4d0957663dcc6799d2c15883928e905\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-owner@test.edulinq.org",
+            "pass": "course-owner",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"course-owner@test.edulinq.org\",\"user-pass\":\"b64e37dd98e0a08dd96bcbebb2d9f5b6b4d0957663dcc6799d2c15883928e905\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-owner@test.edulinq.org",
+            "pass": "course-owner",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-student@test.edulinq.org\",\"user-pass\":\"10a24248efef33e125728f7252d097d4c9022ad82244f0924969fd0ea87d712a\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-student@test.edulinq.org",
+            "pass": "course-student",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"course-student@test.edulinq.org\",\"user-pass\":\"10a24248efef33e125728f7252d097d4c9022ad82244f0924969fd0ea87d712a\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "course-student@test.edulinq.org",
+            "pass": "course-student",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "course": "course101"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course101",
+                "name": "Course 101",
+                "assignments": {
+                    "hw0": {
+                        "id": "hw0",
+                        "name": "Homework 0"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course-languages\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "course": "course-languages"
+        },
+        "output": {
+            "found": true,
+            "course": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages",
+                "assignments": {
+                    "bash": {
+                        "id": "bash",
+                        "name": "A Simple Bash Assignment",
+                        "due-date": 0
+                    },
+                    "cpp": {
+                        "id": "cpp",
+                        "name": "A Simple C++ Assignment"
+                    },
+                    "java": {
+                        "id": "java",
+                        "name": "A Simple Java Assignment"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"server-user@test.edulinq.org\",\"user-pass\":\"24ffc21469baecb37b0eed63e737fa07f95fa8cf40cfad84c57bcc5eb4130baf\"},\"endpoint\":\"courses/get\",\"files\":[]}": {
+        "endpoint": "courses/get",
+        "module_name": "autograder.api.courses.get",
+        "arguments": {
+            "user": "server-user@test.edulinq.org",
+            "pass": "server-user",
+            "course": "course101"
+        },
+        "output": {
+            "code": 400,
+            "message": "User 'server-user@test.edulinq.org' is not enolled in course 'course101'.",
+            "python-message": "Failed to complete operation: User 'server-user@test.edulinq.org' is not enolled in course 'course101'."
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
         "endpoint": "courses/lms/scores/upload",
         "module_name": "autograder.api.courses.lms.scores.upload",
         "arguments": {
@@ -3368,7 +3643,7 @@
             "results": []
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":true,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":true,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
         "endpoint": "courses/lms/scores/upload",
         "module_name": "autograder.api.courses.lms.scores.upload",
         "arguments": {
@@ -3379,7 +3654,118 @@
             "results": []
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"type\":\"grading-time\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/stats/query\",\"files\":[]}": {
+    "{\"arguments\":{\"bcc\":[\"course-other@test.edulinq.org\"],\"body\":\"Body\",\"cc\":[\"course-owner@test.edulinq.org\"],\"course-id\":\"course101\",\"dry-run\":false,\"subject\":\"Subject\",\"to\":[\"course-student@test.edulinq.org\"],\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/admin/email\",\"files\":[]}": {
+        "endpoint": "courses/admin/email",
+        "module_name": "autograder.api.courses.admin.email",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": false,
+            "to": [
+                "course-student@test.edulinq.org"
+            ],
+            "cc": [
+                "course-owner@test.edulinq.org"
+            ],
+            "bcc": [
+                "course-other@test.edulinq.org"
+            ],
+            "subject": "Subject",
+            "body": "Body"
+        },
+        "output": {
+            "to": [
+                "course-student@test.edulinq.org"
+            ],
+            "cc": [
+                "course-owner@test.edulinq.org"
+            ],
+            "bcc": [
+                "course-other@test.edulinq.org"
+            ]
+        }
+    },
+    "{\"arguments\":{\"bcc\":[\"course-grader@test.edulinq.org\"],\"body\":\"Body\",\"course-id\":\"course101\",\"dry-run\":false,\"subject\":\"Subject\",\"to\":[\"student\",\"course-other@test.edulinq.org\"],\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/admin/email\",\"files\":[]}": {
+        "endpoint": "courses/admin/email",
+        "module_name": "autograder.api.courses.admin.email",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": false,
+            "to": [
+                "student",
+                "course-other@test.edulinq.org"
+            ],
+            "bcc": [
+                "course-grader@test.edulinq.org"
+            ],
+            "subject": "Subject",
+            "body": "Body"
+        },
+        "output": {
+            "to": [
+                "course-other@test.edulinq.org",
+                "course-student@test.edulinq.org"
+            ],
+            "cc": [],
+            "bcc": [
+                "course-grader@test.edulinq.org"
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/admin/update\",\"files\":[]}": {
+        "endpoint": "courses/admin/update",
+        "module_name": "autograder.api.courses.admin.update",
+        "arguments": {},
+        "output": {
+            "result": {
+                "course-id": "course101",
+                "success": true,
+                "message": "",
+                "created": false,
+                "updated": true,
+                "lms-sync-result": {
+                    "user-sync": [
+                        {
+                            "email": "course-admin@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-grader@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-other@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-owner@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-student@test.edulinq.org",
+                            "skipped": true
+                        }
+                    ],
+                    "assignment-sync": {
+                        "synced-assignments": [],
+                        "ambiguous-matches": [],
+                        "non-matched-assignments": [],
+                        "unchanged-assignments": []
+                    }
+                },
+                "built-assignment-images": [
+                    "autograder.course101.hw0"
+                ],
+                "assignment-template-files": {
+                    "hw0": [
+                        "submission.py"
+                    ]
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"course101\",\"type\":\"grading-time\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/stats/query\",\"files\":[]}": {
         "endpoint": "courses/stats/query",
         "module_name": "autograder.api.courses.stats.query",
         "arguments": {
@@ -3410,7 +3796,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":true,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":true,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
         "endpoint": "courses/upsert/zip",
         "module_name": "autograder.api.courses.upsert.zip",
         "arguments": {
@@ -3439,7 +3825,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(courses101-102.zip)\"]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(courses101-102.zip)\"]}": {
         "endpoint": "courses/upsert/zip",
         "module_name": "autograder.api.courses.upsert.zip",
         "arguments": {
@@ -3477,7 +3863,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
         "endpoint": "courses/upsert/zip",
         "module_name": "autograder.api.courses.upsert.zip",
         "arguments": {
@@ -3506,7 +3892,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":true,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"skip-build-images\":true,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
         "endpoint": "courses/upsert/zip",
         "module_name": "autograder.api.courses.upsert.zip",
         "arguments": {
@@ -3533,7 +3919,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
         "endpoint": "courses/users/drop",
         "module_name": "autograder.api.courses.users.drop",
         "arguments": {
@@ -3543,7 +3929,7 @@
             "found-user": true
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
         "endpoint": "courses/users/drop",
         "module_name": "autograder.api.courses.users.drop",
         "arguments": {
@@ -3553,7 +3939,7 @@
             "found-user": false
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
         "endpoint": "courses/users/drop",
         "module_name": "autograder.api.courses.users.drop",
         "arguments": {
@@ -3563,7 +3949,7 @@
             "found-user": false
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3595,7 +3981,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3627,7 +4013,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3687,7 +4073,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3747,7 +4133,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"grader\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"grader\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3785,7 +4171,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3829,7 +4215,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"student\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"student\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3857,7 +4243,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3885,7 +4271,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
         "endpoint": "courses/users/enroll",
         "module_name": "autograder.api.courses.users.enroll",
         "arguments": {
@@ -3916,7 +4302,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
         "endpoint": "courses/users/get",
         "module_name": "autograder.api.courses.users.get",
         "arguments": {
@@ -3933,7 +4319,7 @@
             }
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
         "endpoint": "courses/users/get",
         "module_name": "autograder.api.courses.users.get",
         "arguments": {
@@ -3944,7 +4330,7 @@
             "user": null
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
         "endpoint": "courses/users/get",
         "module_name": "autograder.api.courses.users.get",
         "arguments": {
@@ -3955,7 +4341,7 @@
             "user": null
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
         "endpoint": "courses/users/get",
         "module_name": "autograder.api.courses.users.get",
         "arguments": {},
@@ -3970,7 +4356,7 @@
             }
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-users\":[\"*\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-users\":[\"*\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
         "endpoint": "courses/users/list",
         "module_name": "autograder.api.courses.users.list",
         "arguments": {
@@ -4018,7 +4404,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
         "endpoint": "courses/users/list",
         "module_name": "autograder.api.courses.users.list",
         "arguments": {},
@@ -4062,7 +4448,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-users\":[\"course-grader@test.edulinq.org\",\"course-owner@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-users\":[\"course-grader@test.edulinq.org\",\"course-owner@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
         "endpoint": "courses/users/list",
         "module_name": "autograder.api.courses.users.list",
         "arguments": {
@@ -4090,7 +4476,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-users\":[\"*\",\"-course-admin@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-users\":[\"*\",\"-course-admin@test.edulinq.org\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
         "endpoint": "courses/users/list",
         "module_name": "autograder.api.courses.users.list",
         "arguments": {
@@ -4132,7 +4518,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-users\":[\"student\",\"admin\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-users\":[\"student\",\"admin\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
         "endpoint": "courses/users/list",
         "module_name": "autograder.api.courses.users.list",
         "arguments": {
@@ -4160,7 +4546,7 @@
             ]
         }
     },
-    "{\"arguments\":{\"assignment-lms-id\":\"12345\",\"course-id\":\"COURSE101\",\"scores\":[{\"email\":\"course-student@test.edulinq.org\",\"score\":10},{\"email\":\"zzz@test.edulinq.org\",\"score\":10}],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/upload/scores\",\"files\":[]}": {
+    "{\"arguments\":{\"assignment-lms-id\":\"12345\",\"course-id\":\"course101\",\"scores\":[{\"email\":\"course-student@test.edulinq.org\",\"score\":10},{\"email\":\"zzz@test.edulinq.org\",\"score\":10}],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/upload/scores\",\"files\":[]}": {
         "endpoint": "lms/upload/scores",
         "module_name": "autograder.api.lms.uploadscores",
         "arguments": {
@@ -4188,7 +4574,7 @@
             "no-lms-id-users": []
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
         "endpoint": "lms/user/get",
         "module_name": "autograder.api.lms.userget",
         "arguments": {
@@ -4206,7 +4592,7 @@
             }
         }
     },
-    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
+    "{\"arguments\":{\"course-id\":\"course101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
         "endpoint": "lms/user/get",
         "module_name": "autograder.api.lms.userget",
         "arguments": {
@@ -5319,6 +5705,39 @@
                         {
                             "name": "result",
                             "type": "*model.GradingInfo"
+                        }
+                    ]
+                },
+                "courses/get": {
+                    "description": "Get information about a course.",
+                    "input": [
+                        {
+                            "name": "course-id",
+                            "type": "string",
+                            "description": "The ID of the course to make this request to.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-email",
+                            "type": "string",
+                            "description": "The email of the user making this request.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-pass",
+                            "type": "string",
+                            "description": "The password of the user making this request.",
+                            "required": true
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "course",
+                            "type": "*core.CourseInfo"
+                        },
+                        {
+                            "name": "found",
+                            "type": "bool"
                         }
                     ]
                 },
@@ -6573,6 +6992,11 @@
                     "category": "struct",
                     "fields": [
                         {
+                            "name": "engine-options",
+                            "type": "map[string]model.OptionsMap",
+                            "description": "EngineOptions includes the options for analysis engines.\nIt is a map keyed by an engine name to it's respective engine options.\nCurrent supported values can be found in the respective engine's options struct."
+                        },
+                        {
                             "name": "exclude-patterns",
                             "type": "[]string"
                         },
@@ -7086,6 +7510,10 @@
                 "model.LocatableError": {
                     "category": "struct",
                     "description": "A general representation of errors that have a definite source location."
+                },
+                "model.OptionsMap": {
+                    "category": "map",
+                    "description": "Holds options specific to a particular analysis engine."
                 },
                 "model.PairwiseAnalysis": {
                     "category": "struct",
@@ -8496,6 +8924,39 @@
                         }
                     ]
                 },
+                "courses/get": {
+                    "description": "Get information about a course.",
+                    "input": [
+                        {
+                            "name": "course-id",
+                            "type": "string",
+                            "description": "The ID of the course to make this request to.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-email",
+                            "type": "string",
+                            "description": "The email of the user making this request.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-pass",
+                            "type": "string",
+                            "description": "The password of the user making this request.",
+                            "required": true
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "course",
+                            "type": "*core.CourseInfo"
+                        },
+                        {
+                            "name": "found",
+                            "type": "bool"
+                        }
+                    ]
+                },
                 "courses/lms/scores/upload": {
                     "description": "Perform a full scoring and upload scores to the course's LMS.",
                     "input": [
@@ -9747,6 +10208,11 @@
                     "category": "struct",
                     "fields": [
                         {
+                            "name": "engine-options",
+                            "type": "map[string]model.OptionsMap",
+                            "description": "EngineOptions includes the options for analysis engines.\nIt is a map keyed by an engine name to it's respective engine options.\nCurrent supported values can be found in the respective engine's options struct."
+                        },
+                        {
                             "name": "exclude-patterns",
                             "type": "[]string"
                         },
@@ -10260,6 +10726,10 @@
                 "model.LocatableError": {
                     "category": "struct",
                     "description": "A general representation of errors that have a definite source location."
+                },
+                "model.OptionsMap": {
+                    "category": "map",
+                    "description": "Holds options specific to a particular analysis engine."
                 },
                 "model.PairwiseAnalysis": {
                     "category": "struct",
@@ -11088,8 +11558,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {
@@ -11146,8 +11616,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {
@@ -11204,8 +11674,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {
@@ -11262,8 +11732,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {
@@ -11321,8 +11791,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {
@@ -11390,8 +11860,8 @@
                             "name": "A Simple Bash Assignment",
                             "due-date": 0
                         },
-                        "cpp-simple": {
-                            "id": "cpp-simple",
+                        "cpp": {
+                            "id": "cpp",
                             "name": "A Simple C++ Assignment"
                         },
                         "java": {

@@ -1,4 +1,4 @@
-import * as Util from './util.js'
+import * as Util from './util/index.js'
 
 const BASE_URL = '/api'
 
@@ -117,6 +117,8 @@ function sendRequest({
     if (overrideCleartext) {
         payload[REQUEST_USER_PASS_KEY] = Util.sha256(overrideCleartext);
     }
+
+    Util.removeUndefinedValues(payload);
 
     let url = `${BASE_URL}/${API_VESION}/${endpoint}`;
 

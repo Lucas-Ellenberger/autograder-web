@@ -1,0 +1,448 @@
+import * as Autograder from '../../autograder/index.js';
+import * as Context from './context.js';
+import * as Event from './event.js';
+import * as Log from '../log.js';
+import * as Render from '../render/index.js';
+
+// All the known routes keyed by the URL path (anchor, no params).
+let routes = {};
+
+const DEFAULT_HANDLER = handlerNotFound;
+
+const PARAM_ASSIGNMENT = 'assignment';
+const PARAM_COURSE = 'course';
+const PARAM_SUBMISSION = 'submission';
+const PARAM_TARGET_ENDPOINT = 'endpoint';
+
+const PATH_HOME = '';
+
+const PATH_LOGIN = 'login';
+const PATH_LOGOUT = 'logout';
+
+const PATH_COURSE = 'course';
+const PATH_COURSES = 'courses';
+const PATH_COURSE_USERS_LIST = `${PATH_COURSE}/list`;
+const PATH_COURSE_UPDATE = `${PATH_COURSE}/update`;
+const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
+const PATH_ASSIGNMENT_FETCH_COURSE_SCORES = `${PATH_ASSIGNMENT}/fetch/course/scores`;
+const PATH_ASSIGNMENT_FETCH_USER_ATTEMPT = `${PATH_ASSIGNMENT}/fetch/user/attempt`;
+const PATH_EMAIL = `${PATH_COURSE}/email`;
+const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
+const PATH_SUBMIT_REMOVE = `${PATH_ASSIGNMENT}/remove`;
+const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
+const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+const PATH_USER_HISTORY = `${PATH_ASSIGNMENT}/user/history`;
+const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
+const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
+const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis/individual`;
+const PATH_ANALYSIS_PAIRWISE = `${PATH_ASSIGNMENT}/analysis/pairwise`;
+
+const PATH_SERVER = 'server';
+const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
+const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
+const PATH_SERVER_USERS_LIST = `${PATH_SERVER}/users/list`;
+
+const NAV_COURSES = 'Courses';
+const NAV_EMPTY = '';
+const NAV_HOME = 'Home';
+const NAV_SERVER = 'Server';
+
+// The current hash/location we are routed to.
+// Should be prefixed with a hash symbol.
+let currentHash = undefined;
+
+// Start listening for routing events.
+function init() {
+    window.addEventListener("hashchange", function() {
+        route();
+    });
+}
+
+// Add a route to the router.
+// Handlers should take four parameters: handler(path, pathParams, context, container).
+// Where |path| the the canonical path being handle (without any query parameters),
+// |pathParams| are any query parameters on the original path,
+// |context| is any context resolved by the router while preparing the request,
+// and |container| is an element to render into.
+// Possible fields for |context| are: user, courseID, course, and assignmentID.
+function addRoute(path, handler,
+        pageName = undefined,
+        navParent = NAV_EMPTY,
+        requirements = {login: true, course: false, assignment: false}) {
+    // Fill in any holes in requirements.
+    requirements.course = requirements.course || requirements.assignment;
+    requirements.login = requirements.login || requirements.course;
+
+    routes[path] = {
+        handler: handler,
+        requirements: requirements,
+        pageName: pageName,
+        navParent: navParent,
+    };
+}
+
+// Route the page content to a path specified in an argument or window.location.hash.
+// For routes that require an additional load/request (non-trivial routes),
+// the loading page will be activated when the request it made.
+function route(rawPath = undefined) {
+    if (!rawPath) {
+        rawPath = getLocationHash();
+    }
+
+    let [path, params] = parsePath(rawPath);
+
+    // Form the canonical path we are on.
+    let newHash = formHashPath(path, params);
+
+    // Skip any routing if we are on the current path.
+    // This let's us avoid infinite loops when routing internally.
+    if (newHash == currentHash) {
+        return;
+    }
+
+    // Set the hash to the cleaned-up value.
+    currentHash = newHash;
+    window.location.hash = newHash;
+
+    // Check for a known route.
+    let routeInfo = routes[path];
+    if (!routeInfo) {
+        // No path found, fallback to the default route.
+        console.warn(`Unknown path '${path}'. Falling back to default route.`);
+        return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, '', {});
+    }
+
+    console.debug(`Routing '${path}' to ${routeInfo.handler.name}.`);
+    return handlerWrapper(routeInfo.handler, path, params, routeInfo.pageName, routeInfo.navParent, routeInfo.requirements);
+}
+
+function routeComponents({path = '', params = {}}) {
+    route(formHashPath(path, params));
+}
+
+// Parse a raw path (which may have come from a hash)
+// into a clean path and params (which can be empty).
+function parsePath(rawPath) {
+    rawPath = basicPathClean(rawPath);
+
+    // Parse the raw path as a url to pull out parameters.
+    let url = URL.parse(rawPath, 'http://localhost');
+
+    // Pull out the path (which comes with a leading slash).
+    let path = url.pathname.replace(/^\//, '');
+
+    // Pull out the params into a simple object.
+    let rawParams = url.searchParams;
+    rawParams.sort();
+
+    let params = {};
+    for (const [key, value] of rawParams.entries()) {
+        params[key] = value;
+    }
+
+    return [path, params];
+}
+
+// Do any setup for a handler, call the handler, then do any teardown.
+function handlerWrapper(handler, path, params, pageName, navParent, requirements) {
+    // Redirect to a login if required.
+    if (requirements.login && !Autograder.hasCredentials()) {
+        redirectLogin();
+        return;
+    }
+
+    // If we need user info and the context does not exist, load the context.
+    if (requirements.login && !Context.exists()) {
+        Context.load()
+            .then(function(result) {
+                // Call this function again to complete all checks and call the wrapper.
+                return handlerWrapper(handler, path, params, pageName, navParent, requirements);
+            })
+            .catch(function(result) {
+                routingFailed(path, params, null, `Failed to load context: '${result}'.`, false);
+                return redirectLogout();
+            })
+        ;
+        return;
+    }
+
+    // Check for any requested courses or assignments.
+    let context = Context.get();
+
+    // Check course.
+    if (requirements.course) {
+        let courseID = params[PARAM_COURSE];
+        if (!courseID) {
+            routingFailed(path, params, context, `No course id specified for path '${path}'.`, false);
+            return;
+        }
+
+        // Check if the course context does not exist.
+        // If it doesn't, then either the course context needs to be loaded or the user is not enrolled in this course.
+        if (!Object.hasOwn(context.courses, courseID)) {
+            // Check if the user is a server admin and or enrolled in this course.
+            if ((Autograder.Common.getServerRoleValue(context.user.role) < Autograder.Common.SERVER_ROLE_ADMIN)
+                    && !Object.hasOwn(context.user.enrollments, courseID)) {
+                routingFailed(path, params, context, `User ('${context.user.email}') is not enrolled in course ('${courseID}').`, true);
+                return redirectHome();
+            }
+
+            Context.loadCourse(courseID)
+                .then(function(result) {
+                    // Call this function again to complete all checks and call the wrapper.
+                    return handlerWrapper(handler, path, params, pageName, navParent, requirements);
+                })
+                .catch(function(result) {
+                    routingFailed(path, params, context, `Failed to load context course: '${result}'.`, true);
+                    return redirectHome();
+                })
+            ;
+            return;
+        }
+
+        // Check assignment (requires course).
+        if (requirements.assignment) {
+            let assignmentID = params[PARAM_ASSIGNMENT];
+            if (!assignmentID) {
+                routingFailed(path, params, context, `No assignment id specified for path '${path}'.`, true);
+                return;
+            }
+
+            if (!Object.hasOwn(context.courses[courseID].assignments, assignmentID)) {
+                routingFailed(path, params, context, `Course ('${courseID}') does not have assignment ('${assignmentID}').`, true);
+                return;
+            }
+        }
+    }
+
+    // This path now has everything it needs.
+
+    // Set the context user.
+    setContextUserDisplay();
+    highlightNavItem(navParent);
+
+    let container = mainConatiner();
+
+    // Set the page inforamtion.
+    if (pageName) {
+        container.setAttribute('data-page', pageName.toLowerCase());
+        Render.setTabTitle(pageName);
+    }
+
+    // Call the handler.
+    handler(path, params, context, container);
+
+    let eventDetails = {
+        'path': path,
+        'params': params,
+        'context': context,
+        'container': container,
+    };
+    Event.dispatchEvent(Event.EVENT_TYPE_ROUTING_COMPLETE, eventDetails);
+}
+
+function routingFailed(path, params, context, message, notify = true) {
+    Log.warn(message, context, notify);
+
+    let eventDetails = {
+        'path': path,
+        'params': params,
+        'context': context,
+        'message': message,
+    };
+    Event.dispatchEvent(Event.EVENT_TYPE_ROUTING_FAILED, eventDetails);
+}
+
+function setContextUserDisplay() {
+    let context = Context.get();
+
+    let currentUserHTML = '';
+    let loginAreaHTML = '';
+
+    if (context?.user) {
+        currentUserHTML = `
+            <span>${context.user.name}</span>
+        `;
+
+        loginAreaHTML = `
+            <a href='#logout'>${Render.getIconHTML(Render.ICON_NAME_LOGOUT, '')}</span>
+        `;
+    } else {
+        currentUserHTML = '';
+        loginAreaHTML = `
+            <a href='#login'>${Render.getIconHTML(Render.ICON_NAME_LOGIN, '')}</span>
+        `;
+    }
+
+    document.querySelector('.header .user-info .current-user').innerHTML = currentUserHTML;
+    document.querySelector('.header .user-info .login-area').innerHTML = loginAreaHTML;
+}
+
+function highlightNavItem(targetNavName) {
+    let navLinks = document.querySelectorAll('.nav .nav-link');
+    for (let navLink of navLinks) {
+        let navName = navLink.querySelector('.nav-link span');
+        if (navName.textContent === targetNavName) {
+            navLink.classList.add('nav-highlight');
+        } else {
+            navLink.classList.remove('nav-highlight');
+        }
+    }
+}
+
+function mainConatiner() {
+    return document.querySelector('.page-body .content');
+}
+
+function handlerNotFound(path, params, context, container) {
+    container.innerHTML = `
+        <h2>Location Not Found</h2>
+        <p>We could not find the location '${path}'.</p>
+    `;
+}
+
+// Return a standardized location that always has as leading hash.
+function getLocationHash() {
+    let hash = window.location.hash.trim();
+
+    if (hash.length === 0) {
+        return '#';
+    }
+
+    return hash;
+}
+
+// Form a path (location.hash).
+// The returned path will be standardized so it can be compared directly,
+// and include a leading hash symbol.
+function formHashPath(path, params = {}) {
+    path = basicPathClean(path);
+
+    // Create a fake URL for parsing and formatting.
+    let url = URL.parse(path, 'http://localhost');
+
+    // Add the params.
+    for (const [key, value] of Object.entries(params)) {
+        if (!value) {
+            continue;
+        }
+
+        url.searchParams.append(key, value);
+    }
+
+    // Sort the params.
+    url.searchParams.sort();
+
+    // Pull out the path (which comes with a leading slash).
+    path = url.pathname.replace(/^\//, '');
+
+    // Add on the params
+    // (empty if there are none and includes the leading '?' if there are).
+    path += url.search;
+
+    return '#' + path;
+}
+
+function basicPathClean(path) {
+    path = path.trim();
+
+    // Remove leading hashes, slashes, and spaces.
+    path = path.replace(/^[\s\/#]+/, '');
+
+    // Remove tailing slashes and spaces.
+    path = path.replace(/[\/\s]+$/, '');
+
+    return path;
+}
+
+function redirect(path = PATH_HOME) {
+    window.location.hash = path;
+}
+
+function redirectHome() {
+    redirect(PATH_HOME);
+}
+
+function redirectLogin() {
+    redirect(PATH_LOGIN);
+}
+
+function redirectLogout() {
+    redirect(PATH_LOGOUT);
+}
+
+function loadingStart(container = undefined, modal = true) {
+    container = container ?? mainConatiner();
+
+    let loadingClass = 'glow-pulse loading logo';
+    if (modal) {
+        loadingClass += ' loading-modal';
+    }
+
+    container.innerHTML = `
+        <div class='loading-container'>
+            ${Render.getIconHTML(Render.ICON_NAME_LOGO, loadingClass)}
+            <div class='loading-dots'>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+}
+
+function loadingStop(container = undefined) {
+    container = container ?? mainConatiner();
+
+    container.innerHTML = '';
+}
+
+init();
+
+export {
+    addRoute,
+    formHashPath,
+    loadingStart,
+    loadingStop,
+    redirect,
+    redirectHome,
+    redirectLogin,
+    redirectLogout,
+    route,
+    routeComponents,
+
+    PARAM_ASSIGNMENT,
+    PARAM_COURSE,
+    PARAM_SUBMISSION,
+    PARAM_TARGET_ENDPOINT,
+
+    PATH_HOME,
+    PATH_LOGIN,
+    PATH_LOGOUT,
+    PATH_COURSE,
+    PATH_COURSES,
+    PATH_ANALYSIS_INDIVIDUAL,
+    PATH_ANALYSIS_PAIRWISE,
+    PATH_ASSIGNMENT,
+    PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
+    PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
+    PATH_EMAIL,
+    PATH_COURSE_USERS_LIST,
+    PATH_COURSE_UPDATE,
+    PATH_SUBMIT,
+    PATH_SUBMIT_REMOVE,
+    PATH_PEEK,
+    PATH_HISTORY,
+    PATH_PROXY_REGRADE,
+    PATH_PROXY_RESUBMIT,
+    PATH_SERVER,
+    PATH_SERVER_CALL_API,
+    PATH_SERVER_DOCS,
+    PATH_SERVER_USERS_LIST,
+    PATH_USER_HISTORY,
+
+    NAV_COURSES,
+    NAV_EMPTY,
+    NAV_HOME,
+    NAV_SERVER,
+};

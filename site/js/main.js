@@ -1,4 +1,4 @@
-import * as WebUI from './modules/webui/base.js'
+import * as WebUI from './modules/webui/index.js'
 
 function main() {
     WebUI.init();
