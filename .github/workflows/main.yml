@@ -9,7 +9,7 @@ on:
       - '*'
 
 jobs:
-  main:
+  test:
 
     runs-on: ubuntu-22.04
 
@@ -23,6 +23,17 @@ jobs:
           node-version: '23.x'
           cache: 'npm'
 
+      - name: Build
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+  generate-screenshots:
+    name: Generate Screenshots
+    needs: test
+    runs-on: ubuntu-22.04
+    steps:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -38,15 +49,19 @@ jobs:
         shell: bash
         run: pip3 install -r requirements-dev.txt
 
-      - name: Build
-        run: npm ci
+      - name: Run Server Docker Container
+        run: docker run --rm --tty --publish 8080:80 --name autograder-server-container
 
-      - name: Test
-        run: npm test
+      - name: Start Local Server
+        run: docker exec autograder-server-container ls
 
-      - name: Generate Image Artifacts
-        run: ./scripts/generate_screenshots.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site-screenshots
-          path: resources/*.png
+      # - name: Generate Image Artifacts
+      #   run: ./scripts/generate_screenshots.py
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: site-screenshots
+      #     path: resources/*.png
+
+      - name: Stop Server Container
+        if: always()
+        run: docker stop autograder-server-container && docker rm autograder-server-container
