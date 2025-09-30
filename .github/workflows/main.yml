@@ -53,11 +53,23 @@ jobs:
         shell: bash
         run: pip3 install -r requirements-dev.txt
 
-      - name: Run Server Docker Container
-        run: docker run --rm --tty --detach --volume "$(pwd)/site:/autograder-web/site" --publish 127.0.0.1:8080:8080 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=/autograder-web/site --log-level=debug
+      - name: Start Server in Docker Container
+        run: |
+          docker run --rm --tty -d \
+            --publish 127.0.0.1:8080:80 \
+            --name autograder-server-container \
+            edulinq/autograder-server-prebuilt:latest \
+            server --unit-testing \
+            --config web.static.root=../autograder-web/site \
+            --log-level=debug
 
       - name: Generate Image Artifacts
         run: ./scripts/generate_screenshots.py
+
+      - name: DEBUG: List Directories
+        run: ls -R
+
+      - name: Upload Screenshot Artifacts
       - uses: actions/upload-artifact@v4
         with:
           name: site-screenshots

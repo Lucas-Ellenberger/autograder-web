@@ -59,6 +59,7 @@ def main():
     driver.get(DEFAULT_START_URL)
     driver.implicitly_wait(2)
 
+    os.makedirs(RESOURCES_DIR, exist_ok = True)
     driver.save_screenshot(make_output_path('login'))
 
     bright_mode_toggle = driver.find_element(selenium.webdriver.common.by.By.CLASS_NAME, 'bright-mode-toggle')
