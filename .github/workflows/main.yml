@@ -55,12 +55,13 @@ jobs:
 
       - name: Start Server in Docker Container
         run: |
-          docker run --rm --tty -d \
-            --publish 127.0.0.1:8080:80 \
+          docker run --rm --tty --detach \
+            --volume "$(pwd)/site:/autograder-web/site"
+            --publish 127.0.0.1:8080:8080 \
             --name autograder-server-container \
             edulinq/autograder-server-prebuilt:latest \
             server --unit-testing \
-            --config web.static.root=../autograder-web/site \
+            --config web.static.root=/autograder-web/site \
             --log-level=debug
 
       - name: Generate Image Artifacts
