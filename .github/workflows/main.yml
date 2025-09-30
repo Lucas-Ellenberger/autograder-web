@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    name: Build and Test
 
     runs-on: ubuntu-22.04
 
@@ -53,14 +54,14 @@ jobs:
         run: pip3 install -r requirements-dev.txt
 
       - name: Run Server Docker Container
-        run: docker run --rm --tty --publish 8080:80 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=../autograder-web/site --log-level=debug
+        run: docker run --rm --tty --detach --publish 8080:80 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=../autograder-web/site --log-level=debug
 
       # - name: Start Local Server
       #   run: docker exec autograder-server-container ls
 
-      # - name: Generate Image Artifacts
-      #   run: ./scripts/generate_screenshots.py
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: site-screenshots
-      #     path: resources/*.png
+      - name: Generate Image Artifacts
+        run: ./scripts/generate_screenshots.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-screenshots
+          path: resources/*.png
