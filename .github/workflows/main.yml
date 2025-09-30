@@ -53,7 +53,7 @@ jobs:
         run: pip3 install -r requirements-dev.txt
 
       - name: Run Server Docker Container
-        run: docker run --rm --tty --publish 8080:80 --name autograder-server-container edulinq/autograder-server-prebuilt:latest cmd/server/main.go --unit-testing --config web.static.root=../autograder-web/site --log-level=debug
+        run: docker run --rm --tty --publish 8080:80 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=../autograder-web/site --log-level=debug
 
       # - name: Start Local Server
       #   run: docker exec autograder-server-container ls
