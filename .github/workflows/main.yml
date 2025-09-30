@@ -54,10 +54,7 @@ jobs:
         run: pip3 install -r requirements-dev.txt
 
       - name: Run Server Docker Container
-        run: docker run --rm --tty --detach --publish 8080:80 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=../autograder-web/site --log-level=debug
-
-      # - name: Start Local Server
-      #   run: docker exec autograder-server-container ls
+        run: docker run --rm --tty -v "$(pwd)/site:/autograder-web/site" --publish 127.0.0.1:8080:8080 --name autograder-server-container edulinq/autograder-server-prebuilt:latest server --unit-testing --config web.static.root=/autograder-web/site --log-level=debug
 
       - name: Generate Image Artifacts
         run: ./scripts/generate_screenshots.py
@@ -65,3 +62,7 @@ jobs:
         with:
           name: site-screenshots
           path: resources/*.png
+
+      - name: Stop Server Container
+        if: always()
+        run: docker stop autograder-server-container
