@@ -31,9 +31,14 @@ def main():
     start_url = 'http://localhost:8080'
     driver.get(start_url)
 
+    bright_mode_toggle = selenium.webdriver.support.ui.WebDriverWait(driver, 10).until(
+            selenium.webdriver.support.expected_conditions.presence_of_element_located((
+                selenium.webdriver.common.by.By.CLASS_NAME, 'bright-mode-toggle'
+            ))
+        )
+
     driver.save_screenshot(make_output_path('login'))
 
-    bright_mode_toggle = driver.find_element(selenium.webdriver.common.by.By.CLASS_NAME, 'bright-mode-toggle')
     bright_mode_toggle.click()
 
     driver.save_screenshot(make_output_path('login', False))
