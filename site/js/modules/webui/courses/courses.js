@@ -17,7 +17,7 @@ function handlerCourses(path, params, context, container) {
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_OTHER,
-                courseId: id,
+                courseId: course.id,
             },
         ));
     }

@@ -23,6 +23,7 @@ describe('Nav Server Actions', function() {
             [
                 'API Documentation',
                 'Call API',
+                'List Courses',
                 'List Users',
             ],
         ],

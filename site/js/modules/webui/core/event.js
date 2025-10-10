@@ -12,6 +12,7 @@ const eventListeners = new Map();
 const eventElement = document.createElement(`div`);
 
 const EVENT_TYPE_DOWNLOAD_FILE_COMPLETE = 'autograder-download-file-end';
+const EVENT_TYPE_NONTEMPLATE_LOAD_COMPLETE = 'autograder-nontemplate-load-end';
 const EVENT_TYPE_ROUTING_COMPLETE = 'autograder-routing-end';
 const EVENT_TYPE_ROUTING_FAILED = 'autograder-routing-failed';
 const EVENT_TYPE_TEMPLATE_RESULT_COMPLETE = 'autograder-template-result-end';
@@ -115,6 +116,7 @@ export {
     removeAllEventListeners,
 
     EVENT_TYPE_DOWNLOAD_FILE_COMPLETE,
+    EVENT_TYPE_NONTEMPLATE_LOAD_COMPLETE,
     EVENT_TYPE_ROUTING_COMPLETE,
     EVENT_TYPE_ROUTING_FAILED,
     EVENT_TYPE_TEMPLATE_RESULT_COMPLETE,

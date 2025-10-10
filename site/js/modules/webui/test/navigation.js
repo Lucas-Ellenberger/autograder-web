@@ -10,10 +10,10 @@ async function expectFailedNavigation(path, params = undefined, messageSubstring
         pathComponents['params'] = params;
     }
 
-    let renderPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_FAILED, pathComponents);
+    let eventWaitPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_FAILED, pathComponents);
 
     Core.Routing.routeComponents(pathComponents);
-    let event = await renderPromise;
+    let event = await eventWaitPromise;
 
     if (messageSubstring) {
         expect(event.detail.message).toContain(messageSubstring);
@@ -45,7 +45,8 @@ async function loginUser(displayName) {
     await homeRenderedPromise;
 }
 
-async function navigate(path, params = undefined) {
+// Navigate to a page and wait for the corresponding event (the routing complete event by default).
+async function navigate(path, params = undefined, eventType = Core.Event.EVENT_TYPE_ROUTING_COMPLETE) {
     let pathComponents = {
         'path': path,
     };
@@ -54,10 +55,10 @@ async function navigate(path, params = undefined) {
         pathComponents['params'] = params;
     }
 
-    let renderPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+    let eventWaitPromise = Core.Event.getEventPromise(eventType, pathComponents);
 
     Core.Routing.routeComponents(pathComponents);
-    await renderPromise;
+    await eventWaitPromise;
 }
 
 export {

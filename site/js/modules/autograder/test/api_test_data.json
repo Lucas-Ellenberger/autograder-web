@@ -3632,6 +3632,47 @@
             "python-message": "Failed to complete operation: User 'server-user@test.edulinq.org' is not enolled in course 'course101'."
         }
     },
+    "{\"arguments\":{\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/list\",\"files\":[]}": {
+        "endpoint": "courses/list",
+        "module_name": "autograder.api.courses.list",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin"
+        },
+        "output": {
+            "courses": [
+                {
+                    "id": "course-languages",
+                    "name": "Course Using Different Languages",
+                    "assignments": {
+                        "bash": {
+                            "id": "bash",
+                            "name": "A Simple Bash Assignment",
+                            "due-date": 0
+                        },
+                        "cpp": {
+                            "id": "cpp",
+                            "name": "A Simple C++ Assignment"
+                        },
+                        "java": {
+                            "id": "java",
+                            "name": "A Simple Java Assignment"
+                        }
+                    }
+                },
+                {
+                    "id": "course101",
+                    "name": "Course 101",
+                    "assignments": {
+                        "hw0": {
+                            "id": "hw0",
+                            "name": "Homework 0"
+                        }
+                    }
+                }
+            ]
+        }
+    },
     "{\"arguments\":{\"course-id\":\"course101\",\"dry-run\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
         "endpoint": "courses/lms/scores/upload",
         "module_name": "autograder.api.courses.lms.scores.upload",
@@ -5738,6 +5779,29 @@
                         {
                             "name": "found",
                             "type": "bool"
+                        }
+                    ]
+                },
+                "courses/list": {
+                    "description": "List the courses on the server.",
+                    "input": [
+                        {
+                            "name": "user-email",
+                            "type": "string",
+                            "description": "The email of the user making this request.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-pass",
+                            "type": "string",
+                            "description": "The password of the user making this request.",
+                            "required": true
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "courses",
+                            "type": "[]*core.CourseInfo"
                         }
                     ]
                 },
@@ -8954,6 +9018,29 @@
                         {
                             "name": "found",
                             "type": "bool"
+                        }
+                    ]
+                },
+                "courses/list": {
+                    "description": "List the courses on the server.",
+                    "input": [
+                        {
+                            "name": "user-email",
+                            "type": "string",
+                            "description": "The email of the user making this request.",
+                            "required": true
+                        },
+                        {
+                            "name": "user-pass",
+                            "type": "string",
+                            "description": "The password of the user making this request.",
+                            "required": true
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "courses",
+                            "type": "[]*core.CourseInfo"
                         }
                     ]
                 },

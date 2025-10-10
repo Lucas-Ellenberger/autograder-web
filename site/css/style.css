@@ -567,7 +567,6 @@ svg {
     flex-direction: column;
     justify-content: center;
     align-self: center;
-    max-width: fit-content;
 }
 
 .loading-container .loading {
@@ -813,7 +812,6 @@ svg {
 }
 
 .content {
-    flex-grow: 1000;
     padding: 1.0em;
     border-radius: var(--curve-radius-large);
 }

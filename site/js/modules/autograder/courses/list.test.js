@@ -1,0 +1,41 @@
+import * as List from './list.js';
+
+test('courses/list base', function() {
+    const expected = {
+        'courses': courses,
+    };
+
+    expect(List.list()).resolves.toStrictEqual(expected);
+});
+
+const courses = [
+    {
+        'id': 'course-languages',
+        'name': 'Course Using Different Languages',
+        'assignments': {
+            'bash': {
+                'id': 'bash',
+                'name': 'A Simple Bash Assignment',
+                'due-date': 0
+            },
+            'cpp': {
+                'id': 'cpp',
+                'name': 'A Simple C++ Assignment'
+            },
+            'java': {
+                'id': 'java',
+                'name': 'A Simple Java Assignment'
+            }
+        }
+    },
+    {
+        'id': 'course101',
+        'name': 'Course 101',
+        'assignments': {
+            'hw0': {
+                'id': 'hw0',
+                'name': 'Homework 0'
+            }
+        }
+    }
+];
