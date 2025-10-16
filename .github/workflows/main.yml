@@ -1,10 +1,5 @@
 name: Main
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 on:
   push:
     branches:
@@ -39,9 +34,6 @@ jobs:
     name: Generate Screenshots
     needs: test
     runs-on: ubuntu-22.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,6 +83,9 @@ jobs:
   publish-github-pages:
     needs: generate-screenshots
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       contents: read
       packages: write
