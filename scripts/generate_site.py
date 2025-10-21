@@ -30,8 +30,8 @@ def get_run_directories():
         if (not os.path.isdir(full_path)):
             continue
 
-        # if (not name.startswith('site-screenshots')):
-        #     continue
+        if (not name.startswith('site-screenshots')):
+            continue
 
         dirs.append(full_path)
 
