@@ -133,7 +133,7 @@ jobs:
           ls -td site-screenshots-* | tail -n +21 | xargs -r rm -rf
 
       - name: Build Site
-        run: python3 scripts/generate_site.py build/site
+        run: python3 scripts/generate_site.py
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

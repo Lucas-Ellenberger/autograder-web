@@ -30,12 +30,13 @@ def get_run_directories():
         if (not os.path.isdir(full_path)):
             continue
 
-        if (not name.startswith('site-screenshots-')):
-            continue
+        # if (not name.startswith('site-screenshots')):
+        #     continue
 
         dirs.append(full_path)
 
     dirs.sort(key = lambda directory: os.path.getmtime(directory), reverse = True)
+    print(f"DEBUG: Found the following run directories: '{dirs}'.")
     return dirs[:MAX_RUNS]
 
 def generate_run_section(run_dir):
