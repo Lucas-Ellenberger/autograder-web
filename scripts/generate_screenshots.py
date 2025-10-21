@@ -7,7 +7,9 @@ import sys
 import time
 
 THIS_DIR = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
-RESOURCES_DIR = os.path.abspath(os.path.join(THIS_DIR, '..', 'resources'))
+ROOT_DIR = os.path.abspath(os.path.join(THIS_DIR, '..'))
+BUILD_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'build'))
+IMAGES_BUILD_DIR = os.path.abspath(os.path.join(BUILD_DIR, 'html'))
 
 DEFAULT_SITE = 'http://localhost'
 DEFAULT_PORT = 8080
@@ -23,7 +25,7 @@ def make_output_path(image_name, light_mode = True):
         mode_name = 'dark'
 
     file_name = '%s-%s.png' % (image_name, mode_name)
-    return os.path.join(RESOURCES_DIR, file_name)
+    return os.path.join(IMAGES_BUILD_DIR, file_name)
 
 def wait_for_server_start(start_url = DEFAULT_START_URL, num_retries = DEFAULT_REQUEST_RETRIES, request_timeout = DEFAULT_REQUEST_TIMEOUT, sleep_time = DEFAULT_REQUEST_SLEEP_TIME):
     for _ in range(num_retries):
@@ -59,7 +61,9 @@ def main():
     driver.get(DEFAULT_START_URL)
     driver.implicitly_wait(2)
 
-    os.makedirs(RESOURCES_DIR, exist_ok = True)
+    os.makedirs(IMAGES_BUILD_DIR, exist_ok = True)
+    # TEST
+    print(make_output_path('login'))
     driver.save_screenshot(make_output_path('login'))
 
     bright_mode_toggle = driver.find_element(selenium.webdriver.common.by.By.CLASS_NAME, 'bright-mode-toggle')

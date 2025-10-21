@@ -82,15 +82,19 @@ jobs:
 
   publish-github-pages:
     needs: generate-screenshots
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+
     permissions:
       contents: read
       id-token: write
       packages: write
       pages: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -110,26 +114,31 @@ jobs:
         shell: bash
         run: pip3 install -r requirements-dev.txt
 
-      - name: Download All Screenshot Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: .ci/site
-
-      - name: Keep Only 20 Most Recent
-        run: |
-          cd .ci/site
-          ls -td site-screenshots-* | tail -n +21 | xargs -r rm -rf
-
-      - name: Generate Site
-        run: python3 scripts/generate_site.py .ci/site
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Artifact for Pages
+      - name: Download All Screenshot Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: 'build/site'
+
+      - name: DEBUG: View Build Site
+        run: |
+          cd build/site
+          ls
+
+      - name: Keep Only 20 Most Recent
+        run: |
+          cd build/site
+          ls -td site-screenshots-* | tail -n +21 | xargs -r rm -rf
+
+      - name: Build Site
+        run: python3 scripts/generate_site.py build/site
+
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.ci/site
+          path: 'build/site'
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

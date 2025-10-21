@@ -1,69 +1,111 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 import datetime
-import pathlib
+import os
+import shutil
+import subprocess
+import sys
 
+# TODO: Prune unnecessary variables.
 THIS_DIR = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
-RESOURCES_DIR = os.path.abspath(os.path.join(THIS_DIR, '..', 'resources'))
-HTML_TEMPLATE_FILE = os.path.join(RESOURCES_DIR, 'gallery_template.html')
+ROOT_DIR = os.path.abspath(os.path.join(THIS_DIR, '..'))
+TEMPLATE_HTML_DIR = os.path.join(THIS_DIR, 'template', 'html')
+BUILD_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'build'))
+IMAGES_BUILD_DIR = os.path.abspath(os.path.join(BUILD_DIR, 'html'))
+SITE_BUILD_DIR = os.path.abspath(os.path.join(BUILD_DIR, 'site'))
+IMAGES_DIRNAME = 'images'
+IMAGES_OUT_DIR = os.path.abspath(os.path.join(BUILD_DIR, IMAGES_DIRNAME))
+GEN_IMAGES_SCRIPT = os.path.abspath(os.path.join(THIS_DIR, 'generate_screenshots.py'))
 
-def generate_site_html(site_root):
-    if (not os.path.exists(HTML_TEMPLATE_FILE)):
-        print(f"Error: Template HTML file not found at {HTML_TEMPLATE_FILE}.")
+RUNS_MARKER = '<!-- RUNS-MARKER -->'
+MAX_RUNS = 20
+
+def get_run_directories():
+    if (not os.path.exists(SITE_BUILD_DIR)):
+        return []
+
+    dirs = []
+    for name in os.listdir(SITE_BUILD_DIR):
+        full_path = os.path.join(SITE_BUILD_DIR, name)
+        if (not os.path.isdir(full_path)):
+            continue
+
+        if (not name.startswith('site-screenshots-')):
+            continue
+
+        dirs.append(full_path)
+
+    dirs.sort(key = lambda directory: os.path.getmtime(directory), reverse = True)
+    return dirs[:MAX_RUNS]
+
+def generate_run_section(run_dir):
+    image_section = [f"<div class='run'><h2>{name}</h2><div class='img-grid'>"]
+
+    for name in sorted(os.listdir(run_dir)):
+        if name.lower().endswith(".png"):
+            img_path = os.path.join(run_dir, name)
+            rel_path = os.path.relpath(img_path, SITE_BUILD_DIR)
+            section.append(
+                f"<a href='{rel_path}' target='_blank'><img src='{rel_path}' alt='{name}'></a>"
+            )
+
+    section.append("</div></div>")
+    return "\n".join(section)
+
+def generate_site_html(template_html):
+    run_dirs = get_run_directories()
+    print(f"Found {len(run_dirs)} run directories to include.")
+
+    run_sections = []
+    for run_dir in run_dirs:
+        run_sections.append(generate_run_section(run_dir))
+
+    run_section_html = "\n".join(run_sections)
+
+    if RUNS_MARKER in template_html:
+        html = template_html.replace(RUNS_MARKER, run_section_html)
+
+    return html
+
+def copy_template_files():
+    if not os.path.exists(TEMPLATE_HTML_DIR):
+        print(f"Warning: Template HTML directory not found at {TEMPLATE_HTML_DIR}")
+        return
+
+    os.makedirs(SITE_BUILD_DIR, exist_ok = True)
+
+    for item in os.listdir(TEMPLATE_HTML_DIR):
+        source = os.path.join(TEMPLATE_HTML_DIR, item)
+        dest = os.path.join(SITE_BUILD_DIR, item)
+        if os.path.isdir(source):
+            shutil.copytree(source, dest, dirs_exist_ok = True)
+        else:
+            shutil.copy2(source, dest)
+
+def build_site():
+    print(f"Building screenshot gallery at: {SITE_BUILD_DIR}")
+
+    os.makedirs(SITE_BUILD_DIR, exist_ok=True)
+    copy_template_files()
+
+    template_file_path = os.path.join(TEMPLATE_HTML_DIR, "index.html")
+    if (not os.path.exists(template_file_path)):
+        print("Error: Could not find template index.html")
         return 1
 
-    with open(HTML_TEMPLATE_FILE, 'r') as html_file:
-        html = html_file.read()
+    with open(template_file_path, "r", encoding = "utf-8") as template_file:
+        template_html = template_file.read()
 
-        html = html.replace("{{ timestamp }}", datetime.datetime.utcnow().isoformat())
-        html = html.replace("{{ runs }}", generate_image_sections(site_root))
+    html_output = generate_site_html(template_html)
 
-    html_out_path = os.path.join(site_root, 'index.html')
-    with open(html_out_path, 'w') as html_out_file:
-        html_out_file.write(html)
+    out_path = os.path.join(SITE_BUILD_DIR, "index.html")
+    with open(out_path, "w", encoding = "utf-8") as out_file:
+        out_file.write(html_output)
 
     return 0
 
-def generate_image_sections(site_root):
-    screenshot_paths = get_sorted_image_directories(site_root)
-
-    image_sections = []
-    for screenshot_path in screenshot_paths:
-        name = screenshot_path.name
-        image_section = [f"<div class='run'><h2>{name}</h2><div class='img-grid'>"]
-
-        for img in sorted(screenshot_path.glob("*.png")):
-            rel_path = img.relative_to(site_root)
-            image_section.append(f"<a href='{rel_path}' target='_blank'><img src='{rel_path}' alt='{img.name}'></a>")
-
-        image_section.append("</div></div>")
-
-        image_sections.append("\n".join(image_section))
-
-    return "\n".join(image_sections)
-
-def get_sorted_image_directories(site_root):
-    screenshot_paths = []
-    for path in site_root.iterdir():
-        if (not path.is_dir()):
-            continue
-
-        if (not path.name.startswith("site-screenshots-")):
-            continue
-
-        screenshot_paths.append(path)
-
-    return sorted(screenshot_paths, key = lambda path: path.stat().st_mtime, reverse = True)
-
 def main():
-    if (len(sys.argv) != 2):
-        print("Usage: generate_site.py <site_root>")
-        return 1
-
-    site_root = pathlib.Path(sys.argv[1]).resolve()
-    return generate_site_html(site_root)
+    return build_site()
 
 if __name__ == '__main__':
     sys.exit(main())
