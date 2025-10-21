@@ -124,7 +124,7 @@ jobs:
 
       - name: DEBUG View Build Site
         run: |
-          cd build/site
+          cd build/site/site-screenshots
           ls
 
       - name: Keep Only 20 Most Recent
