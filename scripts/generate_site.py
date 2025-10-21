@@ -40,18 +40,20 @@ def get_run_directories():
     return dirs[:MAX_RUNS]
 
 def generate_run_section(run_dir):
-    image_section = [f"<div class='run'><h2>{name}</h2><div class='img-grid'>"]
+    image_section = [f"<div class='run'><h2>{os.path.basename(run_dir)}</h2><div class='img-grid'>"]
 
     for name in sorted(os.listdir(run_dir)):
-        if name.lower().endswith(".png"):
-            img_path = os.path.join(run_dir, name)
-            rel_path = os.path.relpath(img_path, SITE_BUILD_DIR)
-            section.append(
-                f"<a href='{rel_path}' target='_blank'><img src='{rel_path}' alt='{name}'></a>"
-            )
+        if (not name.lower().endswith(".png")):
+            continue
 
-    section.append("</div></div>")
-    return "\n".join(section)
+        image_path = os.path.join(run_dir, name)
+        relative_path = os.path.relpath(image_path, SITE_BUILD_DIR)
+        image_section.append(
+            f"<a href='{relative_path}' target='_blank'><img src='{relative_path}' alt='{name}'></a>"
+        )
+
+    image_section.append("</div></div>")
+    return "\n".join(image_section)
 
 def generate_site_html(template_html):
     run_dirs = get_run_directories()
