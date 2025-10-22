@@ -117,23 +117,8 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Download All Screenshot Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: 'build/site'
-
-      - name: DEBUG View Build Site
-        run: |
-          cd build/site/site-screenshots
-          ls
-
-      - name: Keep Only 20 Most Recent
-        run: |
-          cd build/site
-          ls -td site-screenshots-* | tail -n +21 | xargs -r rm -rf
-
       - name: Build Site
-        run: python3 scripts/generate_site.py
+        run: python3 scripts/generate_site.py ${{ github.repository_owner }} ${{ github.ref_name }} ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
