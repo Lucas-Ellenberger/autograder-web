@@ -35,7 +35,7 @@ def get_actions_artifacts(url, token_cleartext):
         raw_response = requests.request(
             method = 'GET',
             url = url,
-            data = {'Authorization': f"Bearer: {token_cleartext}"})
+            headers = {'Authorization': f"Bearer {token_cleartext}"})
     except requests.exceptions.ConnectionError:
         raise Exception("Could not connect to GitHub server at '%s'." % (url))
 
