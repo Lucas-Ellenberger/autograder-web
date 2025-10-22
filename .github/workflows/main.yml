@@ -118,7 +118,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build Site
-        run: python3 scripts/generate_site.py ${{ github.repository_owner }} ${{ github.ref_name }} ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/generate_site.py ${{ github.repository_owner }} ${{ github.repository.name }} ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
