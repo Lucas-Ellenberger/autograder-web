@@ -20,16 +20,14 @@ IMAGES_DIRNAME = 'images'
 IMAGES_OUT_DIR = os.path.abspath(os.path.join(BUILD_DIR, IMAGES_DIRNAME))
 GEN_IMAGES_SCRIPT = os.path.abspath(os.path.join(THIS_DIR, 'generate_screenshots.py'))
 
-OWNER_DELIM = '<OWNER>'
-REPO_DELIM = '<REPO>'
-GITHUB_ACTIONS_ARTIFACT_URL = f"https://api.github.com/repos/{OWNER_DELIM}/{REPO_DELIM}/actions/artifacts"
+REPO_DELIM = '<OWNER>/<REPO>'
+GITHUB_ACTIONS_ARTIFACT_URL = f"https://api.github.com/repos/{REPO_DELIM}/actions/artifacts"
 
 RUNS_MARKER = '<!-- RUNS-MARKER -->'
 MAX_RUNS = 20
 
-def get_artifacts_url(owner, repo):
-    artifacts_url = GITHUB_ACTIONS_ARTIFACT_URL.replace(OWNER_DELIM, owner)
-    return artifacts_url.replace(REPO_DELIM, repo)
+def get_artifacts_url(repository):
+    return GITHUB_ACTIONS_ARTIFACT_URL.replace(REPO_DELIM, repository)
 
 def get_actions_artifacts(url, token_cleartext):
     print("DEBUG: Getting the following URL: '%s'." % (url))
@@ -82,8 +80,8 @@ def generate_run_section(run_dir):
     image_section.append("</div></div>")
     return "\n".join(image_section)
 
-def generate_site_html(template_html, owner, repo, token_cleartext):
-    url = get_artifacts_url(owner, repo)
+def generate_site_html(template_html, repository, token_cleartext):
+    url = get_artifacts_url(repository)
     artifacts = get_actions_artifacts(url, token_cleartext)
 
     return template_html
@@ -113,7 +111,7 @@ def copy_template_files():
         else:
             shutil.copy2(source, dest)
 
-def build_site(owner, repo, token_cleartext):
+def build_site(repository, token_cleartext):
     print(f"Building screenshot gallery at: {SITE_BUILD_DIR}")
 
     os.makedirs(SITE_BUILD_DIR, exist_ok=True)
@@ -127,7 +125,7 @@ def build_site(owner, repo, token_cleartext):
     with open(template_file_path, "r", encoding = "utf-8") as template_file:
         template_html = template_file.read()
 
-    html_output = generate_site_html(template_html, owner, repo, token_cleartext)
+    html_output = generate_site_html(template_html, repository, token_cleartext)
 
     out_path = os.path.join(SITE_BUILD_DIR, "index.html")
     with open(out_path, "w", encoding = "utf-8") as out_file:
@@ -138,14 +136,13 @@ def build_site(owner, repo, token_cleartext):
 def main():
     # TODO: Get owner, repo, token from CLI.
     # TODO: May not need to get repo name.
-    if (len(sys.argv) != 4):
-        print("Usage: generate_site.py <GitHub Owner> <GitHub Repo> <Token Cleartext>")
+    if (len(sys.argv) != 3):
+        print("Usage: generate_site.py <GitHub Owner and Repo> <Token Cleartext>")
         return 1
 
-    owner = sys.argv[1]
-    repo = sys.argv[2]
-    token_cleartext = sys.argv[3]
-    return build_site(owner, repo, token_cleartext)
+    repository = sys.argv[1]
+    token_cleartext = sys.argv[2]
+    return build_site(repository, token_cleartext)
 
 if __name__ == '__main__':
     sys.exit(main())
