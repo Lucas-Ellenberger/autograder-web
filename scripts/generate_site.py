@@ -32,6 +32,7 @@ def get_artifacts_url(owner, repo):
     return artifacts_url.replace(REPO_DELIM, repo)
 
 def get_actions_artifacts(url, token_cleartext):
+    print("DEBUG: Getting the following URL: '%s'." % (url))
     try:
         raw_response = requests.request(
             method = 'GET',
