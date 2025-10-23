@@ -31,11 +31,16 @@ def get_artifacts_url(repository):
 
 def get_actions_artifacts(url, token_cleartext):
     print("DEBUG: Getting the following URL: '%s'." % (url))
+    # TODO: Make constant?
+    auth_header = "Bearer %s" % (token_cleartext)
     try:
         raw_response = requests.request(
             method = 'GET',
             url = url,
-            headers = {'Authorization': f"Bearer {token_cleartext}"})
+            headers = {
+                'Authorization': auth_header
+            }
+        )
     except requests.exceptions.ConnectionError:
         raise Exception("Could not connect to GitHub server at '%s'." % (url))
 
@@ -45,7 +50,30 @@ def get_actions_artifacts(url, token_cleartext):
         raise Exception("GitHub response does not contain valid JSON. Response:\n---\n%s\n---" % (raw_response.text))
 
     print(json.dumps(response, indent = 4))
-    return response
+    return response.get('artifacts', [])
+
+def is_site_screenshot_artifact(artifact):
+    name = artifact.get('name', '')
+    # TODO: Make constant?
+    return name == 'site-screenshots'
+
+def get_artifact_create_unix_time(artifact):
+    datetime = artifact.get('created_at', None)
+    if (datetime is None):
+        return 0
+
+    if (isinstance(datetime, datetime.datetime)):
+        return int(datetime.timestamp())
+
+    raise Exception("Unsupported time format: '%s'." % (datetime))
+
+def sort_and_filter_artifacts(raw_artifacts):
+    print(json.dumps(raw_artifacts, indent = 4))
+    screenshot_artifacts = list(filter(is_site_screenshot_artifact, raw_artifacts))
+    sorted_artifacts = screenshot_artifacts.sort(key = lambda artifact: get_artifact_create_unix_time(artifact))
+    # TEST
+    print(sorted_artifacts)
+    return sorted_artifacts
     # if (not os.path.exists(SITE_BUILD_DIR)):
     #     return []
 
@@ -82,7 +110,8 @@ def generate_run_section(run_dir):
 
 def generate_site_html(template_html, repository, token_cleartext):
     url = get_artifacts_url(repository)
-    artifacts = get_actions_artifacts(url, token_cleartext)
+    raw_artifacts = get_actions_artifacts(url, token_cleartext)
+    artifacts = sort_and_filter_artifacts(raw_artifacts)
 
     return template_html
     # run_sections = []
