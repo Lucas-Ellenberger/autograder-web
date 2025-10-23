@@ -21,7 +21,12 @@ IMAGES_OUT_DIR = os.path.abspath(os.path.join(BUILD_DIR, IMAGES_DIRNAME))
 GEN_IMAGES_SCRIPT = os.path.abspath(os.path.join(THIS_DIR, 'generate_screenshots.py'))
 
 REPO_DELIM = '<OWNER>/<REPO>'
-GITHUB_ACTIONS_ARTIFACT_URL = f"https://api.github.com/repos/{REPO_DELIM}/actions/artifacts"
+GITHUB_ACTIONS_ARTIFACT_URL = "https://api.github.com/repos/%s/actions/artifacts" % (REPO_DELIM)
+
+BEARER_DELIM = '<BEARER>'
+BEARER_TEMPLATE = "Bearer %s" % (BEARER_DELIM)
+
+SCREENSHOT_ARTIFACT_NAME = 'site-screenshots'
 
 RUNS_MARKER = '<!-- RUNS-MARKER -->'
 MAX_RUNS = 20
@@ -30,9 +35,7 @@ def get_artifacts_url(repository):
     return GITHUB_ACTIONS_ARTIFACT_URL.replace(REPO_DELIM, repository)
 
 def get_actions_artifacts(url, token_cleartext):
-    print("DEBUG: Getting the following URL: '%s'." % (url))
-    # TODO: Make constant?
-    auth_header = "Bearer %s" % (token_cleartext)
+    auth_header = BEARER_TEMPLATE.replace(BEARER_DELIM, token_cleartext)
     try:
         raw_response = requests.request(
             method = 'GET',
@@ -49,13 +52,12 @@ def get_actions_artifacts(url, token_cleartext):
     except Exception as ex:
         raise Exception("GitHub response does not contain valid JSON. Response:\n---\n%s\n---" % (raw_response.text))
 
-    # print(json.dumps(response, indent = 4))
     return response.get('artifacts', [])
 
 def is_site_screenshot_artifact(artifact):
     name = artifact.get('name', '')
     # TODO: Make constant?
-    return name == 'site-screenshots'
+    return name == SCREENSHOT_ARTIFACT_NAME
 
 def get_artifact_create_unix_time(artifact):
     creation_datetime = artifact.get('created_at', None)
@@ -69,11 +71,13 @@ def get_artifact_create_unix_time(artifact):
     raise Exception("Unsupported time format: '%s'." % (datetime))
 
 def sort_and_filter_artifacts(raw_artifacts):
-    print(json.dumps(raw_artifacts, indent = 4))
+    # print(json.dumps(raw_artifacts, indent = 4))
     screenshot_artifacts = list(filter(is_site_screenshot_artifact, raw_artifacts))
-    sorted_artifacts = screenshot_artifacts.sort(key = lambda artifact: get_artifact_create_unix_time(artifact))
-    # TEST
+    print(screenshot_artifacts)
+
+    sorted_artifacts = screenshot_artifacts.sort(key = get_artifact_create_unix_time)
     print(sorted_artifacts)
+
     return sorted_artifacts
     # if (not os.path.exists(SITE_BUILD_DIR)):
     #     return []
