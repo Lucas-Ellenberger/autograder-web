@@ -58,12 +58,12 @@ def is_site_screenshot_artifact(artifact):
     return name == 'site-screenshots'
 
 def get_artifact_create_unix_time(artifact):
-    datetime = artifact.get('created_at', None)
-    if (datetime is None):
+    creation_datetime = artifact.get('created_at', None)
+    if (creation_datetime is None):
         return 0
 
-    if (isinstance(datetime, datetime.datetime)):
-        return int(datetime.timestamp())
+    if (isinstance(creation_datetime, datetime.datetime)):
+        return int(creation_datetime.timestamp())
 
     raise Exception("Unsupported time format: '%s'." % (datetime))
 
