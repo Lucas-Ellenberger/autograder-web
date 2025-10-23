@@ -49,7 +49,7 @@ def get_actions_artifacts(url, token_cleartext):
     except Exception as ex:
         raise Exception("GitHub response does not contain valid JSON. Response:\n---\n%s\n---" % (raw_response.text))
 
-    print(json.dumps(response, indent = 4))
+    # print(json.dumps(response, indent = 4))
     return response.get('artifacts', [])
 
 def is_site_screenshot_artifact(artifact):
@@ -64,7 +64,7 @@ def get_artifact_create_unix_time(artifact):
 
     if (isinstance(creation_datetime, str)):
         value = datetime.datetime.fromisoformat(creation_datetime)
-        return int(value * 1000)
+        return int(value.timestamp() * 1000)
 
     raise Exception("Unsupported time format: '%s'." % (datetime))
 
