@@ -62,8 +62,9 @@ def get_artifact_create_unix_time(artifact):
     if (creation_datetime is None):
         return 0
 
-    if (isinstance(creation_datetime, datetime.datetime)):
-        return int(creation_datetime.timestamp())
+    if (isinstance(creation_datetime, str)):
+        value = datetime.datetime.fromisoformat(creation_datetime)
+        return int(value * 1000)
 
     raise Exception("Unsupported time format: '%s'." % (datetime))
 
